@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Notifier</title>
+  </head>
+  <body>
+    <h1>Notifier</h1>
+    <!-- <textarea id="chat-log" cols="100" rows="20"></textarea><br/> -->
+    <p id="chat-log">hi</p>
+    
+    <script>
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/');
+    console.log(chatSocket)
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        console.log(data)
+        document.getElementById('chat-log').innerHTML 
+                = data;
+    };
+    </script>
+  </body>
+</html>
