@@ -1,23 +1,68 @@
 <html>
   <head>
     <title>Notifier</title>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>
     <h1>Notifier</h1>
     <!-- <textarea id="chat-log" cols="100" rows="20"></textarea><br/> -->
     <p id="chat-log">hi</p>
-    
+
+    <form method="post" id="button">
+        {% csrf_token %}
+    <input type="" id="msg">
+    <button type="submit">submit</button>
+    </form>
     <script>
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/');
-    console.log(chatSocket)
+    // console.log(chatSocket)
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
-        console.log(data)
+        // console.log(data)
         document.getElementById('chat-log').innerHTML 
                 = data;
     };
+    </script>
+
+
+
+    <script>
+    // console.log(window.location)
+    var button = $("#button")
+    var loc = window.location;
+    var msg = $("#msg")
+
+    var wsStart = 'ws://'
+    if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+    }
+
+    var endpoint = wsStart + window.location.host + window.location.pathname+'chat/'
+    var socket = new WebSocket(endpoint);
+
+    socket.onmessage = function(e){
+        console.log('onmessage',e);
+    }
+    socket.onopen = function(e){
+        console.log('onopen',e);
+        button.submit(function(event){
+            event.preventDefault();
+            var msgText = msg.val();
+            socket.send(msgText);
+            button[0].reset()
+        })
+        
+    }
+    socket.onerror = function(e){
+        console.log('onerror',e);
+    }
+    socket.onclose = function(e){
+        console.log('onclose',e);
+    }
+
+
     </script>
   </body>
 </html>
