@@ -1,6 +1,7 @@
 import asyncio
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.consumer import AsyncConsumer
+import json
 
 
 class TickTockConsumer(AsyncJsonWebsocketConsumer):
@@ -33,7 +34,9 @@ class ChatConsumer(AsyncConsumer):
 		# })
 
 	async def websocket_receive(self, event):
-		print('------------received---------',event)
+		print('------------received---------',json.loads(event['text']))
+
+
 
 	async def websocket_disconnect(self, event):
 		print('------------disconnected---------',event)
