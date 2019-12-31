@@ -1150,7 +1150,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
 .notification-row .badge {
 
-    position: absolute;
+    /*position: absolute;*/
 
     right: -4px;
 
@@ -1160,7 +1160,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 
     border-radius: 9px;
 
-    min-width: 18px;
+    min-width: 20px;
 
     height: 18px;
 
@@ -1512,7 +1512,7 @@ div[data-role="editor-toolbar"] {
 
 .top-nav  {
 
-    margin-top: 7px;
+    margin-top: 0px;
 
 }
 
@@ -1808,11 +1808,11 @@ div[data-role="editor-toolbar"] {
 
 .info-box {
 
-  min-height: 140px;
+  min-height: 85px;
 
   margin-bottom: 30px;
 
-  padding: 20px;
+  padding: 1%;
 
   color: white;
 
@@ -1840,9 +1840,10 @@ div[data-role="editor-toolbar"] {
 
   text-align: center;
 
-  margin-right: 20px;
+  /*margin-right: 20px;*/
 
-  padding-right: 20px;
+  /*padding-right: 20px;*/
+
 
   color: rgba(255, 255, 255, 0.75);
 
@@ -1850,11 +1851,9 @@ div[data-role="editor-toolbar"] {
 
 .info-box .count {
 
-  margin-top: 20px;
+  font-size: 30px;
 
-  font-size: 34px;
-
-  font-weight: 700;
+  font-weight: 600;
 
 }
 
@@ -1864,7 +1863,7 @@ div[data-role="editor-toolbar"] {
 
   text-transform: uppercase;
 
-  font-weight: 600;
+  font-weight: 800;
 
 }
 
@@ -2310,7 +2309,7 @@ div[data-role="editor-toolbar"] {
 
   background:#eef3f7;
 
-  height:380px;
+  height:400px;
 
   border-top: none;
 
@@ -3950,7 +3949,7 @@ div[data-role="editor-toolbar"] {
 
 .badge.bg-important {
 
-    background: #00a0df;
+    background: rgba(255, 255, 255, 0.15);
 
     font-family: 'Lato', sans-serif;
 
