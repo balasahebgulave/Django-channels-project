@@ -50,7 +50,7 @@
         wsStart = 'wss://'
     }
 
-    var endpoint = wsStart + window.location.host + window.location.pathname+'chat/'
+    var endpoint = wsStart + window.location.host + '/chat/'
     var socket = new WebSocket(endpoint);
 
     socket.onmessage = function(e){

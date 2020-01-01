@@ -41,3 +41,18 @@ class ChatConsumer(AsyncConsumer):
 	async def websocket_disconnect(self, event):
 		print('------------disconnected---------',event)
 
+
+
+class AddMachineConsumer(AsyncConsumer):
+	async def websocket_connect(self, event):
+		print('---------connected AddMachineConsumer---------',event)
+		await self.send({
+			"type":"websocket.accept"
+		})
+
+	async def websocket_receive(self, event):
+		print('---------received AddMachineConsumer---------',event)
+
+
+	async def websocket_disconnect(self, event):
+		print('---------disconnected AddMachineConsumer---------',event)

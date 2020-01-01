@@ -62,7 +62,7 @@ def Login(request):
 
 	return render(request, 'Application/login.html', context)
 
-@login_required(login_url='Login')
+# @login_required(login_url='Login')
 def Homepage(request):
 	context = {}
 	check_admin = request.user.is_superuser

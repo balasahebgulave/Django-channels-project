@@ -1,5 +1,5 @@
 from django.contrib import admin
 from . models import *
-admin.site.register(Userseeds)
+admin.site.register(UserSeed)
+admin.site.register(MachineConfiguration)
 
-# Register your models here.

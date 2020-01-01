@@ -7,7 +7,6 @@
   <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
   <meta name="author" content="GeeksLabs">
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
-  <link rel="shortcut icon" href="{% static '/img/favicon.png' %}">
 
   <title>Notspam-App</title>
 
@@ -32,7 +31,7 @@
   <link href="{% static '/Application/css/widgets.css' %}" rel="stylesheet">
   <link href="{% static '/Application/css/style.css' %}" rel="stylesheet">
   <link href="{% static '/Application/css/style-responsive.css' %}" rel="stylesheet" />
-  <link href="{% static '/Application/css/xcharts.min.css' %}" rel=" stylesheet">
+  <link href="{% static '/Application/css/xcharts.min.css' %}" rel="stylesheet">
   <link href="{% static '/Application/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
   <!-- =======================================================
     Theme Name: NiceAdmin
@@ -54,7 +53,7 @@
       </div>
 
       <!--logo start-->
-      <a href="index.html" class="logo">Not<span class="lite">Spam</span></a>
+      <a href="#" class="logo">Not<span class="lite">Spam</span></a>
       <!--logo end-->
 
       <div class="nav search-row" id="top_menu">
@@ -270,10 +269,10 @@
           </li>
           <!-- alert notification end-->
           <!-- user login dropdown start-->
-          <li class="dropdown" style="margin-top: 1.5%">
+          <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="profile-ava">
-                                <img alt="" src="{% static '/img/avatar1_small.jpg' %}">
+                                <img alt="" src="{% static '/Application/img/user.jpg' %}">
                             </span>
                             <span class="username">{{user}}</span>
                             <b class="caret"></b>
@@ -322,9 +321,9 @@
                       </a>
           </li>
           <li class="sub-menu">
-            <a href="javascript:;" class="">
+            <a href="#" class="">
                           <i class="icon_document_alt"></i>
-                          <span>Add Machine</span>
+                          <span id="addmachine" onclick="manageOperations(this.id)">Add Machine</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <!-- <ul class="sub">
@@ -333,9 +332,9 @@
             </ul> -->
           </li>
           <li class="sub-menu">
-            <a href="javascript:;" class="">
+            <a href="#" class="">
                           <i class="icon_desktop"></i>
-                          <span>All Machine</span>
+                          <span id="adminallmachine" onclick="manageOperations(this.id)">All Machine</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             <!-- <ul class="sub">
@@ -623,6 +622,94 @@
 
             </div>
 
+
+
+
+
+
+            <div class="panel panel-default" id="adminallmachinediv" style="display: none">
+              <div class="panel-heading">
+                <h2><i class="fa fa-map-marker red"></i><strong>All Team Machine</strong></h2>
+                <div class="panel-actions">
+                  <a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                  <a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                  <a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
+             - </div>
+             
+              <div class="panel-body-map">
+                
+              </div>
+
+            </div>
+
+
+
+
+
+
+            <div class="panel panel-default" id="addmachinediv" style="display: none">
+              <div class="panel-heading">
+                <h2><i class="fa fa-map-marker red"></i><strong>Add New Machine</strong></h2>
+                <div class="panel-actions">
+                  <a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
+                  <a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+                  <a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
+             - </div>
+             
+              <div class="panel-body-map">
+
+                    <form class="form-horizontal" style="padding: 3%" method="post">
+
+                      <div class="form-group">
+                        <label class="control-label col-lg-2" for="title">Team Name</label>
+                        <div class="col-lg-8">
+                          <input type="text" placeholder="Enter Team Name - A" class="form-control" id="title">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-lg-2" for="content">Machine IP Address</label>
+                        <div class="col-lg-8">
+                          <input type="text" placeholder="Enter Machine IP Address - 10.10.20.136" class="form-control" id="content">
+                          <!-- <textarea class="form-control" id="content1"></textarea> -->
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-lg-2">Machine User</label>
+                        <div class="col-lg-8">
+                          <input type="text" placeholder="Enter Machine Username - Administrator" class="form-control" id="machineuser">
+                          <!-- <select class="form-control">
+                                                  <option value="">- Choose Cateogry -</option>
+                                                  <option value="1">General</option>
+                                                  <option value="2">News</option>
+                                                  <option value="3">Media</option>
+                                                  <option value="4">Funny</option>
+                          </select> -->
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-lg-2" for="tags">Machine Password</label>
+                        <div class="col-lg-8">
+                          <input type="text" placeholder="Enter Machine Password - pass@123" class="form-control" id="tags">
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-9">
+                          <!-- <button type="submit" class="btn btn-danger">Publish</button> -->
+                          <button type="submit" class="btn btn-primary">Save Machine</button>
+                          <button type="reset" class="btn btn-default">Reset</button>
+                        </div>
+                      </div>
+
+                    </form>
+                 
+              </div>
+
+            </div>
 
 
 
@@ -1221,7 +1308,7 @@
   <!-- jQuery full calendar -->
   <<script src="static/Application/js/fullcalendar.min.js"></script>
     <!-- Full Google Calendar - Calendar -->
-    <script src="assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+    <script src="static/Application/assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
     <!--script for this page only-->
     <script src="static/Application/js/calendar-custom.js"></script>
     <script src="static/Application/js/jquery.rateit.min.js"></script>
@@ -1292,7 +1379,7 @@
 
 
     <script>
-      var divs = ['allmachinesdiv','createtaskdiv','deleteseeddiv','insertproxydiv','removeproxydiv','livelogdiv','clearlogdiv','insertseeddiv']
+      var divs = ['allmachinesdiv','createtaskdiv','deleteseeddiv','insertproxydiv','removeproxydiv','livelogdiv','clearlogdiv','insertseeddiv','addmachinediv','adminallmachinediv']
       function manageOperations(id){
           var currentid = id+'div'
           var len = divs.length;
@@ -1308,6 +1395,42 @@
               }
           } 
     }
+    </script>
+
+
+
+
+    <script>
+      var loc = window.location;
+      var wsStart = 'ws://'
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+
+      var endpoint = wsStart + window.location.host + '/addmachine/'
+      var addmachinesocket = new WebSocket(endpoint);
+
+      console.log(endpoint);
+
+      addmachinesocket.onmessage = function(e){
+        console.log('addmachinesocket onmessage',e)
+      }
+
+      addmachinesocket.onopen = function(e){
+        console.log('addmachinesocket onopen',e)
+      }
+
+
+      addmachinesocket.onerror = function(e){
+        console.log('addmachinesocket onerror',e)
+      }
+
+
+      addmachinesocket.onclose = function(e){
+        console.log('addmachinesocket onclose',e)
+      }
+
+
     </script>
 
 </body>
