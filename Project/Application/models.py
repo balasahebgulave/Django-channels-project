@@ -7,16 +7,16 @@ class UserSeed(models.Model):
 	recoverymail = models.CharField(max_length = 100, default='None')
 	user = models.CharField(max_length = 100)
 
-	def __str__(self):
-		return self.user
+	# def __str__(self):
+	# 	return self.user
 
 
 class MachineConfiguration(models.Model):
-	team = models.CharField(max_length=20)
-	machine_ip = models.CharField(max_length=50)
-	adminuser = models.CharField(max_length=100)
-	password = models.CharField(max_length=100)
+	team = models.CharField(max_length=20, blank = False)
+	machine_ip = models.CharField(max_length=50, blank = False)
+	adminuser = models.CharField(max_length=100, blank = False)
+	password = models.CharField(max_length=100, blank = False)
 
-	def __str__(self):
-		return f"Team : {self.team} : {self.machine_ip}"
+	# def __str__(self):
+	# 	return f"Team : {self.team} : {self.machine_ip}"
 

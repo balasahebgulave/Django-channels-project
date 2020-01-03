@@ -42,7 +42,7 @@
 
 </head>
 
-<body>
+<body style="background:#F0F8FF;">
   <!-- container section start -->
   <section id="container" class="">
 
@@ -488,11 +488,20 @@
         </div>
         <!--/.row-->
 
-
+        <div><center id="error-log"></center></div>
+        
         <div class="row">
           <div class="col-lg-12 col-md-12">
 
-            <div class="panel panel-default" id="allmachinesdiv" style="display: none">
+            <div id="allmachinesdiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>All Machine</strong></center>
+                  </div>
+
+
+            </div>
+
+            <!-- <div class="panel panel-default" id="allmachinesdiv" style="display: none">
               <div class="panel-heading">
                 <h2><i class="fa fa-map-marker red"></i><strong>Team {{team}} Machines</strong></h2>
                 <div class="panel-actions">
@@ -506,12 +515,18 @@
                 
               </div>
 
+            </div> -->
+
+
+
+            <div id="insertseeddiv"style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Insert Seed</strong></center>
+                  </div>
+
+
             </div>
-
-
-
-
-            <div class="panel panel-default" id="insertseeddiv" style="display: none">
+            <!-- <div class="panel panel-default" id="insertseeddiv" style="display: none">
               <div class="panel-heading">
                 <h2><i class="fa fa-map-marker red"></i><strong>Insert Seed</strong></h2>
                 <div class="panel-actions">
@@ -525,12 +540,18 @@
                 
               </div>
 
-            </div>
+            </div> -->
 
 
         
+            <div id="insertproxydiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Insert Proxy</strong></center>
+                  </div>
 
-            <div class="panel panel-default" id="insertproxydiv" style="display: none">
+
+            </div>
+            <!-- <div class="panel panel-default" id="insertproxydiv" style="display: none">
               <div class="panel-heading">
                 <h2><i class="fa fa-map-marker red"></i><strong>Insert Proxy</strong></h2>
                 <div class="panel-actions">
@@ -544,12 +565,18 @@
                 
               </div>
 
+            </div> -->
+
+
+
+            <div id="deleteseeddiv" style="display: none">
+                  <div>
+                  <center class='heading'><strong>Remove Seed</strong></center>
+                  </div>
+
+
             </div>
-
-
-
-
-            <div class="panel panel-default" id="deleteseeddiv" style="display: none">
+           <!--  <div class="panel panel-default" id="deleteseeddiv" style="display: none">
               <div class="panel-heading">
                 <h2><i class="fa fa-map-marker red"></i><strong>Remove Seed</strong></h2>
                 <div class="panel-actions">
@@ -563,13 +590,19 @@
                 
               </div>
 
+            </div> -->
+
+
+
+
+            <div id="removeproxydiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Remove Proxy</strong></center>
+                  </div>
+
+
             </div>
-
-
-
-
-
-             <div class="panel panel-default" id="removeproxydiv" style="display: none">
+            <!-- <div class="panel panel-default" id="removeproxydiv" style="display: none">
               <div class="panel-heading">
                 <h2><i class="fa fa-map-marker red"></i><strong>Remove Proxy</strong></h2>
                 <div class="panel-actions">
@@ -583,11 +616,17 @@
                 
               </div>
 
+            </div> -->
+
+
+            <div id="livelogdiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Live Log</strong></center>
+                  </div>
+
+
             </div>
-
-
-
-            <div class="panel panel-default" id="livelogdiv" style="display: none">
+            <!-- <div class="panel panel-default" id="livelogdiv" style="display: none">
               <div class="panel-heading">
                 <h2><i class="fa fa-map-marker red"></i><strong>Live Log</strong></h2>
                 <div class="panel-actions">
@@ -601,12 +640,18 @@
                 
               </div>
 
+            </div> -->
+
+
+
+            <div id="createtaskdiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Create Task</strong></center>
+                  </div>
+
+
             </div>
-
-
-
-
-            <div class="panel panel-default" id="createtaskdiv" style="display: none">
+            <!-- <div class="panel panel-default" id="createtaskdiv" style="display: none">
               <div class="panel-heading">
                 <h2><i class="fa fa-map-marker red"></i><strong>Create Task</strong></h2>
                 <div class="panel-actions">
@@ -620,66 +665,80 @@
                 
               </div>
 
+            </div> -->
+
+
+
+            <div id="adminallmachinediv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Team Wise Machine</strong></center>
+                  </div>
+                  <div class="col-md-2">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <th>Sr.No</th>
+                            <th>Team</th>
+                        </thead>
+
+                        <tbody id="mainteam">
+                            {% for i,j in teams %}
+                              <tr>
+                                <td>{{i}}</td>
+                                <td>
+                                  <input type="button" class="btn btn-info" value="{{j.team}}">
+                                </td>
+                              </tr>
+                            {% endfor %}
+                        </tbody>      
+                    </table>
+                  </div>
+
+                  <div class="col-md-10">
+                    <table id="livelog" class="table table-hover table-bordered">
+                        <thead>
+                            <th>id</th>
+                            <th>Team</th>
+                            <th>Machine IP</th>
+                            <th>Machine Username</th>
+                            <th>Machine Password</th>
+                            <th>Delete Machine</th>
+                        </thead>
+
+                        <tbody id="temp">
+                            
+                        </tbody>      
+                    </table>
+                  </div>
             </div>
+              
 
 
 
+            <div id="addmachinediv" style="display: none;" >
+                  <div>
+                  <center class="heading"><strong>Add Machine</strong></center>
+                  </div>
 
-
-
-            <div class="panel panel-default" id="adminallmachinediv" style="display: none">
-              <div class="panel-heading">
-                <h2><i class="fa fa-map-marker red"></i><strong>All Team Machine</strong></h2>
-                <div class="panel-actions">
-                  <a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-                  <a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                  <a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
-                </div>
-             - </div>
-             
-              <div class="panel-body-map">
-                
-              </div>
-
-            </div>
-
-
-
-
-
-
-            <div class="panel panel-default" id="addmachinediv" style="display: none">
-              <div class="panel-heading">
-                <h2><i class="fa fa-map-marker red"></i><strong>Add New Machine</strong></h2>
-                <div class="panel-actions">
-                  <a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a>
-                  <a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
-                  <a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
-                </div>
-             - </div>
-             
-              <div class="panel-body-map">
-
-                    <form class="form-horizontal" style="padding: 3%" method="post">
-
+                  <form class="form-horizontal" id="addmachineform" method="post">
+                        {% csrf_token %}
                       <div class="form-group">
-                        <label class="control-label col-lg-2" for="title">Team Name</label>
+                        <label class="control-label col-lg-2" for="team">Team Name</label>
                         <div class="col-lg-8">
-                          <input type="text" placeholder="Enter Team Name - A" class="form-control" id="title">
+                          <input type="text" placeholder="Enter Team Name - A" class="form-control" id="team" required>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-lg-2" for="content">Machine IP Address</label>
+                        <label class="control-label col-lg-2" for="machineip">Machine IP Address</label>
                         <div class="col-lg-8">
-                          <input type="text" placeholder="Enter Machine IP Address - 10.10.20.136" class="form-control" id="content">
+                          <input type="text" placeholder="Enter Machine IP Address - 10.10.20.136" class="form-control" id="machineip" required>
                           <!-- <textarea class="form-control" id="content1"></textarea> -->
                         </div>
                       </div>
 
                       <div class="form-group">
-                        <label class="control-label col-lg-2">Machine User</label>
+                        <label class="control-label col-lg-2" for="machineuser">Machine User</label>
                         <div class="col-lg-8">
-                          <input type="text" placeholder="Enter Machine Username - Administrator" class="form-control" id="machineuser">
+                          <input type="text" placeholder="Enter Machine Username - Administrator" class="form-control" id="machineuser" required>
                           <!-- <select class="form-control">
                                                   <option value="">- Choose Cateogry -</option>
                                                   <option value="1">General</option>
@@ -691,9 +750,9 @@
                       </div>
 
                       <div class="form-group">
-                        <label class="control-label col-lg-2" for="tags">Machine Password</label>
+                        <label class="control-label col-lg-2" for="machinepassword">Machine Password</label>
                         <div class="col-lg-8">
-                          <input type="text" placeholder="Enter Machine Password - pass@123" class="form-control" id="tags">
+                          <input type="text" placeholder="Enter Machine Password - pass@123" class="form-control" id="machinepassword" required>
                         </div>
                       </div>
 
@@ -706,18 +765,12 @@
                       </div>
 
                     </form>
-                 
-              </div>
-
             </div>
 
 
-
-
-
-             
-            </div>
           </div>
+
+        </div>
          <!--  <div class="col-md-3">
           
             <ul class="today-datas">
@@ -1381,20 +1434,22 @@
     <script>
       var divs = ['allmachinesdiv','createtaskdiv','deleteseeddiv','insertproxydiv','removeproxydiv','livelogdiv','clearlogdiv','insertseeddiv','addmachinediv','adminallmachinediv']
       function manageOperations(id){
-          var currentid = id+'div'
-          var len = divs.length;
+        var currentid = id+'div'
+        var len = divs.length;
 
-          for (var i = 0; i < len; i++) {
-          
-              if (divs[i]==currentid){
-                $('#'+currentid).show();
-              }
+        for (var i = 0; i < len; i++) {
+        
+            if (divs[i]==currentid){
+              $('#'+currentid).show();
+              document.getElementById('error-log').innerHTML = '';
 
-              else{
-                $('#'+divs[i]).hide()
-              }
-          } 
-    }
+            }
+
+            else{
+              $('#'+divs[i]).hide()
+            }
+        } 
+      }
     </script>
 
 
@@ -1402,7 +1457,8 @@
 
     <script>
       var loc = window.location;
-      var wsStart = 'ws://'
+      var addmachineform = $('#addmachineform');      
+      var wsStart = 'ws://';
       if (loc.protocol == 'https:'){
         wsStart = 'wss://'
       }
@@ -1414,10 +1470,22 @@
 
       addmachinesocket.onmessage = function(e){
         console.log('addmachinesocket onmessage',e)
+        // console.log(e.data);
+        document.getElementById('error-log').innerHTML 
+                = e.data;
       }
 
       addmachinesocket.onopen = function(e){
         console.log('addmachinesocket onopen',e)
+        addmachineform.submit(function(event){
+          event.preventDefault();
+          var team = $("#team").val();
+          var machineip = $("#machineip").val();
+          var machineuser = $("#machineuser").val();
+          var machinepassword = $("#machinepassword").val();
+          addmachinesocket.send(JSON.stringify({'team':team, 'machineip':machineip, 'machineuser':machineuser,'machinepassword':machinepassword}));
+          addmachineform[0].reset();
+        })
       }
 
 
@@ -1432,6 +1500,67 @@
 
 
     </script>
+
+
+
+    <script>
+      var loc = window.location;
+      var displaymachineform = $('#displaymachineform');      
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+
+      var endpoint = wsStart + window.location.host + '/displaymachines/'
+      var displaymachinesocket = new WebSocket(endpoint);
+
+      console.log(endpoint);
+
+      displaymachinesocket.onmessage = function(e){
+
+        var data = JSON.parse(e.data);
+        console.log(e.data);
+        // var data = e.data;
+
+        var row = "";
+        data.forEach(function(value){
+        if (value){
+          var url = "/deletemachine/"+value[0]+""
+          var deletebutton = "<a href = "+url+">Delete</a>"
+        }
+        else{
+          var deletebutton = "<a href = '{% url 'Deletemachine' 0 %}'>Delete</a>"
+        }
+
+        // row = row + "<tr><td>"+value[0]+"</td><td><a href='#'>"+value[1]+"</a></td></tr>";});
+
+        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+deletebutton+"</td></tr>";
+        });
+        
+        $('#temp').html(row);
+
+      }
+
+      displaymachinesocket.onopen = function(e){
+        console.log('displaymachinesocket onopen',e)
+
+        $('input').click(function(){
+          var team = $(this).val();
+          displaymachinesocket.send(JSON.stringify({'team':team}));
+        })
+      }
+
+
+      displaymachinesocket.onerror = function(e){
+        console.log('displaymachinesocket onerror',e)
+      }
+
+      displaymachinesocket.onclose = function(e){
+        console.log('displaymachinesocket onclose',e)
+      }
+
+    </script>
+
 
 </body>
 

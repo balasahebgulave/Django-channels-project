@@ -11,7 +11,6 @@
 @import url(line-icons.css);
 
 
-
 body {
 
     color: #797979;
@@ -1810,9 +1809,7 @@ div[data-role="editor-toolbar"] {
 
   min-height: 85px;
 
-  margin-bottom: 30px;
-
-  padding: 1%;
+  margin-bottom: 20px;
 
   color: white;
 
@@ -1873,6 +1870,11 @@ div[data-role="editor-toolbar"] {
 
   font-size: 12px;
 
+}
+
+#error-log{
+    margin-bottom: 1%;
+    color: red;
 }
 
 .info-box.danger {
@@ -2301,15 +2303,22 @@ div[data-role="editor-toolbar"] {
 
 }
 
-.panel .panel-body-map {
+.heading{
+  color: black;
+  margin-bottom: 1%;
+}
 
-  border-width: 1px 1px 2px;
+.panel .panel-body-map {
+    
+  overflow-y: scroll;
+
+  border-width: 1px 1px 1px;
 
   border-style: solid;
 
   background:#eef3f7;
 
-  height:400px;
+  height:420px;
 
   border-top: none;
 
