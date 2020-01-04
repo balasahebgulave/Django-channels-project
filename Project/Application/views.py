@@ -74,11 +74,13 @@ def Homepage(request):
 	context = {}
 	try:
 		teams = MachineConfiguration.objects.values('team').distinct()
+		user_team_machines = MachineConfiguration.objects.filter(team = request.session['team'])
 		uniqueteam = []
 		for i,j in enumerate(teams):
-			uniqueteam.append((i,j))
+			uniqueteam.append((i+1,j))
 
 		context['teams'] = uniqueteam
+		context['user_team_machines'] = user_team_machines
 		check_admin = request.user.is_superuser
 		if check_admin == True:
 			context['check_admin'] = check_admin

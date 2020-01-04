@@ -12,19 +12,30 @@
 
 
 body {
+    background:#F0F8FF;
 
-    color: #797979;
-
-    background: #eeeeee;
-
-    font-family: 'Lato', sans-serif;
+    font-family: "Times New Roman", Times, serif;
 
     padding: 0px !important;
 
     margin: 0px !important;
 
-    font-size:14px !important;
+    font-size:16px !important;
 
+}
+
+
+input{
+    border: none;
+    background:#F0F8FF;
+}
+
+
+#addmachineform{
+    border-radius: 5px;
+    border: solid;
+    border-width: 1px;
+    padding: 3%;
 }
 
 h1,h2,h3,h4,h5{
@@ -45,6 +56,10 @@ ul li {
 
 }
 
+
+#status-log{
+    color: red;
+}
 
 
 a, a:hover, a:focus {
@@ -1653,9 +1668,11 @@ div[data-role="editor-toolbar"] {
 
 .top-nav .username {
 
-    font-size: 13px;
+    font-size: 16px;
 
-    color: #bdbdbd;
+    font-family: "Times New Roman", Times, serif;
+
+    color: white;
 
 }
 
@@ -3960,7 +3977,7 @@ div[data-role="editor-toolbar"] {
 
     background: rgba(255, 255, 255, 0.15);
 
-    font-family: 'Lato', sans-serif;
+    font-family: 'Times', sans-serif;
 
     font-size: 11px;
 
