@@ -2,17 +2,21 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 from django.utils.safestring import mark_safe
-from . login_db import login_instance
+# from . login_db import login_instance
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate 
 from django.contrib.auth.models import User
 from . models import MachineConfiguration
 from django.http import Http404
 
+from Project.tasks import add
+
 
 
 def Login(request):	
 	context = {}
+	for i in range(1000):
+		print('-------------tasks-------------',add.delay(100,i))
 	try:
 		if request.method == 'POST':
 			userEmail = request.POST.get('username')
