@@ -6,6 +6,15 @@ from . models import MachineConfiguration
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
 
+from django.contrib.sessions.models import Session
+from django.contrib.auth.models import User
+
+def get_current_user(session_key):
+	session = Session.objects.get(session_key=session_key)
+	session_data = session.get_decoded()
+	uid = session_data.get('_auth_user_id')
+	user = User.objects.get(id=uid)
+	return user
 
 
 
@@ -13,11 +22,20 @@ class TickTockConsumer(AsyncJsonWebsocketConsumer):
 
     async def connect(self):
         await self.accept()
+        print('-------',self.scope['session'].keys())
         while 1:
             await asyncio.sleep(1)
             await self.send_json("tick")
             await asyncio.sleep(1)
             await self.send_json(".....tock")
+            print('eorking')
+
+
+    @database_sync_to_async
+    async def get_live_machine_conf(self):
+    	pass
+
+
 
 
 class ChatConsumer(AsyncConsumer):
@@ -28,6 +46,7 @@ class ChatConsumer(AsyncConsumer):
 		})
 
 		await asyncio.sleep(2)
+
 
 		await self.send({
 			"type":"websocket.send",
@@ -92,7 +111,7 @@ class AddMachineConsumer(AsyncConsumer):
 	@database_sync_to_async
 	def save_machine(self, machinedetails):
 		machine_object = MachineConfiguration(team = machinedetails['team'], machine_ip = machinedetails['machineip'],
-			adminuser = machinedetails['machineuser'], password = machinedetails['machinepassword'])
+			adminuser = machinedetails['machineuser'], password = machinedetails['machinepassword'], user=self.scope['user'])
 		machine_object.save()
 		return True
 
