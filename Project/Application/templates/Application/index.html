@@ -329,7 +329,7 @@
                             <th>RAM Usage %</th>
                         </thead>
 
-                        <tbody>
+                        <!-- <tbody>
                           
                             {% for i in user_team_machines %}
                             <tr>
@@ -342,7 +342,9 @@
                               <td>{{i.ram_usage}}</td>
                             </tr> 
                             {% endfor %}
-                        </tbody>   
+                        </tbody>    -->
+
+                        <tbody id="machine-config"></tbody>
                   </table>
                 </div>   
 
@@ -762,9 +764,13 @@
     // console.log(chatSocket)
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
-        console.log(data)
-        // document.getElementById('chat-log').innerHTML 
-        //         = data;
+        // console.log(data)
+        var row = "";
+        data.forEach(function(value){
+          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";
+        
+        $('#machine-config').html(row);
+        });
     };
     </script>
 

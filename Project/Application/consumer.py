@@ -8,6 +8,7 @@ from channels.db import database_sync_to_async
 
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
+import random
 
 def get_current_user(session_key):
 	session = Session.objects.get(session_key=session_key)
@@ -20,20 +21,24 @@ def get_current_user(session_key):
 
 class TickTockConsumer(AsyncJsonWebsocketConsumer):
 
-    async def connect(self):
-        await self.accept()
-        print('-------',self.scope['session'].keys())
-        while 1:
-            await asyncio.sleep(1)
-            await self.send_json("tick")
-            await asyncio.sleep(1)
-            await self.send_json(".....tock")
-            print('eorking')
+	async def connect(self):
+		await self.accept()
+		print('-------',self.scope['session']['team'])
+		while 1:
+			data = await self.get_live_machine_conf(self.scope['session']['team'])
+			await asyncio.sleep(0.5)
+			await self.send_json(data)
+			await asyncio.sleep(0.5)
+			await self.send_json(data)
+			
 
 
-    @database_sync_to_async
-    async def get_live_machine_conf(self):
-    	pass
+	@database_sync_to_async
+	def get_live_machine_conf(self, team):
+		teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
+		# teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
+		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, "*****", random.randrange(1,100), random.randrange(1,100)) for i in teamwise_machine_object]
+		return teamwise_machine_object
 
 
 
