@@ -14,9 +14,9 @@ from Project.tasks import add
 
 
 def Login(request):	
-	context = {}
-	for i in range(1000):
-		print('-------------tasks-------------',add.delay(100,i))
+	# context = {}
+	# for i in range(1000):
+	# 	print('-------------tasks-------------',add.delay(100,i))
 	try:
 		if request.method == 'POST':
 			userEmail = request.POST.get('username')

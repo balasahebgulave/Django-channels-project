@@ -5,10 +5,10 @@ import json
 from . models import MachineConfiguration
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
-
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User
 import random
+
 
 def get_current_user(session_key):
 	session = Session.objects.get(session_key=session_key)
@@ -19,19 +19,17 @@ def get_current_user(session_key):
 
 
 
-class TickTockConsumer(AsyncJsonWebsocketConsumer):
-
+class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 	async def connect(self):
 		await self.accept()
 		print('-------',self.scope['session']['team'])
 		while 1:
 			data = await self.get_live_machine_conf(self.scope['session']['team'])
+			live_data = {'data':data, 'total_machines':len(data)}
 			await asyncio.sleep(0.5)
-			await self.send_json(data)
+			await self.send_json(live_data)
 			await asyncio.sleep(0.5)
-			await self.send_json(data)
-			
-
+			await self.send_json(live_data)
 
 	@database_sync_to_async
 	def get_live_machine_conf(self, team):
@@ -39,8 +37,6 @@ class TickTockConsumer(AsyncJsonWebsocketConsumer):
 		# teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
 		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, "*****", random.randrange(1,100), random.randrange(1,100)) for i in teamwise_machine_object]
 		return teamwise_machine_object
-
-
 
 
 class ChatConsumer(AsyncConsumer):
@@ -71,15 +67,12 @@ class ChatConsumer(AsyncConsumer):
 		print('------------disconnected---------',event)
 
 
-
 class AddMachineConsumer(AsyncConsumer):
 	async def websocket_connect(self, event):
 		print('---------connected AddMachineConsumer---------',event)
 		await self.send({
 			"type":"websocket.accept"
 		})
-
-		
 
 	async def websocket_receive(self, event):
 		print('---------received AddMachineConsumer---------',event)
@@ -108,15 +101,13 @@ class AddMachineConsumer(AsyncConsumer):
 				"text":f"Error while adding machine : {str(e)}"
 			})
 			
-
 	async def websocket_disconnect(self, event):
 		print('---------disconnected AddMachineConsumer---------',event)
-
 
 	@database_sync_to_async
 	def save_machine(self, machinedetails):
 		machine_object = MachineConfiguration(team = machinedetails['team'], machine_ip = machinedetails['machineip'],
-			adminuser = machinedetails['machineuser'], password = machinedetails['machinepassword'], user=self.scope['user'])
+			adminuser = machinedetails['machineuser'], password = machinedetails['machinepassword'])
 		machine_object.save()
 		return True
 
@@ -125,13 +116,8 @@ class AddMachineConsumer(AsyncConsumer):
 		machine_object = MachineConfiguration.objects.get(machine_ip=machinedetails['machineip'])
 		return machine_object
 
-	
 
-
-	
-
-
-class DisplayAllMachine(AsyncConsumer):
+class DisplayAllMachineConsumer(AsyncConsumer):
 	async def websocket_connect(self, event):
 		print('----------ShowallMachine--connected---------',event)
 		await self.send({
@@ -151,12 +137,11 @@ class DisplayAllMachine(AsyncConsumer):
 				"text": json.dumps(teamwise_machine_object)
 		})
 
-
 	async def websocket_disconnect(self, event):
 		print('----------ShowallMachine--disconnected---------',event)
 
 	@database_sync_to_async
 	def show_teamwise_machine(self, team):
 		teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
-		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password) for i in teamwise_machine_object]
+		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
 		return teamwise_machine_object

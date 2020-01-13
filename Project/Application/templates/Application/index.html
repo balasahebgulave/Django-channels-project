@@ -241,7 +241,7 @@
           <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
             <div class="info-box blue-bg">
               <i class="fa fa-cubes"></i>
-              <div class="count">5</div>
+              <div class="count" id="count">0</div>
               <div class="title">Total Machine</div>
             </div>
             <!--/.info-box-->
@@ -452,6 +452,8 @@
                             <th>Machine IP</th>
                             <th>Machine Username</th>
                             <th>Machine Password</th>
+                            <th>CPU Usage %</th>
+                            <th>RAM Usage %</th>
                             <th>Delete Machine</th>
                         </thead>
 
@@ -726,7 +728,7 @@
           var deletebutton = "<a href = '{% url 'Deletemachine' 0 %}'>Delete</a>"
         }
 
-        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+deletebutton+"</td></tr>";
+        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletebutton+"</td></tr>";
         });
         
         $('#temp').html(row);
@@ -756,22 +758,28 @@
 
     
     <script>
-    
+      var loc = window.location;
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
 
-    var chatSocket = new WebSocket(
-        'ws://' + window.location.host +
-        '/ws/');
-    // console.log(chatSocket)
-    chatSocket.onmessage = function(e) {
+      var endpoint = wsStart + window.location.host + '/ws/'
+      var liveMchineSocket = new WebSocket(endpoint);
+
+      liveMchineSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
         // console.log(data)
         var row = "";
-        data.forEach(function(value){
+        data.data.forEach(function(value){
           row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";
         
         $('#machine-config').html(row);
         });
-    };
+        document.getElementById('count').innerHTML 
+                = data.total_machines;
+
+      };
     </script>
 
 
