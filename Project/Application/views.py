@@ -14,7 +14,7 @@ from Project.tasks import add
 
 
 def Login(request):	
-	# context = {}
+	context = {}
 	# for i in range(1000):
 	# 	print('-------------tasks-------------',add.delay(100,i))
 	try:
