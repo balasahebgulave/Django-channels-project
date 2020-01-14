@@ -10,6 +10,14 @@
 
 @import url(line-icons.css);
 
+span{
+    padding: 5px;
+    font-size: 14px;
+}
+
+.col-md-6{
+    padding: 0.5%;
+}
 
 body {
     background:#F0F8FF;
