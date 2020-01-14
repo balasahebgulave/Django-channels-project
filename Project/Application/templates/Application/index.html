@@ -411,10 +411,175 @@
 
             <div id="createtaskdiv" style="display: none;">
                   <div>
-                  <center class='heading'><strong>Create Task</strong></center>
+                    <center class='heading'><strong>Create Task</strong></center>
                   </div>
 
+                  <div class="col-md-4">
+                    <center class='heading'><strong>Your Tasks</strong></center>
 
+                    
+                  </div>
+
+                  <div class="col-md-8">
+                    <center class='heading'><strong>Create New Tasks</strong></center>
+                   <form class="form-horizontal" style="background-color:#d1b993; padding: 3%">
+                    <div class="col-md-6">
+                      <b>Select Action : </b>
+                      <span><input type="radio" name="action" value="Default"> Default</span>
+                      <span><input type="radio" name="action" value="Custom"> Custom</span>
+                      <span><input type="radio" name="action" value="Random"> Random</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <b>Process Inbox : </b>
+                      <span><input type="radio" name="inbox" value="Yes"> Yes</span>
+                      <span><input type="radio" name="inbox" value="No"> No</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Process Junk or Spam : </b>
+                      <span><input type="radio" name="spam" value="Yes"> Yes</span>
+                      <span><input type="radio" name="spam" value="No"> No</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Compose Mail : </b>
+                      <span><input type="radio" name="compose" value="Yes"> Yes</span>
+                      <span><input type="radio" name="compose" value="No"> No</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Archive or Delete : </b>
+                      <span><input type="radio" name="delete" value="Archive"> Archive</span>
+                      <span><input type="radio" name="delete" value="Delete"> Delete</span>
+                      <span><input type="radio" name="delete" value="Random"> Random</span>
+                      <span><input type="radio" name="delete" value="None"> None</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Bulk Not Junk or Spam : </b>
+                      <span><input type="radio" name="bulk" value="Yes"> Yes</span>
+                      <span><input type="radio" name="bulk" value="No"> No</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Add Safe Sender : </b>
+                      <span><input type="radio" name="sender" value="Yes"> Yes</span>
+                      <span><input type="radio" name="sender" value="No"> No</span>
+                      <span><input type="radio" name="sender" value="Random"> Random</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Color Category : </b>
+                      <span><input type="radio" name="color" value="Yes"> Yes</span>
+                      <span><input type="radio" name="color" value="No"> No</span>
+                      <span><input type="radio" name="color" value="Random"> Random</span>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                      <b>Mark Flag : </b>
+                      <span><input type="radio" name="flag" value="Yes"> Yes</span>
+                      <span><input type="radio" name="flag" value="No"> No</span>
+                      <span><input type="radio" name="flag" value="Random"> Random</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Click Link : </b>
+                      <span><input type="radio" name="link" value="Yes"> Yes</span>
+                      <span><input type="radio" name="link" value="No"> No</span>
+                      <span><input type="radio" name="link" value="Random"> Random</span>
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <b>Forward Mail : </b>
+                      <span><input type="radio" name="forward" value="Yes"> Yes</span>
+                      <span><input type="radio" name="forward" value="No"> No</span>
+                      <span><input type="radio" name="forward" value="Random"> Random</span>
+                    </div>
+
+
+
+                    <div class="col-md-6">
+                      <b>Report Not Spam : </b>
+                      <span><input type="radio" name="notspam" value="Yes"> Yes</span>
+                      <span><input type="radio" name="notspam" value="No"> No</span>
+                      <span><input type="radio" name="notspam" value="Random"> Random</span>
+                    </div>
+
+
+
+                    <div class="row">
+                      <div class="col-md-2">
+                      <b># Inbox Process</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Not Spam</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Delete</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Flag</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Forward</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-md-2">
+                      <b># CC Count</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># SS Count</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Contact Count</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Subject</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># From Name</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      </div>
+
+                    </div>  <br>                  
+                          
+                    <button type="submit" class="btn btn-primary">Save Task</button>
+                    <button type="reset" class="btn btn-default">Reset</button>
+                       
+                  </form>
+                </div>
             </div>
           
 
