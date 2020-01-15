@@ -22,3 +22,34 @@ class MachineConfiguration(models.Model):
 	# def __str__(self):
 	# 	return f"Team : {self.team} : {self.machine_ip}"
 
+
+class CreateTaskProfile(models.Model):
+	user = models.CharField(max_length=100)
+	title = models.CharField(max_length=100)
+	select_action = models.CharField(max_length=100, default='Default')
+	process_inbox = models.CharField(max_length=100, default='No')
+	process_spam = models.CharField(max_length=100, default='No')
+	compose_mail = models.CharField(max_length=100, default='No')
+	archive_or_delete = models.CharField(max_length=100, default='None')
+	bulk_notspam = models.CharField(max_length=100, default='No')
+	add_safe_sender = models.CharField(max_length=100, default='No')
+	color_category = models.CharField(max_length=100, default='No')
+	mark_flag = models.CharField(max_length=100, default='No')
+	click_link = models.CharField(max_length=100, default='No')
+	forward_mail = models.CharField(max_length=100, default='No')
+	report_notspam = models.CharField(max_length=100, default='No')
+	inbox_process_count = models.CharField(max_length=100, default='0')
+	notspam_count = models.CharField(max_length=100, default='0')
+	delete_count = models.CharField(max_length=100, default='0')
+	flag_count = models.CharField(max_length=100, default='0')
+	forward_count = models.CharField(max_length=100, default='0')
+	cc_count = models.CharField(max_length=100, default='0')
+	ss_count = models.CharField(max_length=100, default='0')
+	contact_count = models.CharField(max_length=100, default='0')
+	subject = models.CharField(max_length=100, default='None')
+	from_name = models.CharField(max_length=100, default='None')
+
+	# def __str__(self):
+	# 	return f"Team : {self.title}"
+
+

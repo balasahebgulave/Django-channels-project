@@ -1,5 +1,6 @@
 from channels.routing import ProtocolTypeRouter, URLRouter
-from Application.consumer import CpuRamConsumer, ChatConsumer, AddMachineConsumer, DisplayAllMachineConsumer
+from Application.consumer import CpuRamConsumer, ChatConsumer,\
+AddMachineConsumer, DisplayAllMachineConsumer, CreateTaskProfileConsumer
 from django.urls import path
 from channels.auth import AuthMiddlewareStack
 
@@ -10,7 +11,8 @@ urlpatterns = ProtocolTypeRouter({
 	path('ws/',CpuRamConsumer),
 	path('chat/',ChatConsumer),
 	path('addmachine/',AddMachineConsumer),
-	path('displaymachines/',DisplayAllMachineConsumer)
+	path('displaymachines/',DisplayAllMachineConsumer),
+	path('createtaskprofile/',CreateTaskProfileConsumer)
 	])
   )
 })

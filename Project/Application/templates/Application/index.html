@@ -422,98 +422,99 @@
 
                   <div class="col-md-8">
                     <center class='heading'><strong>Create New Tasks</strong></center>
-                   <form class="form-horizontal" style="padding: 3%; border: 1px solid; border-radius: 10px">
-                    <div class="col-md-6">
+                   <form class="form-horizontal" id="creattaskform" style="padding: 3%; border: 1px solid; border-radius: 10px">
+                    {% csrf_token %}
+                    <div class="col-md-6" id="select_action">
                       <b>Select Action : </b>
-                      <span><input type="radio" name="action" value="Default"> Default</span>
-                      <span><input type="radio" name="action" value="Custom"> Custom</span>
-                      <span><input type="radio" name="action" value="Random"> Random</span>
+                      <span><input type="radio" name="select_action" value="Default" checked/> Default</span>
+                      <span><input type="radio" name="select_action" value="Custom"/> Custom</span>
+                      <span><input type="radio" name="select_action" value="Random"/> Random</span>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="process_inbox">
                       <b>Process Inbox : </b>
-                      <span><input type="radio" name="inbox" value="Yes"> Yes</span>
-                      <span><input type="radio" name="inbox" value="No"> No</span>
+                      <span><input type="radio" name="process_inbox" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="process_inbox" value="No" checked/> No</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="process_spam">
                       <b>Process Junk or Spam : </b>
-                      <span><input type="radio" name="spam" value="Yes"> Yes</span>
-                      <span><input type="radio" name="spam" value="No"> No</span>
+                      <span><input type="radio" name="process_spam" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="process_spam" value="No" checked/> No</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="compose_mail">
                       <b>Compose Mail : </b>
-                      <span><input type="radio" name="compose" value="Yes"> Yes</span>
-                      <span><input type="radio" name="compose" value="No"> No</span>
+                      <span><input type="radio" name="compose_mail" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="compose_mail" value="No" checked/> No</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="archive_or_delete">
                       <b>Archive or Delete : </b>
-                      <span><input type="radio" name="delete" value="Archive"> Archive</span>
-                      <span><input type="radio" name="delete" value="Delete"> Delete</span>
-                      <span><input type="radio" name="delete" value="Random"> Random</span>
-                      <span><input type="radio" name="delete" value="None"> None</span>
+                      <span><input type="radio" name="archive_or_delete" value="Archive"/> Archive</span>
+                      <span><input type="radio" name="archive_or_delete" value="Delete"/> Delete</span>
+                      <span><input type="radio" name="archive_or_delete" value="Random"/> Random</span>
+                      <span><input type="radio" name="archive_or_delete" value="None" checked/> None</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="bulk_notspam">
                       <b>Bulk Not Junk or Spam : </b>
-                      <span><input type="radio" name="bulk" value="Yes"> Yes</span>
-                      <span><input type="radio" name="bulk" value="No"> No</span>
+                      <span><input type="radio" name="bulk_notspam" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="bulk_notspam" value="No" checked/> No</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="add_safe_sender">
                       <b>Add Safe Sender : </b>
-                      <span><input type="radio" name="sender" value="Yes"> Yes</span>
-                      <span><input type="radio" name="sender" value="No"> No</span>
-                      <span><input type="radio" name="sender" value="Random"> Random</span>
+                      <span><input type="radio" name="add_safe_sender" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="add_safe_sender" value="No" checked/> No</span>
+                      <span><input type="radio" name="add_safe_sender" value="Random"/> Random</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="color_category">
                       <b>Color Category : </b>
-                      <span><input type="radio" name="color" value="Yes"> Yes</span>
-                      <span><input type="radio" name="color" value="No"> No</span>
-                      <span><input type="radio" name="color" value="Random"> Random</span>
+                      <span><input type="radio" name="color_category" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="color_category" value="No" checked/> No</span>
+                      <span><input type="radio" name="color_category" value="Random"/> Random</span>
                     </div>
 
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="mark_flag">
                       <b>Mark Flag : </b>
-                      <span><input type="radio" name="flag" value="Yes"> Yes</span>
-                      <span><input type="radio" name="flag" value="No"> No</span>
-                      <span><input type="radio" name="flag" value="Random"> Random</span>
+                      <span><input type="radio" name="mark_flag" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="mark_flag" value="No" checked/> No</span>
+                      <span><input type="radio" name="mark_flag" value="Random"/> Random</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="click_link">
                       <b>Click Link : </b>
-                      <span><input type="radio" name="link" value="Yes"> Yes</span>
-                      <span><input type="radio" name="link" value="No"> No</span>
-                      <span><input type="radio" name="link" value="Random"> Random</span>
+                      <span><input type="radio" name="click_link" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="click_link" value="No" checked/> No</span>
+                      <span><input type="radio" name="click_link" value="Random"/> Random</span>
                     </div>
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="forward_mail">
                       <b>Forward Mail : </b>
-                      <span><input type="radio" name="forward" value="Yes"> Yes</span>
-                      <span><input type="radio" name="forward" value="No"> No</span>
-                      <span><input type="radio" name="forward" value="Random"> Random</span>
+                      <span><input type="radio" name="forward_mail" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="forward_mail" value="No" checked/> No</span>
+                      <span><input type="radio" name="forward_mail" value="Random"/> Random</span>
                     </div>
 
 
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" id="report_notspam">
                       <b>Report Not Spam : </b>
-                      <span><input type="radio" name="notspam" value="Yes"> Yes</span>
-                      <span><input type="radio" name="notspam" value="No"> No</span>
-                      <span><input type="radio" name="notspam" value="Random"> Random</span>
+                      <span><input type="radio" name="report_notspam" value="Yes"/> Yes</span>
+                      <span><input type="radio" name="report_notspam" value="No" checked/> No</span>
+                      <span><input type="radio" name="report_notspam" value="Random"/> Random</span>
                     </div>
 
 
@@ -521,27 +522,27 @@
                     <div class="row">
                       <div class="col-md-2">
                       <b># Inbox Process</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="inbox_process_count"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># Not Spam</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam_count"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># Delete</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="delete_count"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># Flag</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="flag_count"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># Forward</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="forward_count"/> 
                       </div>
 
                     </div>
@@ -550,27 +551,27 @@
                     <div class="row">
                       <div class="col-md-2">
                       <b># CC Count</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="cc_count"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># SS Count</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="ss_count"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># Contact Count</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="contact_count"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># Subject</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="subject"/> 
                       </div>
 
                       <div class="col-md-2">
                       <b># From Name</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam"> 
+                      <input style="background-color: lavender; width: 120px" type="text" name="from_name"/> 
                       </div>
 
                     </div>  <br>                  
@@ -945,6 +946,64 @@
                 = data.total_machines;
 
       };
+    </script>
+
+
+
+    <script>
+      var loc = window.location;
+      var creattaskform = $('#creattaskform');      
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+
+      var endpoint = wsStart + window.location.host + '/createtaskprofile/'
+      var createtaskprofilesocket = new WebSocket(endpoint);
+
+      console.log(endpoint);
+
+      createtaskprofilesocket.onmessage = function(e){
+        console.log('createtaskprofile onmessage',e)
+        data = JSON.parse(e.data)
+
+        if (data.response != null){
+        document.getElementById('error-log').innerHTML 
+                = data.response;
+        }
+
+        if (data.usertaskprofiles != null){
+          data.usertaskprofiles.forEach(function(value){
+          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";
+        
+        $('#temp').html(row);
+        });
+        
+       }
+        
+      }
+
+      createtaskprofilesocket.onopen = function(e){
+        console.log('createtaskprofile onopen',e)
+        creattaskform.submit(function(event){
+        event.preventDefault();  
+
+        createtaskprofilesocket.send(JSON.stringify(creattaskform.serializeArray()));
+        creattaskform[0].reset();
+      })
+      }
+
+
+      createtaskprofilesocket.onerror = function(e){
+        console.log('createtaskprofile onerror',e)
+      }
+
+
+      createtaskprofilesocket.onclose = function(e){
+        console.log('createtaskprofile onclose',e)
+      }
+
+
     </script>
 
 
