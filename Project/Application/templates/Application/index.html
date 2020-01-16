@@ -430,7 +430,7 @@
                   </div>
 
                   <div class="col-md-8">
-                    <center class='heading'><strong>Create New Tasks</strong></center>
+                    <center class='heading'><strong id="task_heading">Create New Tasks</strong></center>
                    <form class="form-horizontal" id="creattaskform" style="padding: 3%; border: 1px solid; border-radius: 10px">
                     {% csrf_token %}
                     <div class="col-md-6" id="select_action">
@@ -585,7 +585,7 @@
 
                     </div>  <br>                  
                           
-                    <button type="submit" class="btn btn-primary">Save Task</button>
+                    <button type="submit" id="save_task_button" class="btn btn-primary">Save Task</button>
                     <button type="reset" class="btn btn-default">Reset</button>
                        
                   </form>
@@ -1017,7 +1017,10 @@
         $('input[name="contact_count"]').val(data.contact_count);
         $('input[name="subject"]').val(data.subject);
         $('input[name="from_name"]').val(data.from_name);
-
+        document.getElementById('save_task_button').innerHTML 
+                = 'Update Task';              
+        document.getElementById('task_heading').innerHTML 
+                = 'Update Your Task';
         }
         
       }
@@ -1049,6 +1052,16 @@
         console.log('createtaskprofile onclose',e)
       }
 
+    </script>
+
+
+    <script>
+      $('#save_task_button').click(function(){
+        document.getElementById('save_task_button').innerHTML 
+                = 'Save Task';
+        document.getElementById('task_heading').innerHTML 
+                = 'Create New Task';
+      })
     </script>
 
 
