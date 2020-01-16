@@ -442,15 +442,15 @@
 
                     <div class="col-md-6" id="process_inbox">
                       <b>Process Inbox : </b>
-                      <span><input type="radio" name="process_inbox" value="Yes"/> Yes</span>
-                      <span><input type="radio" name="process_inbox" value="No" checked/> No</span>
+                      <span><input type="radio" name="process_inbox" value="Yes" checked/> Yes</span>
+                      <span><input type="radio" name="process_inbox" value="No" /> No</span>
                     </div>
 
 
                     <div class="col-md-6" id="process_spam">
                       <b>Process Junk or Spam : </b>
-                      <span><input type="radio" name="process_spam" value="Yes"/> Yes</span>
-                      <span><input type="radio" name="process_spam" value="No" checked/> No</span>
+                      <span><input type="radio" name="process_spam" value="Yes" checked/> Yes</span>
+                      <span><input type="radio" name="process_spam" value="No" /> No</span>
                     </div>
 
 
@@ -504,8 +504,8 @@
 
                     <div class="col-md-6" id="click_link">
                       <b>Click Link : </b>
-                      <span><input type="radio" name="click_link" value="Yes"/> Yes</span>
-                      <span><input type="radio" name="click_link" value="No" checked/> No</span>
+                      <span><input type="radio" name="click_link" value="Yes" checked/> Yes</span>
+                      <span><input type="radio" name="click_link" value="No" /> No</span>
                       <span><input type="radio" name="click_link" value="Random"/> Random</span>
                     </div>
 
@@ -992,6 +992,8 @@
 
        if (data.show_profile != null){
         var data = data.show_profile;
+        console.log(data)
+
         $('input:radio[value='+data.select_action+']').attr('checked', true);
         $('input:radio[value='+data.process_inbox+']').attr('checked', true);
         $('input:radio[value='+data.process_spam+']').attr('checked', true);
@@ -1048,6 +1050,7 @@
       }
 
     </script>
+
 
 </body>
 

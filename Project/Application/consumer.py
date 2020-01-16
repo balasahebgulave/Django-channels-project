@@ -154,7 +154,6 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 		
 
 	async def websocket_receive(self, event):
-		usertaskprofiles = await self.user_task_profile()
 		profiledata = json.loads(event['text'])
 		if 'taskprofile' in profiledata.keys():
 			profiledata = {data['name']:data['value'] for data in profiledata['taskprofile']}
@@ -163,7 +162,9 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 				response = 'Profile Saved Successfully'
 			except Exception as e:
 				response = f"Error while adding taskprofile:{str(e)}"
-				
+			
+			usertaskprofiles = await self.user_task_profile()
+
 			await self.send({
 					"type":"websocket.send",
 					"text": json.dumps({'usertaskprofiles':usertaskprofiles,'response':response,})
@@ -187,7 +188,7 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 			CreateTaskProfile.objects.filter(user=self.scope['user'])[6].delete()
 			profile_count = profile_count - 1
 		
-		CreateTaskProfile.objects.create(user=self.scope['user'],title=f"{str(self.scope['user']).title()}_Task_Profile_{profile_count+1}",select_action=profiledata['select_action'],	
+		CreateTaskProfile.objects.create(user=self.scope['user'],title=f"{str(self.scope['user']).title()}_Task_Profile_{profile_count}",select_action=profiledata['select_action'],	
 		process_inbox=profiledata['process_inbox'],process_spam=profiledata['process_spam'],compose_mail=profiledata['compose_mail'],\
 		archive_or_delete=profiledata['archive_or_delete'],bulk_notspam=profiledata['bulk_notspam'],add_safe_sender=profiledata['add_safe_sender'],\
 		color_category=profiledata['color_category'],mark_flag=profiledata['mark_flag'],click_link=profiledata['click_link'],forward_mail=profiledata['forward_mail'],

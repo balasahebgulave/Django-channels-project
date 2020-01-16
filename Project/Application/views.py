@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate 
 from django.contrib.auth.models import User
-from . models import MachineConfiguration
+from . models import MachineConfiguration, CreateTaskProfile
 from django.http import Http404
 
 # from Project.tasks import add
@@ -75,6 +75,16 @@ def Login(request):
 
 @login_required(login_url='Login')
 def Homepage(request):
+
+	try:
+		default_profile = CreateTaskProfile.objects.filter(title=f"{str(request.user).title()}_Default_Profile").count()
+		print('---------count---------',default_profile)
+		if default_profile == 0:
+			CreateTaskProfile.objects.create(user=request.user,title=f"{str(request.user).title()}_Default_Profile")
+	except Exception as e:
+		print('---------default_profile err---------',e)
+		pass
+
 	context = {}
 	try:
 		teams = MachineConfiguration.objects.values('team').distinct()
