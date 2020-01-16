@@ -417,6 +417,18 @@
                   <div class="col-md-4">
                     <center class='heading'><strong>Your Tasks</strong></center>
 
+                    <table id="livelog" class="table table-hover table-bordered">
+                        <thead>
+                            <th>Id</th>
+                            <th>Task Profiles</th>
+                      
+                        </thead>
+
+                        <tbody id="task">
+                            
+                        </tbody>      
+                    </table>
+
                     
                   </div>
 
@@ -973,10 +985,15 @@
         }
 
         if (data.usertaskprofiles != null){
+          var row = ''
           data.usertaskprofiles.forEach(function(value){
-          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";
+          var task = '<input type="button" class="btn btn-info" value='+value[1]+'>'
+
+          console.log(task)
+
+          row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td></tr>";
         
-        $('#temp').html(row);
+        $('#task').html(row);
         });
         
        }
