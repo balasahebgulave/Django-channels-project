@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from . models import MachineConfiguration
 from django.http import Http404
 
-from Project.tasks import add
+# from Project.tasks import add
 
 
 

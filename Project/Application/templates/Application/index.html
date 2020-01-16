@@ -410,10 +410,7 @@
 
 
             <div id="createtaskdiv" style="display: none;">
-                  <div>
-                    <center class='heading'><strong>Create Task</strong></center>
-                  </div>
-
+                  
                   <div class="col-md-4">
                     <center class='heading'><strong>Your Tasks</strong></center>
 
@@ -916,7 +913,7 @@
       displaymachinesocket.onopen = function(e){
         console.log('displaymachinesocket onopen',e)
 
-        $('input').click(function(){
+        $('input[type="button"]').click(function(){
           var team = $(this).val();
           displaymachinesocket.send(JSON.stringify({'team':team}));
         })
@@ -988,26 +985,56 @@
           var row = ''
           data.usertaskprofiles.forEach(function(value){
           var task = '<input type="button" class="btn btn-info" value='+value[1]+'>'
-
-          console.log(task)
-
           row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td></tr>";
-        
-        $('#task').html(row);
-        });
-        
+        $('#task').html(row)});
        }
+
+
+       if (data.show_profile != null){
+        var data = data.show_profile;
+        $('input:radio[value='+data.select_action+']').attr('checked', true);
+        $('input:radio[value='+data.process_inbox+']').attr('checked', true);
+        $('input:radio[value='+data.process_spam+']').attr('checked', true);
+        $('input:radio[value='+data.compose_mail+']').attr('checked', true);
+        $('input:radio[value='+data.archive_or_delete+']').attr('checked', true);
+        $('input:radio[value='+data.bulk_notspam+']').attr('checked', true);
+        $('input:radio[value='+data.add_safe_sender+']').attr('checked', true);
+        $('input:radio[value='+data.color_category+']').attr('checked', true);
+        $('input:radio[value='+data.mark_flag+']').attr('checked', true);
+        $('input:radio[value='+data.click_link+']').attr('checked', true);
+        $('input:radio[value='+data.forward_mail+']').attr('checked', true);
+        $('input:radio[value='+data.report_notspam+']').attr('checked', true);
+
+        $('input[name="inbox_process_count"]').val(data.inbox_process_count);
+        $('input[name="notspam_count"]').val(data.notspam_count);
+        $('input[name="delete_count"]').val(data.delete_count);
+        $('input[name="flag_count"]').val(data.flag_count);
+        $('input[name="forward_count"]').val(data.forward_count);
+        $('input[name="cc_count"]').val(data.cc_count);
+        $('input[name="ss_count"]').val(data.ss_count);
+        $('input[name="contact_count"]').val(data.contact_count);
+        $('input[name="subject"]').val(data.subject);
+        $('input[name="from_name"]').val(data.from_name);
+
+        }
         
       }
 
       createtaskprofilesocket.onopen = function(e){
-        console.log('createtaskprofile onopen',e)
+        console.log('createtaskprofile onopen',e);
+
         creattaskform.submit(function(event){
         event.preventDefault();  
+        createtaskprofilesocket.send(JSON.stringify({'taskprofile':creattaskform.serializeArray()}));
+        creattaskform[0].reset(); 
+        });
 
-        createtaskprofilesocket.send(JSON.stringify(creattaskform.serializeArray()));
-        creattaskform[0].reset();
-      })
+
+        $('input[type="button"]').live('click', function(){
+        var profile = $(this).val();
+        createtaskprofilesocket.send(JSON.stringify({'profile':profile}));
+        });
+
       }
 
 
@@ -1020,9 +1047,7 @@
         console.log('createtaskprofile onclose',e)
       }
 
-
     </script>
-
 
 </body>
 
