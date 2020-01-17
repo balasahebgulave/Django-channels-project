@@ -606,15 +606,15 @@
                             <th>Team</th>
                         </thead>
 
-                        <tbody id="mainteam">
-                            {% for i,j in teams %}
+                        <tbody id="uniqueteam">
+                            <!-- {% for i,j in teams %}
                               <tr>
                                 <td>{{i}}</td>
                                 <td>
                                   <input type="button" class="btn btn-info" value="{{j.team}}">
                                 </td>
                               </tr>
-                            {% endfor %}
+                            {% endfor %} -->
                         </tbody>      
                     </table>
                   </div>
@@ -804,21 +804,18 @@
     </script>
 
 
+
     <script>
       var divs = ['allmachinesdiv','createtaskdiv','deleteseeddiv','insertproxydiv','removeproxydiv','livelogdiv','clearlogdiv','insertseeddiv','addmachinediv','adminallmachinediv']
       function manageOperations(id){
         var currentid = id+'div'
         var len = divs.length;
-
         for (var i = 0; i < len; i++) {
-        
             if (divs[i]==currentid){
               $('#'+currentid).show();
               document.getElementById('error-log').innerHTML = '';
               document.getElementById('status-log').innerHTML = '';
-
             }
-
             else{
               $('#'+divs[i]).hide()
             }
@@ -836,16 +833,24 @@
       if (loc.protocol == 'https:'){
         wsStart = 'wss://'
       }
-
       var endpoint = wsStart + window.location.host + '/addmachine/'
       var addmachinesocket = new WebSocket(endpoint);
 
-      console.log(endpoint);
-
       addmachinesocket.onmessage = function(e){
         console.log('addmachinesocket onmessage',e)
+        var data = JSON.parse(e.data); 
+        if (data.response != null){
         document.getElementById('error-log').innerHTML 
-                = e.data;
+                = data.response;
+        }
+        if (data.uniqueteam != null){
+        var row = "";
+        data.uniqueteam.forEach(function(value){
+          var team = '<input type="button" class="btn btn-info" value='+value[1].team+'>'
+          row = row + "<tr><td>"+value[0]+"</td><td>"+team+"</td></tr>";
+        });
+        $('#uniqueteam').html(row);
+        }
       }
 
       addmachinesocket.onopen = function(e){
@@ -858,22 +863,17 @@
           var machinepassword = $("#machinepassword").val();
           addmachinesocket.send(JSON.stringify({'team':team, 'machineip':machineip, 'machineuser':machineuser,'machinepassword':machinepassword}));
           addmachineform[0].reset();
-          setTimeout(function(){ location.reload(); }, 2000);
         })
       }
-
-
       addmachinesocket.onerror = function(e){
         console.log('addmachinesocket onerror',e)
       }
-
-
       addmachinesocket.onclose = function(e){
         console.log('addmachinesocket onclose',e)
       }
-
-
     </script>
+
+
 
 
 
@@ -884,17 +884,13 @@
       if (loc.protocol == 'https:'){
         wsStart = 'wss://'
       }
-
       var endpoint = wsStart + window.location.host + '/displaymachines/'
       var displaymachinesocket = new WebSocket(endpoint);
-
-      console.log(endpoint);
-
       displaymachinesocket.onmessage = function(e){
-
         var data = JSON.parse(e.data);
+        if (data.teamwise_machine != null){
         var row = "";
-        data.forEach(function(value){
+        data.teamwise_machine.forEach(function(value){
         if (value){
           var url = "/deletemachine/"+value[0]+""
           var deletebutton = "<a href = "+url+">Delete</a>"
@@ -902,23 +898,29 @@
         else{
           var deletebutton = "<a href = '{% url 'Deletemachine' 0 %}'>Delete</a>"
         }
-
         row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletebutton+"</td></tr>";
         });
         
         $('#temp').html(row);
+        }
 
+        if (data.uniqueteam != null){
+        var row = "";
+        data.uniqueteam.forEach(function(value){
+          var team = '<input type="button" class="btn btn-info" value='+value[1].team+'>'
+          row = row + "<tr><td>"+value[0]+"</td><td>"+team+"</td></tr>";
+        });
+        $('#uniqueteam').html(row);
+        }
       }
 
       displaymachinesocket.onopen = function(e){
         console.log('displaymachinesocket onopen',e)
-
-        $('input[type="button"]').click(function(){
-          var team = $(this).val();
-          displaymachinesocket.send(JSON.stringify({'team':team}));
-        })
+        $('input[type="button"]').live('click', function(){
+        var team = $(this).val();
+        displaymachinesocket.send(JSON.stringify({'team':team}));
+        });
       }
-
 
       displaymachinesocket.onerror = function(e){
         console.log('displaymachinesocket onerror',e)
@@ -927,7 +929,6 @@
       displaymachinesocket.onclose = function(e){
         console.log('displaymachinesocket onclose',e)
       }
-
     </script>
 
 
@@ -938,23 +939,18 @@
       if (loc.protocol == 'https:'){
         wsStart = 'wss://'
       }
-
       var endpoint = wsStart + window.location.host + '/ws/'
       var liveMchineSocket = new WebSocket(endpoint);
-
       liveMchineSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
-        // console.log(data)
         var row = "";
         data.data.forEach(function(value){
-          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";
-        
+          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";      
         $('#machine-config').html(row);
         });
         document.getElementById('count').innerHTML 
                 = data.total_machines;
-
-      };
+        };
     </script>
 
 
@@ -966,21 +962,15 @@
       if (loc.protocol == 'https:'){
         wsStart = 'wss://'
       }
-
       var endpoint = wsStart + window.location.host + '/createtaskprofile/'
       var createtaskprofilesocket = new WebSocket(endpoint);
-
-      console.log(endpoint);
-
       createtaskprofilesocket.onmessage = function(e){
         console.log('createtaskprofile onmessage',e)
         data = JSON.parse(e.data)
-
         if (data.response != null){
         document.getElementById('error-log').innerHTML 
                 = data.response;
         }
-
         if (data.usertaskprofiles != null){
           var row = ''
           data.usertaskprofiles.forEach(function(value){
@@ -988,12 +978,8 @@
           row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td></tr>";
         $('#task').html(row)});
        }
-
-
        if (data.show_profile != null){
         var data = data.show_profile;
-        console.log(data)
-
         $('input:radio[value='+data.select_action+']').attr('checked', true);
         $('input:radio[value='+data.process_inbox+']').attr('checked', true);
         $('input:radio[value='+data.process_spam+']').attr('checked', true);
@@ -1022,7 +1008,6 @@
         document.getElementById('task_heading').innerHTML 
                 = 'Update Your Task';
         }
-        
       }
 
       createtaskprofilesocket.onopen = function(e){
@@ -1033,26 +1018,21 @@
         createtaskprofilesocket.send(JSON.stringify({'taskprofile':creattaskform.serializeArray()}));
         creattaskform[0].reset(); 
         });
-
-
         $('input[type="button"]').live('click', function(){
         var profile = $(this).val();
         createtaskprofilesocket.send(JSON.stringify({'profile':profile}));
         });
-
       }
-
 
       createtaskprofilesocket.onerror = function(e){
         console.log('createtaskprofile onerror',e)
       }
-
-
       createtaskprofilesocket.onclose = function(e){
         console.log('createtaskprofile onclose',e)
       }
-
     </script>
+
+
 
 
     <script>

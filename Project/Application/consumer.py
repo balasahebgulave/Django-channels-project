@@ -22,7 +22,7 @@ def get_current_user(session_key):
 class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 	async def connect(self):
 		await self.accept()
-		print('-------',self.scope['session']['team'])
+		# print('-------',self.scope['session']['team'])
 		while 1:
 			data = await self.get_live_machine_conf(self.scope['session']['team'])
 			live_data = {'data':data, 'total_machines':len(data)}
@@ -61,30 +61,27 @@ class ChatConsumer(AsyncConsumer):
 
 
 class AddMachineConsumer(AsyncConsumer):
-
 	async def websocket_connect(self, event):
 		await self.send({
 			"type":"websocket.accept"
 		})
 
 	async def websocket_receive(self, event):
-		
 		try:
 			machinedetails = json.loads(event['text'])
 			try:
 				check_exist = await self.check_machine(machinedetails)
 			except:
 				check_exist = None
-
 			if check_exist == None:
 				await self.save_machine(machinedetails)
 				response = "Machine Saved Successfully"
 			else:
 				response = f"Machine allredy present in team : {check_exist.team}"
-
+			uniqueteam = await self.show_unique_team()
 			await self.send({
 				"type":"websocket.send",
-				"text": response
+				"text": json.dumps({'response':response,'uniqueteam':uniqueteam})
 			})
 
 		except Exception as e:
@@ -93,7 +90,6 @@ class AddMachineConsumer(AsyncConsumer):
 				"text":f"Error while adding machine : {str(e)}"
 			})
 			
-	
 	@database_sync_to_async
 	def save_machine(self, machinedetails):
 		machine_object = MachineConfiguration(team = machinedetails['team'], machine_ip = machinedetails['machineip'],
@@ -106,12 +102,26 @@ class AddMachineConsumer(AsyncConsumer):
 		machine_object = MachineConfiguration.objects.get(machine_ip=machinedetails['machineip'])
 		return machine_object
 
+	@database_sync_to_async
+	def show_unique_team(self):
+		teams = MachineConfiguration.objects.values('team').distinct()
+		uniqueteam = []
+		for i,j in enumerate(teams):
+			uniqueteam.append((i+1,j))
+		return uniqueteam
+
 
 class DisplayAllMachineConsumer(AsyncConsumer):
 
 	async def websocket_connect(self, event):
 		await self.send({
 			"type":"websocket.accept"
+		})
+
+		uniqueteam = await self.show_unique_team()
+		await self.send({
+			"type":"websocket.send",
+			"text":json.dumps({'uniqueteam':uniqueteam})
 		})
 
 	async def websocket_receive(self, event):
@@ -123,7 +133,7 @@ class DisplayAllMachineConsumer(AsyncConsumer):
 
 		await self.send({
 				"type":"websocket.send",
-				"text": json.dumps(teamwise_machine_object)
+				"text": json.dumps({'teamwise_machine':teamwise_machine_object})
 		})
 
 	
@@ -134,24 +144,28 @@ class DisplayAllMachineConsumer(AsyncConsumer):
 		return teamwise_machine_object
 
 
+	@database_sync_to_async
+	def show_unique_team(self):
+		teams = MachineConfiguration.objects.values('team').distinct()
+		uniqueteam = []
+		for i,j in enumerate(teams):
+			uniqueteam.append((i+1,j))
+		return uniqueteam
+
+
+
+
 class CreateTaskProfileConsumer(AsyncConsumer):
 
 	async def websocket_connect(self, event):
 		await self.send({
 			"type":"websocket.accept"
 		})
-
-
 		usertaskprofiles = await self.user_task_profile()
-
-		print('----------',usertaskprofiles)
-
 		await self.send({
 				"type":"websocket.send",
 				"text": json.dumps({'usertaskprofiles':usertaskprofiles})
 		})
-
-		
 
 	async def websocket_receive(self, event):
 		profiledata = json.loads(event['text'])
@@ -172,22 +186,17 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 
 		if 'profile' in profiledata.keys():
 			show_profile = await self.show_task_profile(profiledata['profile'])
-			print('--------show_profile--------',show_profile)
 			await self.send({
 					"type":"websocket.send",
 					"text": json.dumps({'show_profile':show_profile})
 			})
 
-
 	@database_sync_to_async
 	def save_task_profile(self, profiledata):
 		profile_count = CreateTaskProfile.objects.filter(user=self.scope['user']).count()
-		print('--------profile_count--------',profile_count)
 		if profile_count >= 7 :
-			print('------in if-------',profile_count)
 			CreateTaskProfile.objects.filter(user=self.scope['user'])[6].delete()
 			profile_count = profile_count - 1
-		
 		CreateTaskProfile.objects.create(user=self.scope['user'],title=f"{str(self.scope['user']).title()}_Task_Profile_{profile_count}",select_action=profiledata['select_action'],	
 		process_inbox=profiledata['process_inbox'],process_spam=profiledata['process_spam'],compose_mail=profiledata['compose_mail'],\
 		archive_or_delete=profiledata['archive_or_delete'],bulk_notspam=profiledata['bulk_notspam'],add_safe_sender=profiledata['add_safe_sender'],\
@@ -198,7 +207,6 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 		from_name=profiledata['from_name'])
 
 		return True
-
 
 	@database_sync_to_async
 	def user_task_profile(self):
