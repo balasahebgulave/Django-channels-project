@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Creative - Bootstrap 3 Responsive Admin Template">
+  <meta name="author" content="GeeksLabs">
+  <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
+
+  <title>Notspam-App</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="{% static '/Application/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- bootstrap theme -->
+  <link href="{% static '/Application/css/bootstrap-theme.css' %}" rel="stylesheet">
+  <!--external css-->
+  <!-- font icon -->
+  <link href="{% static '/Application/css/elegant-icons-style.css' %}" rel="stylesheet" />
+  <link href="{% static '/Application/css/font-awesome.min.css' %}" rel="stylesheet" />
+  <!-- full calendar css-->
+  <link href="{% static '/Application/assets/fullcalendar/fullcalendar/bootstrap-fullcalendar.css' %}" rel="stylesheet" /> 
+  <link href="{% static '/Application/assets/fullcalendar/fullcalendar/fullcalendar.css' %}" rel="stylesheet" />
+  <!-- easy pie chart-->
+  <link href="{% static '/Application/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css' %}" rel="stylesheet" type="text/css" media="screen" />
+  <!-- owl carousel -->
+  <link rel="stylesheet" href="{% static '/Application/css/owl.carousel.css' %}" type="text/css">
+  <link href="{% static '/Application/css/jquery-jvectormap-1.2.2.css' %}" rel="stylesheet">
+  <!-- Custom styles -->
+  <link rel="stylesheet" href="{% static '/Application/css/fullcalendar.css' %}">
+  <link href="{% static '/Application/css/widgets.css' %}" rel="stylesheet">
+  <link href="{% static '/Application/css/style.css' %}" rel="stylesheet">
+  <link href="{% static '/Application/css/style-responsive.css' %}" rel="stylesheet" />
+  <link href="{% static '/Application/css/xcharts.min.css' %}" rel="stylesheet">
+  <link href="{% static '/Application/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
+  
+</head>
+
+<body>
+  <!-- container section start -->
+  <section id="container" class="">
+
+    
+    <header class="header dark-bg">
+      <div class="toggle-nav">
+        <div class="icon-reorder tooltips" data-original-title="Toggle Navigation" data-placement="bottom"><i class="icon_menu"></i></div>
+      </div>
+
+      <!--logo start-->
+      <a href="#" class="logo">Not<span class="lite">Spam</span></a>
+      <!--logo end-->
+
+      <div class="nav search-row" id="top_menu">
+        <!--  search form start -->
+        <ul class="nav top-menu">
+          <li>
+            <form class="navbar-form">
+              <input class="form-control" placeholder="Search" type="text">
+            </form>
+          </li>
+        </ul>
+        <!--  search form end -->
+      </div>
+
+      <div class="top-nav notification-row">
+        <!-- notificatoin dropdown start-->
+        <ul class="nav pull-right top-menu">
+
+          <!-- task notificatoin start -->
+          <li id="task_notificatoin_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <!-- <i class="icon-task-l"></i> -->
+                            <span class="badge bg-important">Team-{{team}}</span>
+                        </a>   
+          </li>
+          <!-- task notificatoin end -->
+          <!-- inbox notificatoin start-->
+          <li id="mail_notificatoin_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <!-- <i class="icon-envelope-l"></i> -->
+                            <span class="badge bg-important">EmpId-{{empid}}</span>
+                        </a>
+
+          </li>
+          <!-- inbox notificatoin end -->
+          <!-- alert notification start-->
+          <li id="alert_notificatoin_bar" class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                            <!-- <i class="icon-bell-l"></i> -->
+                            <span class="badge bg-important">Role-{{role}}</span>
+                        </a>
+         
+          </li>
+          <!-- alert notification end-->
+          <!-- user login dropdown start-->
+          <li class="dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="profile-ava">
+                                <img alt="" src="{% static '/Application/img/user.jpg' %}">
+                            </span>
+                            <span class="username">{{user}}</span>
+                            <b class="caret"></b>
+                        </a>
+            <ul class="dropdown-menu extended logout">
+              <div class="log-arrow-up"></div>
+              <li class="eborder-top">
+                <a href="#"><i class="icon_profile"></i> My Profile</a>
+              </li>
+              <li>
+                <a href="#"><i class="icon_mail_alt"></i> My Inbox</a>
+              </li>
+              <li>
+                <a href="#"><i class="icon_clock_alt"></i> Timeline</a>
+              </li>
+              <li>
+                <a href="#"><i class="icon_chat_alt"></i> Chats</a>
+              </li>
+              <li>
+                <a href="/logout"><i class="icon_key_alt"></i> Log Out</a>
+              </li>
+              <li>
+                <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
+              </li>
+              <li>
+                <a href="documentation.html"><i class="icon_key_alt"></i> Documentation</a>
+              </li>
+            </ul>
+          </li>
+          <!-- user login dropdown end -->
+        </ul>
+        <!-- notificatoin dropdown end-->
+      </div>
+    </header>
+    <!--header end-->
+
+     {% if check_admin %}
+    <!--sidebar start-->
+    <aside>
+      <div id="sidebar" class="nav-collapse">
+        <ul class="sidebar-menu">
+          <li class="active">
+            <a class="" href="#">
+                          <i class="icon_house_alt"></i>
+                          <span>Dashboard</span>
+                      </a>
+          </li>
+          <li class="sub-menu">
+            <a href="#" class="">
+                          <i class="icon_document_alt"></i>
+                          <span id="addmachine" onclick="manageOperations(this.id)">Add Machine</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            <!-- <ul class="sub">
+              <li><a class="" href="form_component.html">Form Elements</a></li>
+              <li><a class="" href="form_validation.html">Form Validation</a></li>
+            </ul> -->
+          </li>
+          <li class="sub-menu">
+            <a href="#" class="">
+                          <i class="icon_desktop"></i>
+                          <span id="adminallmachine" onclick="manageOperations(this.id)">All Machine</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+           
+          </li>
+          <li>
+            <a class="" href="#">
+                          <i class="icon_genius"></i>
+                          <span>All Proxy</span>
+                      </a>
+          </li>
+          <li>
+            <a class="" href="#">
+                          <i class="icon_piechart"></i>
+                          <span>All Task</span>
+
+                      </a>
+
+          </li>
+
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_table"></i>
+                          <span>All Seed</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            
+          </li>
+
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+                          <i class="icon_documents_alt"></i>
+                          <span>Pages</span>
+                          <span class="menu-arrow arrow_carrot-right"></span>
+                      </a>
+            <ul class="sub">
+              <li><a class="" href="profile.html">Profile</a></li>
+              <li><a class="" href="login.html"><span>Login Page</span></a></li>
+              <li><a class="" href="contact.html"><span>Contact Page</span></a></li>
+              <li><a class="" href="blank.html">Blank Page</a></li>
+              <li><a class="" href="404.html">404 Error</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </div>
+    </aside>
+    <!--sidebar end-->
+
+
+    <!--main content start-->
+    <section id="main-content">
+    {% else %}
+    <section>
+    {% endif %}
+
+      <section class="wrapper">
+        <!--overview start-->
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- <h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3> -->
+            <ol class="breadcrumb">
+              <li><i class="fa fa-laptop"></i>Dashboard</li>
+              <li><i class="fa fa-home"></i><a href="#" onclick="manageOperations(this.id)" id="allmachines">Your Team Machines</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="createtask" onclick="manageOperations(this.id)">Create Task</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="insertseed" onclick="manageOperations(this.id)">Insert Seed</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="deleteseed" onclick="manageOperations(this.id)">Remove Seed</a></li>
+              <li><i class="fa fa-home"></i><a href="#"  id="insertproxy" onclick="manageOperations(this.id)">Insert Proxy</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="removeproxy" onclick="manageOperations(this.id)">Remove Proxy</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="livelog" onclick="manageOperations(this.id)">Live Log</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="clearlog" onclick="manageOperations(this.id)">Clear Log</a></li>
+              
+            </ol>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <div class="info-box blue-bg">
+              <i class="fa fa-cubes"></i>
+              <div class="count" id="count">0</div>
+              <div class="title">Total Machine</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <div class="info-box brown-bg">
+              <i class="fa fa-cubes"></i>
+              <div class="count">5</div>
+              <div class="title">Active Machine</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <div class="info-box blue-bg">
+              <i class="fa fa-cloud-download"></i>
+              <div class="count">60</div>
+              <div class="title">Active Seed</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <div class="info-box brown-bg">
+              <i class="fa fa-shopping-cart"></i>
+              <div class="count">7</div>
+              <div class="title">Pending Seed</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+ 
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <div class="info-box blue-bg">
+              <i class="fa fa-thumbs-o-up"></i>
+              <div class="count">10</div>
+              <div class="title">Active Proxy</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+          <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+            <div class="info-box brown-bg">
+              <i class="fa fa-shopping-cart"></i>
+              <div class="count">7</div>
+              <div class="title">Inactive Proxy</div>
+            </div>
+            <!--/.info-box-->
+          </div>
+          <!--/.col-->
+
+
+        </div>
+        <!--/.row-->
+
+        <strong><center id="error-log"></center></strong>
+        <strong><center id="status-log">{{status}}</center></strong>
+        <div class="row">
+          <div class="col-lg-12 col-md-12">
+
+            <div id="allmachinesdiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Your Team All Machine</strong></center>
+                  </div>
+
+                <div>
+                    <table id="livelog" class="table table-hover table-bordered">
+                        <thead>
+                            <th>Id</th>
+                            <th>Team</th>
+                            <th>Machine IP</th>
+                            <th>Machine Username</th>
+                            <th>Machine Password</th>
+                            <th>CPU Usage %</th>
+                            <th>RAM Usage %</th>
+                        </thead>
+
+                        <!-- <tbody>
+                          
+                            {% for i in user_team_machines %}
+                            <tr>
+                              <td>{{i.id}}</td>
+                              <td>{{i.team}}</td>
+                              <td>{{i.machine_ip}}</td>
+                              <td>{{i.adminuser}}</td>
+                              <td><input type="password" value="{{i.password}}"></td>
+                              <td>{{i.cpu_usage}}</td>
+                              <td>{{i.ram_usage}}</td>
+                            </tr> 
+                            {% endfor %}
+                        </tbody>    -->
+
+                        <tbody id="machine-config"></tbody>
+                  </table>
+                </div>   
+
+
+            </div>
+
+
+
+
+            <div id="insertseeddiv"style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Insert Seed</strong></center>
+                  </div>
+
+
+            </div>
+
+
+
+        
+            <div id="insertproxydiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Insert Proxy</strong></center>
+                  </div>
+
+
+            </div>
+
+
+
+
+            <div id="deleteseeddiv" style="display: none">
+                  <div>
+                  <center class='heading'><strong>Remove Seed</strong></center>
+                  </div>
+
+
+            </div>
+
+
+
+
+            <div id="removeproxydiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Remove Proxy</strong></center>
+                  </div>
+
+
+            </div>
+  
+
+
+
+            <div id="livelogdiv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Live Log</strong></center>
+                  </div>
+
+
+            </div>
+
+
+
+
+            <div id="createtaskdiv" style="display: none;">
+                  
+                  <div class="col-md-4">
+                    <center class='heading'><strong>Your Tasks</strong></center>
+
+                    <table id="livelog" class="table table-hover table-bordered">
+                        <thead>
+                            <th>Id</th>
+                            <th>Task Profiles</th>
+                      
+                        </thead>
+
+                        <tbody id="task">
+                            
+                        </tbody>      
+                    </table>
+
+                    
+                  </div>
+
+                  <div class="col-md-8">
+                    <center class='heading'><strong id="task_heading">Create New Tasks</strong></center>
+                   <form class="form-horizontal" id="creattaskform" style="padding: 3%; border: 1px solid; border-radius: 10px">
+                    {% csrf_token %}
+                    <div class="col-md-6" id="select_action">
+                      <b>Select Action : </b>
+                      <span><input type="radio" name="select_action" value="Default" checked/> Default</span>
+                      <span><input type="radio" name="select_action" value="Custom"/> Custom</span>
+                      <span><input type="radio" name="select_action" value="Random"/> Random</span>
+                    </div>
+
+                    <div class="col-md-6" id="process_inbox">
+                      <b>Process Inbox : </b>
+                      <span><input type="radio" name="process_inbox" value="P_I_Yes" checked/> Yes</span>
+                      <span><input type="radio" name="process_inbox" value="P_I_No" /> No</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="process_spam">
+                      <b>Process Junk or Spam : </b>
+                      <span><input type="radio" name="process_spam" value="P_S_Yes" checked/> Yes</span>
+                      <span><input type="radio" name="process_spam" value="P_S_No" /> No</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="compose_mail">
+                      <b>Compose Mail : </b>
+                      <span><input type="radio" name="compose_mail" value="C_M_Yes"/> Yes</span>
+                      <span><input type="radio" name="compose_mail" value="C_M_No" checked/> No</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="archive_or_delete">
+                      <b>Archive or Delete : </b>
+                      <span><input type="radio" name="archive_or_delete" value="Archive"/> Archive</span>
+                      <span><input type="radio" name="archive_or_delete" value="Delete"/> Delete</span>
+                      <span><input type="radio" name="archive_or_delete" value="Random"/> Random</span>
+                      <span><input type="radio" name="archive_or_delete" value="None" checked/> None</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="bulk_notspam">
+                      <b>Bulk Not Junk or Spam : </b>
+                      <span><input type="radio" name="bulk_notspam" value="B_N_S_Yes"/> Yes</span>
+                      <span><input type="radio" name="bulk_notspam" value="B_N_S_No" checked/> No</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="add_safe_sender">
+                      <b>Add Safe Sender : </b>
+                      <span><input type="radio" name="add_safe_sender" value="A_S_S_Yes"/> Yes</span>
+                      <span><input type="radio" name="add_safe_sender" value="A_S_S_No" checked/> No</span>
+                      <span><input type="radio" name="add_safe_sender" value="A_S_S_Random"/> Random</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="color_category">
+                      <b>Color Category : </b>
+                      <span><input type="radio" name="color_category" value="C_C_Yes"/> Yes</span>
+                      <span><input type="radio" name="color_category" value="C_C_No" checked/> No</span>
+                      <span><input type="radio" name="color_category" value="C_C_Random"/> Random</span>
+                    </div>
+
+
+
+                    <div class="col-md-6" id="mark_flag">
+                      <b>Mark Flag : </b>
+                      <span><input type="radio" name="mark_flag" value="M_F_Yes"/> Yes</span>
+                      <span><input type="radio" name="mark_flag" value="M_F_No" checked/> No</span>
+                      <span><input type="radio" name="mark_flag" value="M_F_Random"/> Random</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="click_link">
+                      <b>Click Link : </b>
+                      <span><input type="radio" name="click_link" value="C_L_Yes" checked/> Yes</span>
+                      <span><input type="radio" name="click_link" value="C_L_No" /> No</span>
+                      <span><input type="radio" name="click_link" value="C_L_Random"/> Random</span>
+                    </div>
+
+
+                    <div class="col-md-6" id="forward_mail">
+                      <b>Forward Mail : </b>
+                      <span><input type="radio" name="forward_mail" value="F_M_Yes"/> Yes</span>
+                      <span><input type="radio" name="forward_mail" value="F_M_No" checked/> No</span>
+                      <span><input type="radio" name="forward_mail" value="F_M_Random"/> Random</span>
+                    </div>
+
+
+
+                    <div class="col-md-6" id="report_notspam">
+                      <b>Report Not Spam : </b>
+                      <span><input type="radio" name="report_notspam" value="R_N_S_Yes"/> Yes</span>
+                      <span><input type="radio" name="report_notspam" value="R_N_S_No" checked/> No</span>
+                      <span><input type="radio" name="report_notspam" value="R_N_S_Random"/> Random</span>
+                    </div>
+
+
+
+                    <div class="row">
+                      <div class="col-md-2">
+                      <b># Inbox Process</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="inbox_process_count"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Not Spam</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="notspam_count"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Delete</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="delete_count"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Flag</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="flag_count"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Forward</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="forward_count"/> 
+                      </div>
+
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-md-2">
+                      <b># CC Count</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="cc_count"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># SS Count</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="ss_count"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Contact Count</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="contact_count"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># Subject</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="subject"/> 
+                      </div>
+
+                      <div class="col-md-2">
+                      <b># From Name</b><br>
+                      <input style="background-color: lavender; width: 120px" type="text" name="from_name"/> 
+                      </div>
+
+                    </div>  <br>                  
+                          
+                    <button type="submit" id="save_task_button" class="btn btn-primary">Save Task</button>
+                    <button type="reset" class="btn btn-default">Reset</button>
+                       
+                  </form>
+                </div>
+            </div>
+          
+
+
+
+            <div id="adminallmachinediv" style="display: none;">
+                  <div>
+                  <center class='heading'><strong>Team Wise Machine</strong></center>
+                  </div>
+                  <div class="col-md-2">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <th>Sr.No</th>
+                            <th>Team</th>
+                        </thead>
+
+                        <tbody id="uniqueteam">
+                            <!-- {% for i,j in teams %}
+                              <tr>
+                                <td>{{i}}</td>
+                                <td>
+                                  <input type="button" class="btn btn-info" value="{{j.team}}">
+                                </td>
+                              </tr>
+                            {% endfor %} -->
+                        </tbody>      
+                    </table>
+                  </div>
+
+                  <div class="col-md-10">
+                    <table id="livelog" class="table table-hover table-bordered">
+                        <thead>
+                            <th>Id</th>
+                            <th>Team</th>
+                            <th>Machine IP</th>
+                            <th>Machine Username</th>
+                            <th>Machine Password</th>
+                            <th>CPU Usage %</th>
+                            <th>RAM Usage %</th>
+                            <th>Delete Machine</th>
+                        </thead>
+
+                        <tbody id="temp">
+                            
+                        </tbody>      
+                    </table>
+                  </div>
+            </div>
+              
+
+
+
+            <div id="addmachinediv" style="display: none;" >
+                  <div>
+                  <center class="heading"><strong>Add Machine</strong></center>
+                  </div>
+
+                  <form class="form-horizontal" id="addmachineform" method="post">
+                        {% csrf_token %}
+                      <div class="form-group">
+                        <label class="control-label col-lg-2" for="team">Team Name</label>
+                        <div class="col-lg-8">
+                          <input type="text" placeholder="Enter Team Name - A" class="form-control" id="team" name="team" required>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-lg-2" for="machineip">Machine IP Address</label>
+                        <div class="col-lg-8">
+                          <input name="machineip" type="text" placeholder="Enter Machine IP Address - 10.10.20.136" class="form-control" id="machineip" required>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-lg-2" for="machineuser">Machine User</label>
+                        <div class="col-lg-8">
+                        <input name="machineuser"  type="text" placeholder="Enter Machine Username - Administrator" class="form-control" id="machineuser" required>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="control-label col-lg-2" for="machinepassword">Machine Password</label>
+                        <div class="col-lg-8">
+                          <input name="machinepassword" type="text" placeholder="Enter Machine Password - pass@123" class="form-control" id="machinepassword" required>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div class="col-lg-offset-2 col-lg-9">
+                          <!-- <button type="submit" class="btn btn-danger">Publish</button> -->
+                          <button type="submit" class="btn btn-primary">Save Machine</button>
+                          <button type="reset" class="btn btn-default">Reset</button>
+                        </div>
+                      </div>
+
+                    </form>
+            </div>
+
+          </div>
+
+         </div>
+      
+        </div>
+
+
+        <!-- project team & activity start -->
+        <div class="row">
+         
+        </div><br><br>
+
+        <div class="row">
+         
+        </div>
+        <!-- project team & activity end -->
+
+      </section>
+      <div class="text-right">
+        <div class="credits">
+        
+        </div>
+      </div>
+    </section>
+    <!--main content end-->
+  </section>
+  <!-- container section start -->
+
+
+  <!-- javascripts -->
+  <script src="{% static '/Application/js/jquery.js' %}"></script>
+  <script src="{% static '/Application/js/jquery-ui-1.10.4.min.js' %}"></script>
+  <script src="{% static '/Application/js/jquery-1.8.3.min.js' %}"></script>
+  <script type="text/javascript" src="{% static '/Application/js/jquery-ui-1.9.2.custom.min.js' %}"></script>
+  <!-- bootstrap -->
+  <script src="{% static '/Application/js/bootstrap.min.js' %}"></script>
+  <!-- nice scroll -->
+  <script src="{% static '/Application/js/jquery.scrollTo.min.js' %}"></script>
+  <script src="static/Application/js/jquery.nicescroll.js" type="text/javascript"></script>
+  <!-- charts scripts -->
+  <script src="static/Application/assets/jquery-knob/js/jquery.knob.js"></script>
+  <script src="static/Application/js/jquery.sparkline.js" type="text/javascript"></script>
+  <script src="static/Application/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+  <script src="static/Application/js/owl.carousel.js"></script>
+  <!-- jQuery full calendar -->
+  <script src="static/Application/js/fullcalendar.min.js"></script>
+    <!-- Full Google Calendar - Calendar -->
+    <script src="static/Application/assets/fullcalendar/fullcalendar/fullcalendar.js"></script>
+    <!--script for this page only-->
+    <script src="static/Application/js/calendar-custom.js"></script>
+    <script src="static/Application/js/jquery.rateit.min.js"></script>
+    <!-- custom select -->
+    <script src="static/Application/js/jquery.customSelect.min.js"></script>
+    <script src="static/Application/assets/chart-master/Chart.js"></script>
+
+    <!--custome script for all page-->
+    <script src="static/Application/js/scripts.js"></script>
+    <!-- custom script for this page-->
+    <script src="static/Application/js/sparkline-chart.js"></script>
+    <script src="static/Application/js/easy-pie-chart.js"></script>
+    <script src="static/Application/js/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="static/Application/js/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="static/Application/js/xcharts.min.js"></script>
+    <script src="static/Application/js/jquery.autosize.min.js"></script>
+    <script src="static/Application/js/jquery.placeholder.min.js"></script>
+    <script src="static/Application/js/gdp-data.js"></script>
+    <script src="static/Application/js/morris.min.js"></script>
+    <script src="static/Application/js/sparklines.js"></script>
+    <script src="static/Application/js/charts.js"></script>
+    <script src="static/Application/js/jquery.slimscroll.min.js"></script>
+    <script>
+      //knob
+      $(function() {
+        $(".knob").knob({
+          'draw': function() {
+            $(this.i).val(this.cv + '%')
+          }
+        })
+      });
+
+      //carousel
+      $(document).ready(function() {
+        $("#owl-slider").owlCarousel({
+          navigation: true,
+          slideSpeed: 300,
+          paginationSpeed: 400,
+          singleItem: true
+
+        });
+      });
+
+      //custom select box
+
+      $(function() {
+        $('select.styled').customSelect();
+      });
+
+      /* ---------- Map ---------- */
+      $(function() {
+        $('#map').vectorMap({
+          map: 'world_mill_en',
+          series: {
+            regions: [{
+              values: gdpData,
+              scale: ['#000', '#000'],
+              normalizeFunction: 'polynomial'
+            }]
+          },
+          backgroundColor: '#eef3f7',
+          onLabelShow: function(e, el, code) {
+            el.html(el.html() + ' (GDP - ' + gdpData[code] + ')');
+          }
+        });
+      });
+    </script>
+
+
+
+    <script>
+      var divs = ['allmachinesdiv','createtaskdiv','deleteseeddiv','insertproxydiv','removeproxydiv','livelogdiv','clearlogdiv','insertseeddiv','addmachinediv','adminallmachinediv']
+      function manageOperations(id){
+        var currentid = id+'div'
+        var len = divs.length;
+        for (var i = 0; i < len; i++) {
+            if (divs[i]==currentid){
+              $('#'+currentid).show();
+              document.getElementById('error-log').innerHTML = '';
+              document.getElementById('status-log').innerHTML = '';
+            }
+            else{
+              $('#'+divs[i]).hide()
+            }
+        } 
+      }
+    </script>
+
+
+
+
+    <script>
+      var loc = window.location;
+      var addmachineform = $('#addmachineform');      
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+      var endpoint = wsStart + window.location.host + '/addmachine/'
+      var addmachinesocket = new WebSocket(endpoint);
+
+      addmachinesocket.onmessage = function(e){
+        console.log('addmachinesocket onmessage',e)
+        var data = JSON.parse(e.data); 
+        if (data.response != null){
+        document.getElementById('error-log').innerHTML 
+                = data.response;
+        }
+        if (data.uniqueteam != null){
+        var row = "";
+        data.uniqueteam.forEach(function(value){
+          var team = '<input type="button" class="btn btn-info" value='+value[1].team+'>'
+          row = row + "<tr><td>"+value[0]+"</td><td>"+team+"</td></tr>";
+        });
+        $('#uniqueteam').html(row);
+        }
+      }
+
+      addmachinesocket.onopen = function(e){
+        console.log('addmachinesocket onopen',e)
+        addmachineform.submit(function(event){
+          event.preventDefault();
+          var team = $("#team").val();
+          var machineip = $("#machineip").val();
+          var machineuser = $("#machineuser").val();
+          var machinepassword = $("#machinepassword").val();
+          addmachinesocket.send(JSON.stringify({'team':team, 'machineip':machineip, 'machineuser':machineuser,'machinepassword':machinepassword}));
+          addmachineform[0].reset();
+        })
+      }
+      addmachinesocket.onerror = function(e){
+        console.log('addmachinesocket onerror',e)
+      }
+      addmachinesocket.onclose = function(e){
+        console.log('addmachinesocket onclose',e)
+      }
+    </script>
+
+
+
+
+
+    <script>
+      var loc = window.location;
+      var displaymachineform = $('#displaymachineform');      
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+      var endpoint = wsStart + window.location.host + '/displaymachines/'
+      var displaymachinesocket = new WebSocket(endpoint);
+      displaymachinesocket.onmessage = function(e){
+        var data = JSON.parse(e.data);
+        if (data.teamwise_machine != null){
+        var row = "";
+        data.teamwise_machine.forEach(function(value){
+        if (value){
+          var url = "/deletemachine/"+value[0]+""
+          var deletebutton = "<a href = "+url+">Delete</a>"
+        }
+        else{
+          var deletebutton = "<a href = '{% url 'Deletemachine' 0 %}'>Delete</a>"
+        }
+        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletebutton+"</td></tr>";
+        });
+        
+        $('#temp').html(row);
+        }
+
+        if (data.uniqueteam != null){
+        var row = "";
+        data.uniqueteam.forEach(function(value){
+          var team = '<input type="button" class="btn btn-info" value='+value[1].team+'>'
+          row = row + "<tr><td>"+value[0]+"</td><td>"+team+"</td></tr>";
+        });
+        $('#uniqueteam').html(row);
+        }
+      }
+
+      displaymachinesocket.onopen = function(e){
+        console.log('displaymachinesocket onopen',e)
+        $('input[type="button"]').live('click', function(){
+        var team = $(this).val();
+        displaymachinesocket.send(JSON.stringify({'team':team}));
+        });
+      }
+
+      displaymachinesocket.onerror = function(e){
+        console.log('displaymachinesocket onerror',e)
+      }
+
+      displaymachinesocket.onclose = function(e){
+        console.log('displaymachinesocket onclose',e)
+      }
+    </script>
+
+
+    
+    <script>
+      var loc = window.location;
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+      var endpoint = wsStart + window.location.host + '/ws/'
+      var liveMchineSocket = new WebSocket(endpoint);
+      liveMchineSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var row = "";
+        data.data.forEach(function(value){
+          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";      
+        $('#machine-config').html(row);
+        });
+        document.getElementById('count').innerHTML 
+                = data.total_machines;
+        };
+    </script>
+
+
+
+    <script>
+      var loc = window.location;
+      var creattaskform = $('#creattaskform');      
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+      var endpoint = wsStart + window.location.host + '/createtaskprofile/'
+      var createtaskprofilesocket = new WebSocket(endpoint);
+      createtaskprofilesocket.onmessage = function(e){
+        console.log('createtaskprofile onmessage',e)
+        data = JSON.parse(e.data)
+        if (data.response != null){
+        document.getElementById('error-log').innerHTML 
+                = data.response;
+        }
+        if (data.usertaskprofiles != null){
+          var row = ''
+          data.usertaskprofiles.forEach(function(value){
+          var task = '<input type="button" class="btn btn-info" value='+value[1]+'>'
+          row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td></tr>";
+        $('#task').html(row)});
+       }
+       if (data.show_profile != null){
+        var data = data.show_profile;
+        $('input:radio[value='+data.select_action+']').attr('checked', true);
+        $('input:radio[value='+data.process_inbox+']').attr('checked', true);
+        $('input:radio[value='+data.process_spam+']').attr('checked', true);
+        $('input:radio[value='+data.compose_mail+']').attr('checked', true);
+        $('input:radio[value='+data.archive_or_delete+']').attr('checked', true);
+        $('input:radio[value='+data.bulk_notspam+']').attr('checked', true);
+        $('input:radio[value='+data.add_safe_sender+']').attr('checked', true);
+        $('input:radio[value='+data.color_category+']').attr('checked', true);
+        $('input:radio[value='+data.mark_flag+']').attr('checked', true);
+        $('input:radio[value='+data.click_link+']').attr('checked', true);
+        $('input:radio[value='+data.forward_mail+']').attr('checked', true);
+        $('input:radio[value='+data.report_notspam+']').attr('checked', true);
+
+        $('input[name="inbox_process_count"]').val(data.inbox_process_count);
+        $('input[name="notspam_count"]').val(data.notspam_count);
+        $('input[name="delete_count"]').val(data.delete_count);
+        $('input[name="flag_count"]').val(data.flag_count);
+        $('input[name="forward_count"]').val(data.forward_count);
+        $('input[name="cc_count"]').val(data.cc_count);
+        $('input[name="ss_count"]').val(data.ss_count);
+        $('input[name="contact_count"]').val(data.contact_count);
+        $('input[name="subject"]').val(data.subject);
+        $('input[name="from_name"]').val(data.from_name);
+        document.getElementById('save_task_button').innerHTML 
+                = 'Update Task';              
+        document.getElementById('task_heading').innerHTML 
+                = 'Update Your Task';
+        }
+      }
+
+      createtaskprofilesocket.onopen = function(e){
+        console.log('createtaskprofile onopen',e);
+
+        creattaskform.submit(function(event){
+        event.preventDefault();  
+        createtaskprofilesocket.send(JSON.stringify({'taskprofile':creattaskform.serializeArray()}));
+        creattaskform[0].reset(); 
+        });
+        $('input[type="button"]').live('click', function(){
+        var profile = $(this).val();
+        createtaskprofilesocket.send(JSON.stringify({'profile':profile}));
+        });
+      }
+
+      createtaskprofilesocket.onerror = function(e){
+        console.log('createtaskprofile onerror',e)
+      }
+      createtaskprofilesocket.onclose = function(e){
+        console.log('createtaskprofile onclose',e)
+      }
+    </script>
+
+
+
+
+    <script>
+      $('#save_task_button').click(function(){
+        document.getElementById('save_task_button').innerHTML 
+                = 'Save Task';
+        document.getElementById('task_heading').innerHTML 
+                = 'Create New Task';
+      })
+    </script>
+
+
+</body>
+
+</html>

@@ -34,6 +34,8 @@
   <link href="{% static '/Application/css/xcharts.min.css' %}" rel="stylesheet">
   <link href="{% static '/Application/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
   
+
+
 </head>
 
 <body>
@@ -411,7 +413,7 @@
 
             <div id="createtaskdiv" style="display: none;">
                   
-                  <div class="col-md-4">
+                  <div class="col-sm-4 col-md-4 col-lg-4">
                     <center class='heading'><strong>Your Tasks</strong></center>
 
                     <table id="livelog" class="table table-hover table-bordered">
@@ -429,166 +431,183 @@
                     
                   </div>
 
-                  <div class="col-md-8">
+                  <div class="col-sm-8 col-md-8 col-lg-8">
                     <center class='heading'><strong id="task_heading">Create New Tasks</strong></center>
-                   <form class="form-horizontal" id="creattaskform" style="padding: 3%; border: 1px solid; border-radius: 10px">
+                  <div style="border: 1px solid; border-radius:10px; padding:2%">
+                   <form class="form-horizontal form form-group" id="creattaskform">
                     {% csrf_token %}
-                    <div class="col-md-6" id="select_action">
-                      <b>Select Action : </b>
-                      <span><input type="radio" name="select_action" value="Default" checked/> Default</span>
-                      <span><input type="radio" name="select_action" value="Custom"/> Custom</span>
-                      <span><input type="radio" name="select_action" value="Random"/> Random</span>
-                    </div>
-
-                    <div class="col-md-6" id="process_inbox">
-                      <b>Process Inbox : </b>
-                      <span><input type="radio" name="process_inbox" value="P_I_Yes" checked/> Yes</span>
-                      <span><input type="radio" name="process_inbox" value="P_I_No" /> No</span>
-                    </div>
 
 
-                    <div class="col-md-6" id="process_spam">
-                      <b>Process Junk or Spam : </b>
-                      <span><input type="radio" name="process_spam" value="P_S_Yes" checked/> Yes</span>
-                      <span><input type="radio" name="process_spam" value="P_S_No" /> No</span>
-                    </div>
+                    <table id="taskformtable" class="table table-responsive-sm w-auto">
 
 
-                    <div class="col-md-6" id="compose_mail">
-                      <b>Compose Mail : </b>
-                      <span><input type="radio" name="compose_mail" value="C_M_Yes"/> Yes</span>
-                      <span><input type="radio" name="compose_mail" value="C_M_No" checked/> No</span>
-                    </div>
+                      <tr>
+                        <td><b>Select Action</b></td>
+                        <td ><span><input type="radio" name="select_action" value="Default" checked/> Default</span></td>
+                        <td><span><input type="radio" name="select_action" value="Custom"/> Custom</span></td>
+                        <td><span><input type="radio" name="select_action" value="Random"/> Random</span></td>
 
 
-                    <div class="col-md-6" id="archive_or_delete">
-                      <b>Archive or Delete : </b>
-                      <span><input type="radio" name="archive_or_delete" value="Archive"/> Archive</span>
-                      <span><input type="radio" name="archive_or_delete" value="Delete"/> Delete</span>
-                      <span><input type="radio" name="archive_or_delete" value="Random"/> Random</span>
-                      <span><input type="radio" name="archive_or_delete" value="None" checked/> None</span>
-                    </div>
+                        <td><b>Process Inbox</b></td>
+                        <td><span><input type="radio" name="process_inbox" value="P_I_Yes" checked/> Yes</span></td>
+                        <td><span><input type="radio" name="process_inbox" value="P_I_No" /> No</span></td>
+                        <td></td>
+                      </tr>
+
+                    
 
 
-                    <div class="col-md-6" id="bulk_notspam">
-                      <b>Bulk Not Junk or Spam : </b>
-                      <span><input type="radio" name="bulk_notspam" value="B_N_S_Yes"/> Yes</span>
-                      <span><input type="radio" name="bulk_notspam" value="B_N_S_No" checked/> No</span>
-                    </div>
+                      <tr>
+                        <td><b>Process Junk or Spam</b></td>
+                        <td><span><input type="radio" name="process_spam" value="P_S_Yes" checked/> Yes</span></td>
+                        <td><span><input type="radio" name="process_spam" value="P_S_No" /> No</span></td>
+                        <td></td>  
 
 
-                    <div class="col-md-6" id="add_safe_sender">
-                      <b>Add Safe Sender : </b>
-                      <span><input type="radio" name="add_safe_sender" value="A_S_S_Yes"/> Yes</span>
-                      <span><input type="radio" name="add_safe_sender" value="A_S_S_No" checked/> No</span>
-                      <span><input type="radio" name="add_safe_sender" value="A_S_S_Random"/> Random</span>
-                    </div>
+                        <td><b>Compose Mail</b></td>
+                        <td><span><input type="radio" name="compose_mail" value="C_M_Yes"/> Yes</span></td>
+                        <td><span><input type="radio" name="compose_mail" value="C_M_No" checked/> No</span></td>
+                        <td></td>
+                      </tr>
 
 
-                    <div class="col-md-6" id="color_category">
-                      <b>Color Category : </b>
-                      <span><input type="radio" name="color_category" value="C_C_Yes"/> Yes</span>
-                      <span><input type="radio" name="color_category" value="C_C_No" checked/> No</span>
-                      <span><input type="radio" name="color_category" value="C_C_Random"/> Random</span>
-                    </div>
+                      
+
+
+                      <tr>
+                        <td><b>Archive or Delete</b></td>
+                        <td><span><input type="radio" name="archive_or_delete" value="Archive"/> Archive</span></td>
+                        <td><span><input type="radio" name="archive_or_delete" value="Delete"/> Delete</span></td>
+                        <td><span><input type="radio" name="archive_or_delete" value="Random" checked/> Random</span></td>
+                        
+
+                        <td><b>Bulk Not Junk or Spam</b></td>
+                        <td><span><input type="radio" name="bulk_notspam" value="B_N_S_Yes"/> Yes</span></td>
+                        <td><span><input type="radio" name="bulk_notspam" value="B_N_S_No" checked/> No</span></td>
+                        <td></td>
+                      </tr>
 
 
 
-                    <div class="col-md-6" id="mark_flag">
-                      <b>Mark Flag : </b>
-                      <span><input type="radio" name="mark_flag" value="M_F_Yes"/> Yes</span>
-                      <span><input type="radio" name="mark_flag" value="M_F_No" checked/> No</span>
-                      <span><input type="radio" name="mark_flag" value="M_F_Random"/> Random</span>
-                    </div>
+                                      
 
 
-                    <div class="col-md-6" id="click_link">
-                      <b>Click Link : </b>
-                      <span><input type="radio" name="click_link" value="C_L_Yes" checked/> Yes</span>
-                      <span><input type="radio" name="click_link" value="C_L_No" /> No</span>
-                      <span><input type="radio" name="click_link" value="C_L_Random"/> Random</span>
-                    </div>
+                      <tr>
+                        <td><b>Add Safe Sender</b></td>
+                        <td><span><input type="radio" name="add_safe_sender" value="A_S_S_Yes"/> Yes</span></td>
+                        <td><span><input type="radio" name="add_safe_sender" value="A_S_S_No" checked/> No</span></td>
+                        <td><span><input type="radio" name="add_safe_sender" value="A_S_S_Random"/> Random</span></td>
 
 
-                    <div class="col-md-6" id="forward_mail">
-                      <b>Forward Mail : </b>
-                      <span><input type="radio" name="forward_mail" value="F_M_Yes"/> Yes</span>
-                      <span><input type="radio" name="forward_mail" value="F_M_No" checked/> No</span>
-                      <span><input type="radio" name="forward_mail" value="F_M_Random"/> Random</span>
-                    </div>
+                        <td><b>Color Category</b></td>
+                        <td><span><input type="radio" name="color_category" value="C_C_Yes"/> Yes</span></td>
+                        <td><span><input type="radio" name="color_category" value="C_C_No" checked/> No</span></td>
+                        <td><span><input type="radio" name="color_category" value="C_C_Random"/> Random</span></td>
+                      </tr>
 
 
 
-                    <div class="col-md-6" id="report_notspam">
-                      <b>Report Not Spam : </b>
-                      <span><input type="radio" name="report_notspam" value="R_N_S_Yes"/> Yes</span>
-                      <span><input type="radio" name="report_notspam" value="R_N_S_No" checked/> No</span>
-                      <span><input type="radio" name="report_notspam" value="R_N_S_Random"/> Random</span>
-                    </div>
+                      
+
+                      <tr>
+                        <td><b>Mark Flag</b></td>
+                        <td><span><input type="radio" name="mark_flag" value="M_F_Yes"/> Yes</span></td>
+                        <td><span><input type="radio" name="mark_flag" value="M_F_No" checked/> No</span></td>
+                        <td><span><input type="radio" name="mark_flag" value="M_F_Random"/> Random</span></td>
+
+
+                        <td><b>Click Link</b></td>
+                        <td><span><input type="radio" name="click_link" value="C_L_Yes" checked/> Yes</span></td>
+                        <td><span><input type="radio" name="click_link" value="C_L_No" /> No</span></td>
+                        <td><span><input type="radio" name="click_link" value="C_L_Random"/> Random</span></td>
+
+                      </tr>
+                      
+                      
+                      
+                      
+
+                      <tr>
+                        <td><b>Forward Mail</b></td>
+                        <td><span><input type="radio" name="forward_mail" value="F_M_Yes"/> Yes</span></td>
+                        <td><span><input type="radio" name="forward_mail" value="F_M_No" checked/> No</span></td>
+                        <td><span><input type="radio" name="forward_mail" value="F_M_Random"/> Random</span></td>
 
 
 
-                    <div class="row">
-                      <div class="col-md-2">
-                      <b># Inbox Process</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="inbox_process_count"/> 
-                      </div>
 
-                      <div class="col-md-2">
-                      <b># Not Spam</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="notspam_count"/> 
-                      </div>
+                        <td><b>Report Not Spam</b></td>
+                        <td><span><input type="radio" name="report_notspam" value="R_N_S_Yes"/> Yes</span></td>
+                        <td><span><input type="radio" name="report_notspam" value="R_N_S_No" checked/> No</span></td>
+                        <td><span><input type="radio" name="report_notspam" value="R_N_S_Random"/> Random</span></td>
 
-                      <div class="col-md-2">
-                      <b># Delete</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="delete_count"/> 
-                      </div>
+                      </tr>
+                      
+                      
 
-                      <div class="col-md-2">
-                      <b># Flag</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="flag_count"/> 
-                      </div>
+                      
+                      
+                      
 
-                      <div class="col-md-2">
-                      <b># Forward</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="forward_count"/> 
-                      </div>
-
-                    </div>
+                      <tr>
+                        <td><b># Inbox Process</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="inbox_process_count"/> </td>
 
 
-                    <div class="row">
-                      <div class="col-md-2">
-                      <b># CC Count</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="cc_count"/> 
-                      </div>
+                        <td><b># Not Spam</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="notspam_count"/></td>
+                      
 
-                      <div class="col-md-2">
-                      <b># SS Count</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="ss_count"/> 
-                      </div>
 
-                      <div class="col-md-2">
-                      <b># Contact Count</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="contact_count"/> 
-                      </div>
+                        <td><b># Delete</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="delete_count"/></td>
+                        
+                        <td><b># Flag</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="flag_count"/></td>
 
-                      <div class="col-md-2">
-                      <b># Subject</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="subject"/> 
-                      </div>
+                      </tr>
+                       
 
-                      <div class="col-md-2">
-                      <b># From Name</b><br>
-                      <input style="background-color: lavender; width: 120px" type="text" name="from_name"/> 
-                      </div>
+                      
+                       
+                      <tr>
+                        <td><b># Contact Count</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="contact_count"/> </td>
 
-                    </div>  <br>                  
+
+                        
+                        <td><b># CC Count</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="cc_count"/></td>
+
+                        <td><b># SS Count</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="ss_count"/> </td>
+
+
+                        <td><b># Forward</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="forward_count"/></td>
+
+
+                      </tr>
+                    
+                       
+
+                      <tr>
+                        <td><b># From Name</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="from_name"/></td>
+
+                        <td><b># Subject</b></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="subject"/></td>
+                      </tr>
+
+
+                    </table>
+                
                           
                     <button type="submit" id="save_task_button" class="btn btn-primary">Save Task</button>
                     <button type="reset" class="btn btn-default">Reset</button>
                        
-                  </form>
+                   </form>
+                 </div>
                 </div>
             </div>
           
@@ -815,6 +834,10 @@
               $('#'+currentid).show();
               document.getElementById('error-log').innerHTML = '';
               document.getElementById('status-log').innerHTML = '';
+              document.getElementById('save_task_button').innerHTML 
+                = 'Save Task';              
+              document.getElementById('task_heading').innerHTML 
+                = 'Create Task';
             }
             else{
               $('#'+divs[i]).hide()
@@ -1015,6 +1038,7 @@
 
         creattaskform.submit(function(event){
         event.preventDefault();  
+        console.log(creattaskform.serializeArray())
         createtaskprofilesocket.send(JSON.stringify({'taskprofile':creattaskform.serializeArray()}));
         creattaskform[0].reset(); 
         });
