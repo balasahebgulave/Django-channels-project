@@ -67,8 +67,25 @@ class AddMachineConsumer(AsyncConsumer):
 		})
 
 	async def websocket_receive(self, event):
-		try:
-			machinedetails = json.loads(event['text'])
+		machinedetails = json.loads(event['text'])
+
+		if 'deletemachine' in machinedetails.keys():
+				machine_object = await self.delete_machine(machinedetails['deletemachine'])
+				team = machine_object.team
+				machine_object.delete()
+				uniqueteam = await self.show_unique_team()
+				try:
+					teamwise_machine_object = await self.show_teamwise_machine(team)
+				except Exception as e:
+					teamwise_machine_object = str(e)
+
+
+				await self.send({
+						"type":"websocket.send",
+						"text": json.dumps({'response':"Machine Deleted Successfully",'uniqueteam':uniqueteam,'teamwise_machine':teamwise_machine_object})				
+				})
+		else:
+
 			try:
 				check_exist = await self.check_machine(machinedetails)
 			except:
@@ -79,16 +96,23 @@ class AddMachineConsumer(AsyncConsumer):
 			else:
 				response = f"Machine allredy present in team : {check_exist.team}"
 			uniqueteam = await self.show_unique_team()
+
 			await self.send({
 				"type":"websocket.send",
 				"text": json.dumps({'response':response,'uniqueteam':uniqueteam})
 			})
+	
 
-		except Exception as e:
-			await self.send({
-				"type":"websocket.send",
-				"text":f"Error while adding machine : {str(e)}"
-			})
+	@database_sync_to_async
+	def show_teamwise_machine(self, team):
+		try:
+			teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
+			teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
+		except:
+			teamwise_machine_object = ''
+
+		return teamwise_machine_object
+
 			
 	@database_sync_to_async
 	def save_machine(self, machinedetails):
@@ -110,6 +134,11 @@ class AddMachineConsumer(AsyncConsumer):
 			uniqueteam.append((i+1,j))
 		return uniqueteam
 
+	@database_sync_to_async
+	def delete_machine(self, machine_id):
+		machine_object = MachineConfiguration.objects.get(id=machine_id)
+		return machine_object
+
 
 class DisplayAllMachineConsumer(AsyncConsumer):
 
@@ -125,24 +154,23 @@ class DisplayAllMachineConsumer(AsyncConsumer):
 		})
 
 	async def websocket_receive(self, event):
-		team = json.loads(event['text'])['team']
-		try:
-			teamwise_machine_object = await self.show_teamwise_machine(team)
-		except Exception as e:
-			teamwise_machine_object = str(e)
+		machinedetails = json.loads(event['text'])
+		if 'team' in machinedetails.keys():
+			try:
+				teamwise_machine_object = await self.show_teamwise_machine(machinedetails['team'])
+			except Exception as e:
+				teamwise_machine_object = str(e)
 
-		await self.send({
-				"type":"websocket.send",
-				"text": json.dumps({'teamwise_machine':teamwise_machine_object})
-		})
-
+			await self.send({
+					"type":"websocket.send",
+					"text": json.dumps({'teamwise_machine':teamwise_machine_object})
+			})
 	
 	@database_sync_to_async
 	def show_teamwise_machine(self, team):
 		teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
 		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
 		return teamwise_machine_object
-
 
 	@database_sync_to_async
 	def show_unique_team(self):
@@ -151,8 +179,6 @@ class DisplayAllMachineConsumer(AsyncConsumer):
 		for i,j in enumerate(teams):
 			uniqueteam.append((i+1,j))
 		return uniqueteam
-
-
 
 
 class CreateTaskProfileConsumer(AsyncConsumer):
@@ -169,14 +195,32 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 
 	async def websocket_receive(self, event):
 		profiledata = json.loads(event['text'])
+
+		if 'deletetask' in profiledata.keys():
+			deletetask = await self.delete_task_profile(profiledata['deletetask'])
+			usertaskprofiles = await self.user_task_profile()
+			await self.send({
+					"type":"websocket.send",
+					"text": json.dumps({'usertaskprofiles':usertaskprofiles,'response':"Task Profile Deleted Successfully",})
+			})
+
 		if 'taskprofile' in profiledata.keys():
 			profiledata = {data['name']:data['value'] for data in profiledata['taskprofile']}
-			try:
-				taskprofile = await self.save_task_profile(profiledata)
-				response = 'Profile Saved Successfully'
-			except Exception as e:
-				response = f"Error while adding taskprofile:{str(e)}"
-			
+			if 'taskid' in profiledata.keys():
+				if len(profiledata['taskid']) != 0:
+					try:
+						taskprofile = await self.update_task_profile(profiledata)
+						response = 'Profile Updated Successfully'
+					except Exception as e:
+						response = f"Error while updating taskprofile:{str(e)}"
+
+				else:
+					try:
+						taskprofile = await self.save_task_profile(profiledata)
+						response = 'Profile Saved Successfully'
+					except Exception as e:
+						response = f"Error while adding taskprofile:{str(e)}"
+					
 			usertaskprofiles = await self.user_task_profile()
 
 			await self.send({
@@ -206,6 +250,44 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 		cc_count=profiledata['cc_count'],ss_count=profiledata['ss_count'],contact_count=profiledata['contact_count'],subject=profiledata['subject'],
 		from_name=profiledata['from_name'])
 
+		return True
+
+
+	@database_sync_to_async
+	def delete_task_profile(self, taskid):
+		delete_task = CreateTaskProfile.objects.filter(id=taskid)
+		delete_task.delete()
+		return True
+
+
+	@database_sync_to_async
+	def update_task_profile(self, profiledata):
+		profile_update = CreateTaskProfile.objects.get(id=profiledata['taskid'])
+		profile_update.title = profiledata['title']
+		profile_update.select_action = profiledata['select_action']
+		profile_update.process_inbox = profiledata['process_inbox']
+		profile_update.process_spam = profiledata['process_spam']
+		profile_update.compose_mail = profiledata['compose_mail']
+		profile_update.archive_or_delete = profiledata['archive_or_delete']
+		profile_update.bulk_notspam = profiledata['bulk_notspam']
+		profile_update.add_safe_sender = profiledata['add_safe_sender']
+		profile_update.color_category = profiledata['color_category']
+		profile_update.mark_flag = profiledata['mark_flag']
+		profile_update.click_link = profiledata['click_link']
+		profile_update.forward_mail = profiledata['forward_mail']
+		profile_update.report_notspam = profiledata['report_notspam']
+		profile_update.inbox_process_count = profiledata['inbox_process_count']
+		profile_update.notspam_count = profiledata['notspam_count']
+		profile_update.delete_count = profiledata['delete_count']
+		profile_update.flag_count = profiledata['flag_count']
+		profile_update.forward_count = profiledata['forward_count']
+		profile_update.cc_count = profiledata['cc_count']
+		profile_update.ss_count = profiledata['ss_count']
+		profile_update.contact_count = profiledata['contact_count']
+		profile_update.subject = profiledata['subject']
+		profile_update.from_name = profiledata['from_name']
+		profile_update.save()
+		
 		return True
 
 	@database_sync_to_async

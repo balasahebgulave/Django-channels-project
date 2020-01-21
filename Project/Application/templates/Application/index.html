@@ -420,6 +420,7 @@
                         <thead>
                             <th>Id</th>
                             <th>Task Profiles</th>
+                            <th>Delete Task</th>
                       
                         </thead>
 
@@ -433,19 +434,19 @@
 
                   <div class="col-sm-8 col-md-8 col-lg-8">
                     <center class='heading'><strong id="task_heading">Create New Tasks</strong></center>
-                  <div style="border: 1px solid; border-radius:10px; padding:2%">
+                  <div style="border: 1px solid; border-radius:10px; padding:1%">
                    <form class="form-horizontal form form-group" id="creattaskform">
                     {% csrf_token %}
-
-
+                      <center><input style="font-weight: bold; padding-bottom: 1%;" type="text" name="title" id="tasktitle" value=""></center>
+                      <input type="text" name="taskid" id="taskprofileid" value="" style="display: none">
                     <table id="taskformtable" class="table table-responsive-sm w-auto">
-
+                     
 
                       <tr>
                         <td><b>Select Action</b></td>
-                        <td ><span><input type="radio" name="select_action" value="Default" checked/> Default</span></td>
-                        <td><span><input type="radio" name="select_action" value="Custom"/> Custom</span></td>
-                        <td><span><input type="radio" name="select_action" value="Random"/> Random</span></td>
+                        <td ><span><input type="radio" name="select_action" value="S_A_Default" checked/> Default</span></td>
+                        <td><span><input type="radio" name="select_action" value="S_A_Custom"/> Custom</span></td>
+                        <td><span><input type="radio" name="select_action" value="S_A_Random"/> Random</span></td>
 
 
                         <td><b>Process Inbox</b></td>
@@ -476,9 +477,10 @@
 
                       <tr>
                         <td><b>Archive or Delete</b></td>
-                        <td><span><input type="radio" name="archive_or_delete" value="Archive"/> Archive</span></td>
-                        <td><span><input type="radio" name="archive_or_delete" value="Delete"/> Delete</span></td>
-                        <td><span><input type="radio" name="archive_or_delete" value="Random" checked/> Random</span></td>
+                        <td><span><input type="radio" name="archive_or_delete" value="A_O_D_Archive"/> Archive</span></td>
+                        <td><span><input type="radio" name="archive_or_delete" value="A_O_D_Delete"/> Delete</span></td>
+                        <td><span><input type="radio" name="archive_or_delete" value="A_O_D_Random" checked/> Random</span></td>
+                        <td><span><input type="radio" name="archive_or_delete" value="A_O_D_None" checked/> None</span></td>
                         
 
                         <td><b>Bulk Not Junk or Spam</b></td>
@@ -551,19 +553,19 @@
 
                       <tr>
                         <td><b># Inbox Process</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="inbox_process_count"/> </td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="inbox_process_count" required/> </td>
 
 
                         <td><b># Not Spam</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="notspam_count"/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="notspam_count" required/></td>
                       
 
 
                         <td><b># Delete</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="delete_count"/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="delete_count" required/></td>
                         
                         <td><b># Flag</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="flag_count"/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="flag_count" required/></td>
 
                       </tr>
                        
@@ -572,19 +574,19 @@
                        
                       <tr>
                         <td><b># Contact Count</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="contact_count"/> </td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="contact_count" required/> </td>
 
 
                         
                         <td><b># CC Count</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="cc_count"/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="cc_count" required/></td>
 
                         <td><b># SS Count</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="ss_count"/> </td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="ss_count" required/> </td>
 
 
                         <td><b># Forward</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="forward_count"/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="forward_count" required/></td>
 
 
                       </tr>
@@ -593,10 +595,10 @@
 
                       <tr>
                         <td><b># From Name</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="from_name"/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="from_name" required/></td>
 
                         <td><b># Subject</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="subject"/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="subject" required/></td>
                       </tr>
 
 
@@ -835,9 +837,13 @@
               document.getElementById('error-log').innerHTML = '';
               document.getElementById('status-log').innerHTML = '';
               document.getElementById('save_task_button').innerHTML 
-                = 'Save Task';              
+                = 'Save Task';
               document.getElementById('task_heading').innerHTML 
                 = 'Create Task';
+              document.getElementById('taskprofileid').innerHTML 
+                = '';
+              document.getElementById('tasktitle').innerHTML 
+                = '';
             }
             else{
               $('#'+divs[i]).hide()
@@ -874,6 +880,18 @@
         });
         $('#uniqueteam').html(row);
         }
+
+        if (data.teamwise_machine != null){
+        var row = "";
+        data.teamwise_machine.forEach(function(value){
+
+        var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
+        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletemachine+"</td></tr>";
+        });
+        
+        $('#temp').html(row);
+        }
+
       }
 
       addmachinesocket.onopen = function(e){
@@ -914,14 +932,16 @@
         if (data.teamwise_machine != null){
         var row = "";
         data.teamwise_machine.forEach(function(value){
-        if (value){
-          var url = "/deletemachine/"+value[0]+""
-          var deletebutton = "<a href = "+url+">Delete</a>"
-        }
-        else{
-          var deletebutton = "<a href = '{% url 'Deletemachine' 0 %}'>Delete</a>"
-        }
-        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletebutton+"</td></tr>";
+        // if (value){
+        //   var url = "/deletemachine/"+value[0]+""
+        //   var deletebutton = "<a href = "+url+">Delete</a>"
+        // }
+        // else{
+        //   var deletebutton = "<a href = '{% url 'Deletemachine' 0 %}'>Delete</a>"
+        // }
+
+        var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
+        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletemachine+"</td></tr>";
         });
         
         $('#temp').html(row);
@@ -943,6 +963,14 @@
         var team = $(this).val();
         displaymachinesocket.send(JSON.stringify({'team':team}));
         });
+
+
+        $('#deletemachine').live('click', function(){
+        var deletemachine = $(this).val();
+        console.log(deletemachine)
+        addmachinesocket.send(JSON.stringify({'deletemachine':deletemachine}));
+        });
+
       }
 
       displaymachinesocket.onerror = function(e){
@@ -998,11 +1026,13 @@
           var row = ''
           data.usertaskprofiles.forEach(function(value){
           var task = '<input type="button" class="btn btn-info" value='+value[1]+'>'
-          row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td></tr>";
+          var deletetask = '<button type="button" id="deletetask" class="btn btn-danger" value='+value[0]+'>Delete</button>'
+          row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td><td>"+deletetask+"</td></tr>";
         $('#task').html(row)});
        }
        if (data.show_profile != null){
         var data = data.show_profile;
+        // console.log(data)
         $('input:radio[value='+data.select_action+']').attr('checked', true);
         $('input:radio[value='+data.process_inbox+']').attr('checked', true);
         $('input:radio[value='+data.process_spam+']').attr('checked', true);
@@ -1026,6 +1056,9 @@
         $('input[name="contact_count"]').val(data.contact_count);
         $('input[name="subject"]').val(data.subject);
         $('input[name="from_name"]').val(data.from_name);
+
+        $('input[name="taskid"]').val(data.id);
+        $('input[name="title"]').val(data.title);
         document.getElementById('save_task_button').innerHTML 
                 = 'Update Task';              
         document.getElementById('task_heading').innerHTML 
@@ -1038,7 +1071,7 @@
 
         creattaskform.submit(function(event){
         event.preventDefault();  
-        console.log(creattaskform.serializeArray())
+        // console.log(creattaskform.serializeArray())
         createtaskprofilesocket.send(JSON.stringify({'taskprofile':creattaskform.serializeArray()}));
         creattaskform[0].reset(); 
         });
@@ -1046,6 +1079,13 @@
         var profile = $(this).val();
         createtaskprofilesocket.send(JSON.stringify({'profile':profile}));
         });
+
+
+        $('#deletetask').live('click', function(){
+        var deletetask = $(this).val();
+        createtaskprofilesocket.send(JSON.stringify({'deletetask':deletetask}));
+        });
+        
       }
 
       createtaskprofilesocket.onerror = function(e){
