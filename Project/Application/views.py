@@ -75,7 +75,7 @@ def Login(request):
 
 @login_required(login_url='Login')
 def Homepage(request):
-
+	context = {}
 	try:
 		default_profile = CreateTaskProfile.objects.filter(title=f"{str(request.user).title()}_Default_Profile").count()
 		print('---------count---------',default_profile)
@@ -85,7 +85,6 @@ def Homepage(request):
 		print('---------default_profile err---------',e)
 		pass
 
-	context = {}
 	try:
 		user_team_machines = MachineConfiguration.objects.filter(team = request.session['team'])
 		context['user_team_machines'] = user_team_machines
