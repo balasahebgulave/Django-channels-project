@@ -382,16 +382,16 @@
                         <td>xyz@outlook.com</td>
                     </tr>
                     </table>
-                    <center><p style="color: brown; font-weight: normal">Note : Insert data in tab seperated above format only. if any field is not there then leave blank but put field in serial. </p></center>   
+                    <center><p style="color: brown; font-weight: normal">Note : Insert data in tab seperated above format only. if any field is not there then leave blank or NA. </p></center>   
                   <form method="post" >
                         {% csrf_token %}
-                    <select name="selected_profile" class="form-control" style="margin-bottom: 1%">
-                      <option>select task profile</option>
-                    </select>
+                   <select name="selected_profile" id="selected_profile" class="form-control" style="margin-bottom: 1%">
 
-                    <textarea name="seed" rows="15" class="form-horizontal col-sm-12"></textarea>
+                   </select>
+
+                   <textarea name="seed" rows="10" class="form-horizontal col-sm-12"></textarea>
                     
-                    <button type="submit" class="btn btn-primary" style="margin-top: 1%">submit</button> 
+                   <button type="submit" class="btn btn-primary" style="margin-top: 1%">submit</button> 
                   </form>
             </div>
 
@@ -963,14 +963,6 @@
         if (data.teamwise_machine != null){
         var row = "";
         data.teamwise_machine.forEach(function(value){
-        // if (value){
-        //   var url = "/deletemachine/"+value[0]+""
-        //   var deletebutton = "<a href = "+url+">Delete</a>"
-        // }
-        // else{
-        //   var deletebutton = "<a href = '{% url 'Deletemachine' 0 %}'>Delete</a>"
-        // }
-
         var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
         row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletemachine+"</td></tr>";
         });
@@ -1055,14 +1047,20 @@
         document.getElementById('error-log').innerHTML 
                 = data.response;
         }
+
         if (data.usertaskprofiles != null){
           var row = ''
+          var profiles = ''
           data.usertaskprofiles.forEach(function(value){
+
+          profiles = profiles + '<option>'+value[1]+'</option>' 
           var task = '<input type="button" class="btn btn-info" value='+value[1]+'>'
           var deletetask = '<button type="button" id="deletetask" class="btn btn-danger" value='+value[0]+'>Delete</button>'
           row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td><td>"+deletetask+"</td></tr>";
         $('#task').html(row)});
+        $('#selected_profile').html(profiles);
        }
+
        if (data.show_profile != null){
         var data = data.show_profile;
         // console.log(data)
