@@ -1,12 +1,21 @@
 from django.db import models
 
 class UserSeed(models.Model):
-	proxy = models.CharField(max_length = 100, default='None')
+	user = models.CharField(max_length = 100, blank=False)
+	team = models.CharField(max_length = 100, blank=False)
+	taskprofile = models.CharField(max_length = 100, default='None')
 	username = models.CharField(max_length = 100, default='None')
 	password = models.CharField(max_length = 100, default='None')
+	proxy = models.CharField(max_length = 100, default='None')
+	port = models.CharField(max_length = 100, default='None')
+	proxyuser = models.CharField(max_length = 100, default='None')
+	proxypass = models.CharField(max_length = 100, default='None')
 	recoverymail = models.CharField(max_length = 100, default='None')
-	user = models.CharField(max_length = 100)
-
+	emailto = models.CharField(max_length = 100, default='None')
+	forwardto = models.CharField(max_length = 100, default='None')
+	tasklog = models.CharField(max_length = 100, default='None')
+	seedlog = models.CharField(max_length = 100, default='None')
+	
 	# def __str__(self):
 	# 	return self.user
 
@@ -24,8 +33,8 @@ class MachineConfiguration(models.Model):
 
 
 class CreateTaskProfile(models.Model):
-	user = models.CharField(max_length=100)
-	title = models.CharField(max_length=100)
+	user = models.CharField(max_length=100, blank = False)
+	title = models.CharField(max_length=100, blank = False)
 	select_action = models.CharField(max_length=100, default='S_A_Default')
 	process_inbox = models.CharField(max_length=100, default='P_I_Yes')
 	process_spam = models.CharField(max_length=100, default='P_S_Yes')
