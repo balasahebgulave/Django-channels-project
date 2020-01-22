@@ -357,11 +357,42 @@
 
 
             <div id="insertseeddiv"style="display: none;">
-                  <div>
-                  <center class='heading'><strong>Insert Seed</strong></center>
-                  </div>
+              <center class='heading'><strong>Insert Seed</strong></center>            
+                    <table id="seedlog" class="table table-bordered">
+                    <thead>
+                        <th>username</th>
+                        <th>password</th>
+                        <th>proxy</th>
+                        <th>port</th>
+                        <th>proxyuser</th>
+                        <th>proxypass</th>
+                        <th>recoverymail</th>
+                        <th>emailto</th>
+                        <th>forwardto</th>
+                    </thead>
+                    <tr>
+                        <td>user@yahoo.com</td>
+                        <td>pass@123</td>
+                        <td>104.144.138.178</td>
+                        <td>3129</td>
+                        <td>proxyuser</td>
+                        <td>proxypass</td>
+                        <td>recovery@malinator.com</td>
+                        <td>abc@gmail.com</td>
+                        <td>xyz@outlook.com</td>
+                    </tr>
+                    </table>
+                    <center><p style="color: brown; font-weight: normal">Note : Insert data in tab seperated above format only. if any field is not there then leave blank but put field in serial. </p></center>   
+                  <form method="post" >
+                        {% csrf_token %}
+                    <select name="selected_profile" class="form-control" style="margin-bottom: 1%">
+                      <option>select task profile</option>
+                    </select>
 
-
+                    <textarea name="seed" rows="15" class="form-horizontal col-sm-12"></textarea>
+                    
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1%">submit</button> 
+                  </form>
             </div>
 
 
@@ -553,19 +584,19 @@
 
                       <tr>
                         <td><b># Inbox Process</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="inbox_process_count" required/> </td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="inbox_process_count" value="0" required/> </td>
 
 
                         <td><b># Not Spam</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="notspam_count" required/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="notspam_count" value="0" required/></td>
                       
 
 
                         <td><b># Delete</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="delete_count" required/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="delete_count" value="0" required/></td>
                         
                         <td><b># Flag</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="flag_count" required/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="flag_count" value="NA" required/></td>
 
                       </tr>
                        
@@ -574,19 +605,19 @@
                        
                       <tr>
                         <td><b># Contact Count</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="contact_count" required/> </td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="contact_count" value="0" required/> </td>
 
 
                         
                         <td><b># CC Count</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="cc_count" required/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="cc_count" value="0" required/></td>
 
                         <td><b># SS Count</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="ss_count" required/> </td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="ss_count" value="0" required/> </td>
 
 
                         <td><b># Forward</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="forward_count" required/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="forward_count" value="0" required/></td>
 
 
                       </tr>
@@ -595,10 +626,10 @@
 
                       <tr>
                         <td><b># From Name</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="from_name" required/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="from_name" value="NA" required/></td>
 
                         <td><b># Subject</b></td>
-                        <td><input style="background-color: lavender; width: 60px" type="text" name="subject" required/></td>
+                        <td><input style="background-color: lavender; width: 60px" type="text" name="subject" value="NA" required/></td>
                       </tr>
 
 
