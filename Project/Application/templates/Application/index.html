@@ -966,9 +966,9 @@
 
 
         $('#deletemachine').live('click', function(){
+        var check = confirm('Do you really want to delete machine ?');
         var deletemachine = $(this).val();
-        console.log(deletemachine)
-        addmachinesocket.send(JSON.stringify({'deletemachine':deletemachine}));
+        if (check==true){addmachinesocket.send(JSON.stringify({'deletemachine':deletemachine}));}
         });
 
       }
@@ -981,6 +981,8 @@
         console.log('displaymachinesocket onclose',e)
       }
     </script>
+
+
 
 
     
@@ -1082,8 +1084,9 @@
 
 
         $('#deletetask').live('click', function(){
+        var check = confirm('Do you really want to delete Task Profile ?');
         var deletetask = $(this).val();
-        createtaskprofilesocket.send(JSON.stringify({'deletetask':deletetask}));
+        if (check==true){createtaskprofilesocket.send(JSON.stringify({'deletetask':deletetask}));}  
         });
         
       }
