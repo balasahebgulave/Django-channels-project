@@ -243,7 +243,7 @@
           <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
             <div class="info-box blue-bg">
               <i class="fa fa-cubes"></i>
-              <div class="count" id="count">0</div>
+              <div class="count" id="total_machines">0</div>
               <div class="title">Total Machine</div>
             </div>
             <!--/.info-box-->
@@ -254,7 +254,7 @@
           <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
             <div class="info-box brown-bg">
               <i class="fa fa-cubes"></i>
-              <div class="count">5</div>
+              <div class="count" id="active_machines">5</div>
               <div class="title">Active Machine</div>
             </div>
             <!--/.info-box-->
@@ -1024,8 +1024,10 @@
           row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";      
         $('#machine-config').html(row);
         });
-        document.getElementById('count').innerHTML 
+        document.getElementById("total_machines").innerHTML 
                 = data.total_machines;
+        document.getElementById("active_machines").innerHTML 
+                = data.active_machines;
         };
     </script>
 

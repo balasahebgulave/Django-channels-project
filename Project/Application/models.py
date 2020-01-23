@@ -62,3 +62,7 @@ class CreateTaskProfile(models.Model):
 	# 	return f"Team : {self.title}"
 
 
+
+
+
+

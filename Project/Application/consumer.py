@@ -10,6 +10,17 @@ from django.contrib.auth.models import User
 import random
 
 
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from . models import MachineConfiguration
+
+@receiver(post_save, sender=MachineConfiguration)
+def check_signals(sender, **kwargs):
+	instance = kwargs.get('instance', None)
+	print('----------post_save signal instance----------',kwargs)
+	print('----------post_save signal called----------',kwargs.get('created', False))
+
+
 def get_current_user(session_key):
 	session = Session.objects.get(session_key=session_key)
 	session_data = session.get_decoded()
@@ -24,8 +35,8 @@ class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 		await self.accept()
 		# print('-------',self.scope['session']['team'])
 		while 1:
-			data = await self.get_live_machine_conf(self.scope['session']['team'])
-			live_data = {'data':data, 'total_machines':len(data)}
+			total_machines, active_machines, teamwise_machine_object = await self.get_live_machine_conf(self.scope['session']['team'])
+			live_data = {'data':teamwise_machine_object, 'total_machines':total_machines, 'active_machines':active_machines}
 			await asyncio.sleep(0.5)
 			await self.send_json(live_data)
 			await asyncio.sleep(0.5)
@@ -34,9 +45,11 @@ class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 	@database_sync_to_async
 	def get_live_machine_conf(self, team):
 		teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
+		total_machines = teamwise_machine_object.count()
+		active_machines = len([i for i in teamwise_machine_object if i.cpu_usage != 'Not Active'])
 		# teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
 		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, "*****", random.randrange(1,100), random.randrange(1,100)) for i in teamwise_machine_object]
-		return teamwise_machine_object
+		return total_machines, active_machines, teamwise_machine_object
 
 
 class ChatConsumer(AsyncConsumer):
