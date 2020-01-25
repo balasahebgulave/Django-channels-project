@@ -72,6 +72,10 @@ class ChatConsumer(AsyncConsumer):
 		print('------------received---------',json.loads(event['text']))
 
 
+	async def websocket_disconnect(self, event):
+		print('------------disconnect---------',event)
+
+
 
 class AddMachineConsumer(AsyncConsumer):
 	async def websocket_connect(self, event):
@@ -152,6 +156,10 @@ class AddMachineConsumer(AsyncConsumer):
 		machine_object = MachineConfiguration.objects.get(id=machine_id)
 		return machine_object
 
+	async def websocket_disconnect(self, event):
+		print('------------AddMachineConsumer---------',event)
+
+
 
 class DisplayAllMachineConsumer(AsyncConsumer):
 
@@ -192,6 +200,10 @@ class DisplayAllMachineConsumer(AsyncConsumer):
 		for i,j in enumerate(teams):
 			uniqueteam.append((i+1,j))
 		return uniqueteam
+
+
+	async def websocket_disconnect(self, event):
+		print('------------DisplayAllMachineConsumer---------',event)
 
 
 class CreateTaskProfileConsumer(AsyncConsumer):
@@ -318,3 +330,7 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 			usertaskprofiles = ''
 			pass
 		return usertaskprofiles
+
+
+	async def websocket_disconnect(self, event):
+		print('------------CreateTaskProfileConsumer---------',event)
