@@ -329,6 +329,7 @@
                             <th>Machine Password</th>
                             <th>CPU Usage %</th>
                             <th>RAM Usage %</th>
+                            <th>Disk Usage %</th>
                         </thead>
 
                         <!-- <tbody>
@@ -681,6 +682,7 @@
                             <th>Machine Password</th>
                             <th>CPU Usage %</th>
                             <th>RAM Usage %</th>
+                            <th>Disk Usage %</th>
                             <th>Delete Machine</th>
                         </thead>
 
@@ -917,7 +919,7 @@
         data.teamwise_machine.forEach(function(value){
 
         var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
-        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletemachine+"</td></tr>";
+        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+deletemachine+"</td></tr>";
         });
         
         $('#temp').html(row);
@@ -964,7 +966,7 @@
         var row = "";
         data.teamwise_machine.forEach(function(value){
         var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
-        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+deletemachine+"</td></tr>";
+        row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+deletemachine+"</td></tr>";
         });
         
         $('#temp').html(row);
@@ -1021,7 +1023,7 @@
         var data = JSON.parse(e.data);
         var row = "";
         data.data.forEach(function(value){
-          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td></tr>";      
+          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td></tr>";      
         $('#machine-config').html(row);
         });
         document.getElementById("total_machines").innerHTML 

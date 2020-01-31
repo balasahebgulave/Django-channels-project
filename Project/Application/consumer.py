@@ -47,8 +47,8 @@ class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 		teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
 		total_machines = teamwise_machine_object.count()
 		active_machines = len([i for i in teamwise_machine_object if i.cpu_usage != 'Not Active'])
-		# teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
-		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, "*****", random.randrange(1,100), random.randrange(1,100)) for i in teamwise_machine_object]
+		# teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage, i.disk_usage) for i in teamwise_machine_object]
+		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, "*****", random.randrange(1,100), random.randrange(1,100), random.randrange(1,100)) for i in teamwise_machine_object]
 		return total_machines, active_machines, teamwise_machine_object
 
 
@@ -124,7 +124,7 @@ class AddMachineConsumer(AsyncConsumer):
 	def show_teamwise_machine(self, team):
 		try:
 			teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
-			teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
+			teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage, i.disk_usage) for i in teamwise_machine_object]
 		except:
 			teamwise_machine_object = ''
 
@@ -190,7 +190,7 @@ class DisplayAllMachineConsumer(AsyncConsumer):
 	@database_sync_to_async
 	def show_teamwise_machine(self, team):
 		teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
-		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage) for i in teamwise_machine_object]
+		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage, i.disk_usage) for i in teamwise_machine_object]
 		return teamwise_machine_object
 
 	@database_sync_to_async
@@ -263,8 +263,8 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 	@database_sync_to_async
 	def save_task_profile(self, profiledata):
 		profile_count = CreateTaskProfile.objects.filter(user=self.scope['user']).count()
-		if profile_count >= 7 :
-			CreateTaskProfile.objects.filter(user=self.scope['user'])[6].delete()
+		if profile_count >= 9 :
+			CreateTaskProfile.objects.filter(user=self.scope['user'])[8].delete()
 			profile_count = profile_count - 1
 		CreateTaskProfile.objects.create(user=self.scope['user'],title=f"{str(self.scope['user']).title()}_Task_Profile_{profile_count}",select_action=profiledata['select_action'],	
 		process_inbox=profiledata['process_inbox'],process_spam=profiledata['process_spam'],compose_mail=profiledata['compose_mail'],\

@@ -27,6 +27,7 @@ class MachineConfiguration(models.Model):
 	password = models.CharField(max_length=100, blank = False)
 	cpu_usage = models.CharField(max_length=10, default='Not Active')
 	ram_usage = models.CharField(max_length=10, default='Not Active')
+	disk_usage = models.CharField(max_length=10, default='Not Active')
 
 	# def __str__(self):
 	# 	return f"Team : {self.team} : {self.machine_ip}"
