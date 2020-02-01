@@ -334,3 +334,21 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 
 	async def websocket_disconnect(self, event):
 		print('------------CreateTaskProfileConsumer---------',event)
+
+
+
+class InsertTaskConsumer(AsyncConsumer):
+	async def websocket_connect(self, event):
+		await self.send({
+			"type":"websocket.accept"
+		})
+
+	async def websocket_receive(self, event):
+		insertdata = json.loads(event['text'])
+		inserttask = {data['name']:data['value'] for data in insertdata['inserttask']}
+		print('-------inserttask---------',inserttask)
+
+
+
+	async def websocket_disconnect(self, event):
+		pass

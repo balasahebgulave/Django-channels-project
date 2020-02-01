@@ -384,7 +384,7 @@
                     </tr>
                     </table>
                     <center><p style="color: brown; font-weight: normal">Note : Insert data in tab seperated above format only. if any field is not there then leave blank or NA. </p></center>   
-                  <form method="post" >
+                  <form method="post" id="inserttaskform">
                         {% csrf_token %}
                    <select name="selected_profile" id="selected_profile" class="form-control" style="margin-bottom: 1%">
 
@@ -1105,7 +1105,7 @@
         console.log('createtaskprofile onopen',e);
 
         creattaskform.submit(function(event){
-        event.preventDefault();  
+          event.preventDefault();
         // console.log(creattaskform.serializeArray())
         createtaskprofilesocket.send(JSON.stringify({'taskprofile':creattaskform.serializeArray()}));
         creattaskform[0].reset(); 
@@ -1130,6 +1130,52 @@
       createtaskprofilesocket.onclose = function(e){
         console.log('createtaskprofile onclose',e)
       }
+    </script>
+
+
+
+
+    <script>
+      var loc = window.location;
+      var inserttaskform = $('#inserttaskform');      
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+      var endpoint = wsStart + window.location.host + '/inserttask/'
+      var inserttasksocket = new WebSocket(endpoint);
+
+
+      inserttasksocket.onmessage = function(e){
+        console.log('inserttasksocket onmessage',e)
+
+      }
+
+
+      inserttasksocket.onopen = function(e){
+        console.log('inserttasksocket onopen',e)
+
+        inserttaskform.submit(function(event){
+          event.preventDefault();
+          console.log(inserttaskform.serializeArray());
+          inserttasksocket.send(JSON.stringify({'inserttask':inserttaskform.serializeArray()}))
+          inserttaskform[0].reset();
+        })
+
+      }
+
+
+      inserttasksocket.onerror = function(e){
+        console.log('inserttasksocket onerror',e)
+
+      }
+
+
+      inserttasksocket.onclose = function(e){
+        console.log('inserttasksocket onclose',e)
+
+      }
+      
     </script>
 
 
