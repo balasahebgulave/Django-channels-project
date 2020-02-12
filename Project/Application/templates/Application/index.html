@@ -1147,8 +1147,10 @@
 
 
       inserttasksocket.onmessage = function(e){
-        console.log('inserttasksocket onmessage',e)
-
+        console.log('inserttasksocket onmessage',e);
+        data = JSON.parse(e.data)
+        document.getElementById('error-log').innerHTML 
+                = data.response;
       }
 
 

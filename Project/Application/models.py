@@ -4,7 +4,7 @@ class UserSeed(models.Model):
 	user = models.CharField(max_length = 100, blank=False)
 	team = models.CharField(max_length = 100, blank=False)
 	taskprofile = models.CharField(max_length = 100, default='None')
-	username = models.CharField(max_length = 100, default='None')
+	username = models.CharField(max_length = 100, default='None', unique=True)
 	password = models.CharField(max_length = 100, default='None')
 	proxy = models.CharField(max_length = 100, default='None')
 	port = models.CharField(max_length = 100, default='None')
@@ -15,6 +15,9 @@ class UserSeed(models.Model):
 	forwardto = models.CharField(max_length = 100, default='None')
 	tasklog = models.CharField(max_length = 100, default='None')
 	seedlog = models.CharField(max_length = 100, default='None')
+	starttime = models.CharField(max_length = 100, default='None')
+	endtime = models.CharField(max_length = 100, default='None')
+	seedstatus = models.CharField(max_length = 100, default='Not In Process')
 	
 	# def __str__(self):
 	# 	return self.user

@@ -79,3 +79,4 @@ class Database():
                         return None
 
 login_instance = Database('213.181.107.7','reader','ri1sIpP7sh','redirectiondb')
+print('-------login_instance------',login_instance)
