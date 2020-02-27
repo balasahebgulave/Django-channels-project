@@ -1,13 +1,12 @@
 import asyncio
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.consumer import AsyncConsumer
-import json
+import json, datetime, random
 from . models import MachineConfiguration, CreateTaskProfile, UserSeed
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
 from django.contrib.sessions.models import Session
-from django.contrib.auth.models import User
-import random
+from django.contrib.auth.models import User 
 
 
 from django.dispatch import receiver
@@ -361,7 +360,7 @@ class InsertTaskConsumer(AsyncConsumer):
 						proxy='NA' if len(seed[2])==0 else seed[2],port='NA' if len(seed[3])==0 else seed[3],
 						proxyuser='NA' if len(seed[4])==0 else seed[4],proxypass='NA' if len(seed[5])==0 else seed[5],
 						recoverymail='NA' if len(seed[6])==0 else seed[6],emailto='NA' if len(seed[7])==0 else seed[7],
-						forwardto='NA' if len(seed[8])==0 else seed[8])
+						forwardto='NA' if len(seed[8])==0 else seed[8],tasklog=f"{str(self.scope['user']).title()} Seed Task - {str(datetime.datetime.now())[:16]}")
 					seedcount+=1
 				except Exception as e:
 					if 'UNIQUE constraint failed' in str(e):
@@ -378,3 +377,29 @@ class InsertTaskConsumer(AsyncConsumer):
 	async def websocket_disconnect(self, event):
 		pass
 
+
+
+class RemoveSeedsConsumer(AsyncConsumer):
+	async def websocket_connect(self,event):
+		await self.send({
+			"type":"websocket.accept"
+		})
+
+		user_unique_seed_task = await self.get_user_unique_seed_task()
+
+		print('-----------user_unique_seed_task----------------',user_unique_seed_task)
+
+		await self.send({
+				"type":"websocket.send",
+				"text": json.dumps({'user_unique_seed_task':user_unique_seed_task})
+		})
+
+
+	async def websocket_receive(self,event):
+		pass
+
+
+	@database_sync_to_async
+	def get_user_unique_seed_task(self):
+		user_unique_seed_task = list(UserSeed.objects.filter(tasklog__icontains=self.scope['user']).values_list('tasklog',flat=True).distinct())
+		return user_unique_seed_task

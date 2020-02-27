@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime
+
 
 class UserSeed(models.Model):
 	user = models.CharField(max_length = 100, blank=False)
@@ -13,7 +15,7 @@ class UserSeed(models.Model):
 	recoverymail = models.CharField(max_length = 100, default='None')
 	emailto = models.CharField(max_length = 100, default='None')
 	forwardto = models.CharField(max_length = 100, default='None')
-	tasklog = models.CharField(max_length = 100, default='None')
+	tasklog = models.CharField(max_length = 100, default="None")
 	seedlog = models.CharField(max_length = 100, default='None')
 	starttime = models.CharField(max_length = 100, default='None')
 	endtime = models.CharField(max_length = 100, default='None')

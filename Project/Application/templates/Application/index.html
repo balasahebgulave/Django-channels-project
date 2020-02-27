@@ -1184,6 +1184,54 @@
 
 
     <script>
+      var loc = window.location;
+      // var removeseedform = $('#removeseedform');      
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+      var endpoint = wsStart + window.location.host + '/removeseed/'
+      var removeseedsocket = new WebSocket(endpoint);
+
+
+      removeseedsocket.onmessage = function(e){
+        console.log('removeseedsocket onmessage',e);
+        // data = JSON.parse(e.data)
+        // document.getElementById('error-log').innerHTML 
+        //         = data.response;
+      }
+
+
+      removeseedsocket.onopen = function(e){
+        console.log('removeseedsocket onopen',e)
+
+        // inserttaskform.submit(function(event){
+        //   event.preventDefault();
+        //   console.log(inserttaskform.serializeArray());
+        //   inserttasksocket.send(JSON.stringify({'inserttask':inserttaskform.serializeArray()}))
+        //   inserttaskform[0].reset();
+        // })
+
+      }
+
+
+      removeseedsocket.onerror = function(e){
+        console.log('removeseedsocket onerror',e)
+
+      }
+
+
+      removeseedsocket.onclose = function(e){
+        console.log('removeseedsocket onclose',e)
+
+      }
+      
+    </script>
+
+
+
+
+    <script>
       $('#save_task_button').click(function(){
         document.getElementById('save_task_button').innerHTML 
                 = 'Save Task';
