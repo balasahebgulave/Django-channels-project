@@ -411,8 +411,44 @@
 
 
             <div id="deleteseeddiv" style="display: none">
-                  <div>
+                  
                   <center class='heading'><strong>Remove Seed</strong></center>
+
+                  <div class="col-sm-3 col-md-3 col-lg-3">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                          <th>Sr No</th>
+                          <th>Your seed Tasks</th>
+                          <th>Delete</th>
+                        </thead>
+
+                        <tbody id="uniquetask">
+                           
+                        </tbody>      
+                    </table>
+                  </div>
+
+                  <div class="col-sm-9 col-md-9 col-lg-9">
+                    <table id="livelog" class="table table-hover table-bordered">
+                        <thead>
+                            <th>Id</th>
+                            <th>username</th>
+                            <th>password</th>
+                            <th>proxy</th>
+                            <th>port</th>
+                            <th>proxyuser</th>
+                            <th>proxypass</th>
+                            <th>recoverymail</th>
+                            <th>emailto</th>
+                            <th>forwardto</th>
+                            <th>delete</th>
+
+                        </thead>
+
+                        <tbody id="seedtask">
+                            
+                        </tbody>      
+                    </table>
                   </div>
 
 
@@ -1196,9 +1232,19 @@
 
       removeseedsocket.onmessage = function(e){
         console.log('removeseedsocket onmessage',e);
-        // data = JSON.parse(e.data)
-        // document.getElementById('error-log').innerHTML 
-        //         = data.response;
+        var data = JSON.parse(e.data);
+        var row = "";
+        data.user_unique_seed_task.forEach(function(value){
+          var seedtask = '<button type="button" id="uniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+          var deleteseedtask = '<button type="button" id="uniquetask" class="btn btn-danger" value='+value[1]+'>Delete</button>'
+          row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+        $('#uniquetask').html(row);
+        });
+        document.getElementById("total_machines").innerHTML 
+                = data.total_machines;
+        document.getElementById("active_machines").innerHTML 
+                = data.active_machines;
+        
       }
 
 

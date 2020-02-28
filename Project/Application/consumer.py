@@ -367,15 +367,23 @@ class InsertTaskConsumer(AsyncConsumer):
 						duplicate+=1
 					print('------------error----------',str(e))
 
+		user_unique_seed_task = await self.get_user_unique_seed_task()
 		response = f"{seedcount} seeds inserted successfully, {duplicate} duplicate seeds found."
-
 		await self.send({
 					"type":"websocket.send",
-					"text": json.dumps({'response':response})
+					"text": json.dumps({'response':response,'user_unique_seed_task':user_unique_seed_task})
 			})
 				
 	async def websocket_disconnect(self, event):
 		pass
+
+	@database_sync_to_async
+	def get_user_unique_seed_task(self):
+		user_unique_seed_task = list(UserSeed.objects.filter(tasklog__icontains=self.scope['user']).values_list('tasklog',flat=True).distinct())
+		uniquetask = []
+		for i,j in enumerate(user_unique_seed_task):
+			uniquetask.append((i+1,j))
+		return uniquetask
 
 
 
@@ -402,4 +410,7 @@ class RemoveSeedsConsumer(AsyncConsumer):
 	@database_sync_to_async
 	def get_user_unique_seed_task(self):
 		user_unique_seed_task = list(UserSeed.objects.filter(tasklog__icontains=self.scope['user']).values_list('tasklog',flat=True).distinct())
-		return user_unique_seed_task
+		uniquetask = []
+		for i,j in enumerate(user_unique_seed_task):
+			uniquetask.append((i+1,j))
+		return uniquetask
