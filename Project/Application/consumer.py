@@ -403,6 +403,7 @@ class RemoveSeedsConsumer(AsyncConsumer):
 
 	async def websocket_receive(self,event):
 		seedtask = json.loads(event['text'])
+		print('---------seedtask---------',seedtask)
 		json_response = {}
 		if 'seeduniquetask' in seedtask.keys():
 			task_wise_seed = await self.get_unique_task_wise_seed(seedtask['seeduniquetask'])
@@ -413,7 +414,16 @@ class RemoveSeedsConsumer(AsyncConsumer):
 			json_response['response'] = response
 			json_response['user_unique_seed_task'] = await self.get_user_unique_seed_task()
 			json_response['task_wise_seed'] = []
-			
+
+		if 'deleteuniquetaskseed' in seedtask.keys():
+			seeduniquetask = UserSeed.objects.get(id=seedtask['deleteuniquetaskseed'])
+			taskname = seeduniquetask.tasklog
+			seeduniquetask.delete()
+			task_wise_seed = await self.get_unique_task_wise_seed(taskname)
+			json_response['user_unique_seed_task'] = await self.get_user_unique_seed_task()
+			json_response['task_wise_seed'] = task_wise_seed
+			json_response['response'] = 'Seed Record Deleted Successfully'
+
 		await self.send({
 				"type":"websocket.send",
 				"text": json.dumps(json_response)

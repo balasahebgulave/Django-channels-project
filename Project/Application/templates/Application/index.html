@@ -1235,7 +1235,7 @@
           }
           var row = "";
           data.task_wise_seed.forEach(function(value){
-            var deleteseed = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
+            var deleteseed = '<button type="button" id="deleteuniquetaskseed" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
             row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+value[8]+"</td><td>"+value[9]+"</td><td>"+deleteseed+"</td></tr>"
 
           $('#seedtask').html(row);
@@ -1258,9 +1258,16 @@
         });
 
         $('#deleteuniquetask').live('click', function(){
-        var check = confirm('Do you really want to delete this task ?');
+        var check = confirm('Do you really want to delete this whole task ?');
         var deleteuniquetask = $(this).val();
         if (check==true){removeseedsocket.send(JSON.stringify({'deleteuniquetask':deleteuniquetask}));}
+        });
+
+
+        $('#deleteuniquetaskseed').live('click', function(){
+        var check = confirm('Do you really want to delete this seed record ?');
+        var deleteuniquetaskseed = $(this).val();
+        if (check==true){removeseedsocket.send(JSON.stringify({'deleteuniquetaskseed':deleteuniquetaskseed}));}
         });
       }
 
