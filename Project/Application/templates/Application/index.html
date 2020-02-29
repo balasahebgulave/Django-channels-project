@@ -9,7 +9,7 @@
   <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
 
   <title>Notspam-App</title>
-
+ 
   <!-- Bootstrap CSS -->
   <link href="{% static '/Application/css/bootstrap.min.css' %}" rel="stylesheet">
   <!-- bootstrap theme -->
@@ -415,10 +415,10 @@
                   <center class='heading'><strong>Remove Seed</strong></center>
 
                   <div class="col-sm-3 col-md-3 col-lg-3">
-                    <table class="table table-hover table-bordered">
+                    <table id="uniquetasktable" class="table table-hover table-bordered">
                         <thead>
-                          <th>Sr No</th>
-                          <th>Your seed Tasks</th>
+                          <th>Sr</th>
+                          <th>All Seed Tasks</th>
                           <th>Delete</th>
                         </thead>
 
@@ -429,18 +429,18 @@
                   </div>
 
                   <div class="col-sm-9 col-md-9 col-lg-9">
-                    <table id="livelog" class="table table-hover table-bordered">
+                    <table id="taskseed" class="table table-hover table-bordered">
                         <thead>
                             <th>Id</th>
                             <th>username</th>
                             <th>password</th>
                             <th>proxy</th>
                             <th>port</th>
-                            <th>proxyuser</th>
-                            <th>proxypass</th>
                             <th>recoverymail</th>
                             <th>emailto</th>
                             <th>forwardto</th>
+                            <th>profile</th>
+                            <th>status</th>
                             <th>delete</th>
 
                         </thead>
@@ -481,31 +481,26 @@
 
             <div id="createtaskdiv" style="display: none;">
                   
-                  <div class="col-sm-4 col-md-4 col-lg-4">
+                <div class="col-sm-3 col-md-3 col-lg-3">
                     <center class='heading'><strong>Your Tasks</strong></center>
-
-                    <table id="livelog" class="table table-hover table-bordered">
+                    <table class="table table-hover table-bordered">
                         <thead>
                             <th>Id</th>
                             <th>Task Profiles</th>
                             <th>Delete Task</th>
-                      
                         </thead>
-
                         <tbody id="task">
                             
                         </tbody>      
-                    </table>
-
-                    
+                    </table> 
                   </div>
 
-                  <div class="col-sm-8 col-md-8 col-lg-8">
-                    <center class='heading'><strong id="task_heading">Create New Tasks</strong></center>
+                  <div class="col-sm-9 col-md-9 col-lg-9">
+                  <center class='heading'><strong id="task_heading">Create New Tasks</strong></center>
                   <div style="border: 1px solid; border-radius:10px; padding:1%">
                    <form class="form-horizontal form form-group" id="creattaskform">
                     {% csrf_token %}
-                      <center><input style="font-weight: bold; padding-bottom: 1%;" type="text" name="title" id="tasktitle" value=""></center>
+                      <center><input style="font-weight: bold;" type="text" name="title" id="tasktitle" value=""></center>
                       <input type="text" name="taskid" id="taskprofileid" value="" style="display: none">
                     <table id="taskformtable" class="table table-responsive-sm w-auto">
                      
@@ -709,7 +704,7 @@
                   </div>
 
                   <div class="col-md-10">
-                    <table id="livelog" class="table table-hover table-bordered">
+                    <table class="table table-hover table-bordered">
                         <thead>
                             <th>Id</th>
                             <th>Team</th>
@@ -847,6 +842,8 @@
     <script src="static/Application/js/sparklines.js"></script>
     <script src="static/Application/js/charts.js"></script>
     <script src="static/Application/js/jquery.slimscroll.min.js"></script>
+
+
     <script>
       //knob
       $(function() {
@@ -922,8 +919,6 @@
     </script>
 
 
-
-
     <script>
       var loc = window.location;
       var addmachineform = $('#addmachineform');      
@@ -953,11 +948,9 @@
         if (data.teamwise_machine != null){
         var row = "";
         data.teamwise_machine.forEach(function(value){
-
         var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
         row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+deletemachine+"</td></tr>";
         });
-        
         $('#temp').html(row);
         }
 
@@ -984,9 +977,6 @@
     </script>
 
 
-
-
-
     <script>
       var loc = window.location;
       var displaymachineform = $('#displaymachineform');      
@@ -996,6 +986,7 @@
       }
       var endpoint = wsStart + window.location.host + '/displaymachines/'
       var displaymachinesocket = new WebSocket(endpoint);
+
       displaymachinesocket.onmessage = function(e){
         var data = JSON.parse(e.data);
         if (data.teamwise_machine != null){
@@ -1004,7 +995,6 @@
         var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
         row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+deletemachine+"</td></tr>";
         });
-        
         $('#temp').html(row);
         }
 
@@ -1025,13 +1015,11 @@
         displaymachinesocket.send(JSON.stringify({'team':team}));
         });
 
-
         $('#deletemachine').live('click', function(){
         var check = confirm('Do you really want to delete machine ?');
         var deletemachine = $(this).val();
         if (check==true){addmachinesocket.send(JSON.stringify({'deletemachine':deletemachine}));}
         });
-
       }
 
       displaymachinesocket.onerror = function(e){
@@ -1045,8 +1033,6 @@
 
 
 
-
-    
     <script>
       var loc = window.location;
       var wsStart = 'ws://';
@@ -1055,6 +1041,7 @@
       }
       var endpoint = wsStart + window.location.host + '/ws/'
       var liveMchineSocket = new WebSocket(endpoint);
+
       liveMchineSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
         var row = "";
@@ -1095,7 +1082,7 @@
 
           profiles = profiles + '<option>'+value[1]+'</option>' 
           var task = '<input type="button" class="btn btn-info" value='+value[1]+'>'
-          var deletetask = '<button type="button" id="deletetask" class="btn btn-danger" value='+value[0]+'>Delete</button>'
+          var deletetask = '<button type="button" id="deletetask" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
           row = row + "<tr><td>"+value[0]+"</td><td>"+task+"</td><td>"+deletetask+"</td></tr>";
         $('#task').html(row)});
         $('#selected_profile').html(profiles);
@@ -1139,7 +1126,6 @@
 
       createtaskprofilesocket.onopen = function(e){
         console.log('createtaskprofile onopen',e);
-
         creattaskform.submit(function(event){
           event.preventDefault();
         // console.log(creattaskform.serializeArray())
@@ -1150,19 +1136,17 @@
         var profile = $(this).val();
         createtaskprofilesocket.send(JSON.stringify({'profile':profile}));
         });
-
-
         $('#deletetask').live('click', function(){
         var check = confirm('Do you really want to delete Task Profile ?');
         var deletetask = $(this).val();
         if (check==true){createtaskprofilesocket.send(JSON.stringify({'deletetask':deletetask}));}  
-        });
-        
+        });  
       }
 
       createtaskprofilesocket.onerror = function(e){
         console.log('createtaskprofile onerror',e)
       }
+
       createtaskprofilesocket.onclose = function(e){
         console.log('createtaskprofile onclose',e)
       }
@@ -1181,39 +1165,39 @@
       var endpoint = wsStart + window.location.host + '/inserttask/'
       var inserttasksocket = new WebSocket(endpoint);
 
-
       inserttasksocket.onmessage = function(e){
         console.log('inserttasksocket onmessage',e);
         data = JSON.parse(e.data)
+        if (data.user_unique_seed_task){
+          row = ''
+          data.user_unique_seed_task.forEach(function(value){
+            var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+            var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
+            row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+          $('#uniquetask').html(row);
+          });
+        }
         document.getElementById('error-log').innerHTML 
                 = data.response;
       }
 
-
       inserttasksocket.onopen = function(e){
         console.log('inserttasksocket onopen',e)
-
         inserttaskform.submit(function(event){
           event.preventDefault();
           console.log(inserttaskform.serializeArray());
           inserttasksocket.send(JSON.stringify({'inserttask':inserttaskform.serializeArray()}))
           inserttaskform[0].reset();
         })
-
       }
-
 
       inserttasksocket.onerror = function(e){
         console.log('inserttasksocket onerror',e)
-
       }
-
 
       inserttasksocket.onclose = function(e){
         console.log('inserttasksocket onclose',e)
-
-      }
-      
+      } 
     </script>
 
 
@@ -1229,52 +1213,66 @@
       var endpoint = wsStart + window.location.host + '/removeseed/'
       var removeseedsocket = new WebSocket(endpoint);
 
-
       removeseedsocket.onmessage = function(e){
         console.log('removeseedsocket onmessage',e);
         var data = JSON.parse(e.data);
-        var row = "";
-        data.user_unique_seed_task.forEach(function(value){
-          var seedtask = '<button type="button" id="uniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
-          var deleteseedtask = '<button type="button" id="uniquetask" class="btn btn-danger" value='+value[1]+'>Delete</button>'
-          row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
-        $('#uniquetask').html(row);
-        });
+        if (data.user_unique_seed_task != null){
+          if (data.user_unique_seed_task.length == 0){
+            $('#uniquetask').html("");
+          }
+          var row = "";
+          data.user_unique_seed_task.forEach(function(value){
+            var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+            var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
+            row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+          $('#uniquetask').html(row);
+          });
+        }
+
+        if (data.task_wise_seed != null){
+          if (data.task_wise_seed.length == 0){
+            $('#seedtask').html("");
+          }
+          var row = "";
+          data.task_wise_seed.forEach(function(value){
+            var deleteseed = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
+            row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+value[8]+"</td><td>"+value[9]+"</td><td>"+deleteseed+"</td></tr>"
+
+          $('#seedtask').html(row);
+          });
+        }
+        if (data.response != null){
+        document.getElementById('error-log').innerHTML 
+                = data.response;
+        }
         document.getElementById("total_machines").innerHTML 
                 = data.total_machines;
         document.getElementById("active_machines").innerHTML 
-                = data.active_machines;
-        
+                = data.active_machines;  
       }
-
-
       removeseedsocket.onopen = function(e){
-        console.log('removeseedsocket onopen',e)
+        console.log('removeseedsocket onopen',e);
+        $('#seeduniquetask').live('click', function(){
+        var seedtask = $(this).val();
+        removeseedsocket.send(JSON.stringify({'seeduniquetask':seedtask}));
+        });
 
-        // inserttaskform.submit(function(event){
-        //   event.preventDefault();
-        //   console.log(inserttaskform.serializeArray());
-        //   inserttasksocket.send(JSON.stringify({'inserttask':inserttaskform.serializeArray()}))
-        //   inserttaskform[0].reset();
-        // })
-
+        $('#deleteuniquetask').live('click', function(){
+        var check = confirm('Do you really want to delete this task ?');
+        var deleteuniquetask = $(this).val();
+        if (check==true){removeseedsocket.send(JSON.stringify({'deleteuniquetask':deleteuniquetask}));}
+        });
       }
-
 
       removeseedsocket.onerror = function(e){
         console.log('removeseedsocket onerror',e)
 
       }
 
-
       removeseedsocket.onclose = function(e){
         console.log('removeseedsocket onclose',e)
-
-      }
-      
+      }  
     </script>
-
-
 
 
     <script>
@@ -1285,7 +1283,6 @@
                 = 'Create New Task';
       })
     </script>
-
 
 </body>
 

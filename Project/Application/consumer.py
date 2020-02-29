@@ -7,6 +7,7 @@ from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
 from django.contrib.sessions.models import Session
 from django.contrib.auth.models import User 
+from concurrent.futures import ThreadPoolExecutor
 
 
 from django.dispatch import receiver
@@ -350,6 +351,7 @@ class InsertTaskConsumer(AsyncConsumer):
 		# print('-------seedlist---------',seedslist)
 		seedcount = 0
 		duplicate = 0
+		tasklog = f"{str(self.scope['user']).title()}_Task_{str(datetime.datetime.now())[:19].replace(' ','_')}"
 		for seed in seedslist:
 			seed = seed.split('\t')
 			if len(seed) == 9:
@@ -360,12 +362,11 @@ class InsertTaskConsumer(AsyncConsumer):
 						proxy='NA' if len(seed[2])==0 else seed[2],port='NA' if len(seed[3])==0 else seed[3],
 						proxyuser='NA' if len(seed[4])==0 else seed[4],proxypass='NA' if len(seed[5])==0 else seed[5],
 						recoverymail='NA' if len(seed[6])==0 else seed[6],emailto='NA' if len(seed[7])==0 else seed[7],
-						forwardto='NA' if len(seed[8])==0 else seed[8],tasklog=f"{str(self.scope['user']).title()} Seed Task - {str(datetime.datetime.now())[:16]}")
+						forwardto='NA' if len(seed[8])==0 else seed[8],tasklog=tasklog)
 					seedcount+=1
 				except Exception as e:
 					if 'UNIQUE constraint failed' in str(e):
 						duplicate+=1
-					print('------------error----------',str(e))
 
 		user_unique_seed_task = await self.get_user_unique_seed_task()
 		response = f"{seedcount} seeds inserted successfully, {duplicate} duplicate seeds found."
@@ -387,6 +388,7 @@ class InsertTaskConsumer(AsyncConsumer):
 
 
 
+
 class RemoveSeedsConsumer(AsyncConsumer):
 	async def websocket_connect(self,event):
 		await self.send({
@@ -394,16 +396,30 @@ class RemoveSeedsConsumer(AsyncConsumer):
 		})
 
 		user_unique_seed_task = await self.get_user_unique_seed_task()
-
-		print('-----------user_unique_seed_task----------------',user_unique_seed_task)
-
 		await self.send({
 				"type":"websocket.send",
 				"text": json.dumps({'user_unique_seed_task':user_unique_seed_task})
 		})
 
-
 	async def websocket_receive(self,event):
+		seedtask = json.loads(event['text'])
+		json_response = {}
+		if 'seeduniquetask' in seedtask.keys():
+			task_wise_seed = await self.get_unique_task_wise_seed(seedtask['seeduniquetask'])
+			json_response['task_wise_seed'] = task_wise_seed
+		
+		if 'deleteuniquetask' in seedtask.keys():
+			response = await self.delete_task_all_seed(seedtask['deleteuniquetask'])
+			json_response['response'] = response
+			json_response['user_unique_seed_task'] = await self.get_user_unique_seed_task()
+			json_response['task_wise_seed'] = []
+			
+		await self.send({
+				"type":"websocket.send",
+				"text": json.dumps(json_response)
+		})
+
+	async def websocket_disconnect(self,event):
 		pass
 
 
@@ -414,3 +430,18 @@ class RemoveSeedsConsumer(AsyncConsumer):
 		for i,j in enumerate(user_unique_seed_task):
 			uniquetask.append((i+1,j))
 		return uniquetask
+
+	@database_sync_to_async
+	def get_unique_task_wise_seed(self, taskname):
+		task_wise_seed = UserSeed.objects.filter(tasklog=taskname)
+		task_wise_seed = [(i.id,i.username,i.password,i.proxy,i.port,i.recoverymail,i.emailto,i.forwardto,i.taskprofile,i.seedstatus) for i in task_wise_seed]
+		return task_wise_seed
+
+	@database_sync_to_async
+	def delete_task_all_seed(self,taskname):
+		try:
+			UserSeed.objects.filter(tasklog=taskname).delete()
+			response = 'Task Deleted Successfully'
+		except Exception as e:
+			response = str(e)
+		return response
