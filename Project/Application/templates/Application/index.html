@@ -948,7 +948,7 @@
         if (data.teamwise_machine != null){
         var row = "";
         data.teamwise_machine.forEach(function(value){
-        var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
+        var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
         row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+deletemachine+"</td></tr>";
         });
         $('#temp').html(row);
@@ -992,7 +992,7 @@
         if (data.teamwise_machine != null){
         var row = "";
         data.teamwise_machine.forEach(function(value){
-        var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'>Delete</button>'
+        var deletemachine = '<button type="button" id="deletemachine" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
         row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+deletemachine+"</td></tr>";
         });
         $('#temp').html(row);
