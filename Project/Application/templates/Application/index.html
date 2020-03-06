@@ -33,8 +33,11 @@
   <link href="{% static '/Application/css/style-responsive.css' %}" rel="stylesheet" />
   <link href="{% static '/Application/css/xcharts.min.css' %}" rel="stylesheet">
   <link href="{% static '/Application/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
-  
 
+
+
+
+ 
 
 </head>
 
@@ -52,6 +55,23 @@
       <a href="#" class="logo">Not<span class="lite">Spam</span></a>
       <!--logo end-->
 
+     <!--  <div class="row">
+          <div class="col-lg-12">
+            <ol class="breadcrumb">
+              <li><i class="fa fa-laptop"></i>Dashboard</li>
+              <li><i class="fa fa-home"></i><a href="#" onclick="manageOperations(this.id)" id="allmachines">Your Team Machines</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="createtask" onclick="manageOperations(this.id)">Create Task</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="insertseed" onclick="manageOperations(this.id)">Insert Seed</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="deleteseed" onclick="manageOperations(this.id)">Remove Seed</a></li>
+              <li><i class="fa fa-home"></i><a href="#"  id="insertproxy" onclick="manageOperations(this.id)">Insert Proxy</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="removeproxy" onclick="manageOperations(this.id)">Remove Proxy</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="livelog" onclick="manageOperations(this.id)">Live Log</a></li>
+              <li><i class="fa fa-home"></i><a href="#" id="clearlog" onclick="manageOperations(this.id)">Clear Log</a></li>
+              
+            </ol>
+          </div>
+        </div> -->
+
       <div class="nav search-row" id="top_menu">
         <!--  search form start -->
         <ul class="nav top-menu">
@@ -60,6 +80,14 @@
               <input class="form-control" placeholder="Search" type="text">
             </form>
           </li>
+          <li><a href="#" class="btn btn-default" onclick="manageOperations(this.id)" id="allmachines">Your Team Machines</a></li>
+          <li><a href="#" class="btn btn-default" id="createtask" onclick="manageOperations(this.id)">Create Task</a></li>
+          <li><a href="#" class="btn btn-default" id="insertseed" onclick="manageOperations(this.id)">Insert Seed</a></li>
+          <li><a href="#" class="btn btn-default" id="deleteseed" onclick="manageOperations(this.id)">Remove Seed</a></li>
+          <li><a href="#" class="btn btn-default" id="insertproxy" onclick="manageOperations(this.id)">Insert Proxy</a></li>
+          <li><a href="#" class="btn btn-default" id="removeproxy" onclick="manageOperations(this.id)">Remove Proxy</a></li>
+          <li><a href="#" class="btn btn-default" id="livelog" onclick="manageOperations(this.id)">Live Log</a></li>
+          <li><a href="#" class="btn btn-default" id="clearlog" onclick="manageOperations(this.id)">Clear Log</a></li>
         </ul>
         <!--  search form end -->
       </div>
@@ -219,23 +247,7 @@
 
       <section class="wrapper">
         <!--overview start-->
-        <div class="row">
-          <div class="col-lg-12">
-            <!-- <h3 class="page-header"><i class="fa fa-laptop"></i> Dashboard</h3> -->
-            <ol class="breadcrumb">
-              <li><i class="fa fa-laptop"></i>Dashboard</li>
-              <li><i class="fa fa-home"></i><a href="#" onclick="manageOperations(this.id)" id="allmachines">Your Team Machines</a></li>
-              <li><i class="fa fa-home"></i><a href="#" id="createtask" onclick="manageOperations(this.id)">Create Task</a></li>
-              <li><i class="fa fa-home"></i><a href="#" id="insertseed" onclick="manageOperations(this.id)">Insert Seed</a></li>
-              <li><i class="fa fa-home"></i><a href="#" id="deleteseed" onclick="manageOperations(this.id)">Remove Seed</a></li>
-              <li><i class="fa fa-home"></i><a href="#"  id="insertproxy" onclick="manageOperations(this.id)">Insert Proxy</a></li>
-              <li><i class="fa fa-home"></i><a href="#" id="removeproxy" onclick="manageOperations(this.id)">Remove Proxy</a></li>
-              <li><i class="fa fa-home"></i><a href="#" id="livelog" onclick="manageOperations(this.id)">Live Log</a></li>
-              <li><i class="fa fa-home"></i><a href="#" id="clearlog" onclick="manageOperations(this.id)">Clear Log</a></li>
-              
-            </ol>
-          </div>
-        </div>
+        
 
         <div class="row">
 
@@ -410,9 +422,9 @@
 
 
 
-            <div id="deleteseeddiv" style="display: none">
+            <div id="deleteseeddiv" style="display: none;">
                   
-                  <center class='heading'><strong>Remove Seed</strong></center>
+              <!--     <center class='heading'><strong>Remove Seed</strong></center> -->
 
                   <div class="col-sm-3 col-md-3 col-lg-3">
                     <table id="uniquetasktable" class="table table-hover table-bordered">
@@ -441,7 +453,7 @@
                             <th>forwardto</th>
                             <th>profile</th>
                             <th>status</th>
-                            <th>delete</th>
+                            <!-- <th>delete</th> -->
 
                         </thead>
 
@@ -844,6 +856,21 @@
     <script src="static/Application/js/jquery.slimscroll.min.js"></script>
 
 
+ <!--datatable plugins-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.html5.min.js"></script>
+
+  
+
+
+
     <script>
       //knob
       $(function() {
@@ -1233,13 +1260,42 @@
           if (data.task_wise_seed.length == 0){
             $('#seedtask').html("");
           }
-          var row = "";
-          data.task_wise_seed.forEach(function(value){
-            var deleteseed = '<button type="button" id="deleteuniquetaskseed" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
-            row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+value[8]+"</td><td>"+value[9]+"</td><td>"+deleteseed+"</td></tr>"
 
-          $('#seedtask').html(row);
+          $('#taskseed').dataTable({
+          retrieve: true,
+          deferRender: true,
+                searching: true,
+                dom: 'Bfrtip',
+                buttons: ['csv', 'excel'],
+          data:data.task_wise_seed,
+          columns:[
+              {'data':'id'},
+              {'data':'username'},
+              {'data':'password'},
+              {'data':'proxy'},
+              {'data':'port'},
+              {'data':'recoverymail'},
+              {'data':'emailto'},
+              {'data':'forwardto'},
+              {'data':'taskprofile'},
+              {'data':'seedstatus'},
+              // {'data':'id',
+              // 'render':function(data){
+              //   link = '<button type="button" id="deleteuniquetaskseed" class="btn btn-danger" value='+data+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>';
+              //   return link}
+              // }
+            ]
+
           });
+
+
+          // var row = "";
+          // data.task_wise_seed.forEach(function(value){
+          //   var deleteseed = '<button type="button" id="deleteuniquetaskseed" class="btn btn-danger" value='+value[0]+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>'
+          //   row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td><td>"+value[8]+"</td><td>"+value[9]+"</td><td>"+deleteseed+"</td></tr>"
+
+          // $('#seedtask').html(row);
+          // });
         }
         if (data.response != null){
         document.getElementById('error-log').innerHTML 

@@ -444,7 +444,7 @@ class RemoveSeedsConsumer(AsyncConsumer):
 	@database_sync_to_async
 	def get_unique_task_wise_seed(self, taskname):
 		task_wise_seed = UserSeed.objects.filter(tasklog=taskname)
-		task_wise_seed = [(i.id,i.username,i.password,i.proxy,i.port,i.recoverymail,i.emailto,i.forwardto,i.taskprofile,i.seedstatus) for i in task_wise_seed]
+		task_wise_seed = [{"id":i.id,"username":i.username,"password":i.password,"proxy":i.proxy,"port":i.port,"recoverymail":i.recoverymail,"emailto":i.emailto,"forwardto":i.forwardto,"taskprofile":i.taskprofile,"seedstatus":i.seedstatus} for i in task_wise_seed]
 		return task_wise_seed
 
 	@database_sync_to_async
