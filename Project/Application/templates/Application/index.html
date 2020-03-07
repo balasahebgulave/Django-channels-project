@@ -1260,13 +1260,16 @@
           if (data.task_wise_seed.length == 0){
             $('#seedtask').html("");
           }
+          $('#taskseed').dataTable().fnDestroy();
 
           $('#taskseed').dataTable({
           retrieve: true,
           deferRender: true,
-                searching: true,
-                dom: 'Bfrtip',
-                buttons: ['csv', 'excel'],
+          searching: true,
+          responsive: true,
+          scrollY: 380,
+          dom: 'Bfrtip',
+          buttons: ['csv', 'excel'],
           data:data.task_wise_seed,
           columns:[
               {'data':'id'},
