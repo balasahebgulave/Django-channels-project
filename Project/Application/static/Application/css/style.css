@@ -19,6 +19,24 @@ span{
     padding: 0.5%;
 }
 
+
+
+.scrollunique {
+    overflow:scroll;
+    height:510px;
+    width: 27%;
+}
+
+
+
+.scrollseed{
+    overflow:scroll;
+    height:510px;
+    width: 73%;
+}
+
+
+
 body {
     background:white;
 
@@ -32,11 +50,6 @@ body {
 
 }
 
-
-.btn-default{
-    margin-top: 7px;
-    background-color: lightgray; 
-}
 
 input{
     border: none;
@@ -1154,13 +1167,15 @@ a.logo span {
 
 ul.top-menu > li > a {
 
-    color: black;
+    font-family: 'Roboto', sans-serif;
 
-    /*background-color: silver;*/
+    font-weight: normal;
+
+    color: white;
 
     font-size: 12px;
 
-    padding: 0px 6px;
+    padding: 8px 2px;
 
     margin-right: 20px;
 
@@ -1686,9 +1701,13 @@ div[data-role="editor-toolbar"] {
 
 .top-nav .username {
 
-    font-size: 16px;
+    font-size: 15px;
 
-    font-family: "Times New Roman", Times, serif;
+    font-family: 'Roboto', sans-serif;
+
+    font-weight: 600;
+
+    text-transform: capitalize;
 
     color: white;
 
@@ -1697,8 +1716,6 @@ div[data-role="editor-toolbar"] {
 
 
 .top-nav ul.top-menu > li > a {
-
-    padding: 8px;
 
     background: none;
 
@@ -3995,7 +4012,7 @@ div[data-role="editor-toolbar"] {
 
     background: rgba(255, 255, 255, 0.15);
 
-    font-family: 'Times', sans-serif;
+    font-family: 'Roboto', sans-serif;
 
     margin-top: 7px;
 
@@ -6338,6 +6355,11 @@ ul.inbox-pagination li {
 
 }
 
+
+.btn{
+    font-size: 12px;
+    font-weight: 500;
+}
 
 
 .mail-option {

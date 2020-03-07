@@ -80,14 +80,14 @@
               <input class="form-control" placeholder="Search" type="text">
             </form>
           </li>
-          <li><a href="#" class="btn btn-default" onclick="manageOperations(this.id)" id="allmachines">Your Team Machines</a></li>
-          <li><a href="#" class="btn btn-default" id="createtask" onclick="manageOperations(this.id)">Create Task</a></li>
-          <li><a href="#" class="btn btn-default" id="insertseed" onclick="manageOperations(this.id)">Insert Seed</a></li>
-          <li><a href="#" class="btn btn-default" id="deleteseed" onclick="manageOperations(this.id)">Remove Seed</a></li>
-          <li><a href="#" class="btn btn-default" id="insertproxy" onclick="manageOperations(this.id)">Insert Proxy</a></li>
-          <li><a href="#" class="btn btn-default" id="removeproxy" onclick="manageOperations(this.id)">Remove Proxy</a></li>
-          <li><a href="#" class="btn btn-default" id="livelog" onclick="manageOperations(this.id)">Live Log</a></li>
-          <li><a href="#" class="btn btn-default" id="clearlog" onclick="manageOperations(this.id)">Clear Log</a></li>
+          <li><a href="#" onclick="manageOperations(this.id)" id="allmachines">Your Team Machines</a></li>
+          <li><a href="#" id="createtask" onclick="manageOperations(this.id)">Create Task</a></li>
+          <li><a href="#" id="insertseed" onclick="manageOperations(this.id)">Insert Seed</a></li>
+          <li><a href="#" id="deleteseed" onclick="manageOperations(this.id)">Remove Seed</a></li>
+          <li><a href="#" id="insertproxy" onclick="manageOperations(this.id)">Insert Proxy</a></li>
+          <li><a href="#" id="removeproxy" onclick="manageOperations(this.id)">Remove Proxy</a></li>
+          <li><a href="#" id="livelog" onclick="manageOperations(this.id)">Live Log</a></li>
+          <li><a href="#" id="clearlog" onclick="manageOperations(this.id)">Clear Log</a></li>
         </ul>
         <!--  search form end -->
       </div>
@@ -203,8 +203,7 @@
           <li>
             <a class="" href="#">
                           <i class="icon_piechart"></i>
-                          <span>All Task</span>
-
+                          <span id="adminalltask" onclick="manageOperations(this.id)">All Tasks</span>
                       </a>
 
           </li>
@@ -735,6 +734,48 @@
                     </table>
                   </div>
             </div>
+
+
+
+
+            <div id="adminalltaskdiv" style="display: none;">
+                  <div class="col-md-4 scrollunique">
+                    <table id="uniquetasktable" class="table table-hover table-bordered">
+                        <thead>
+                          <th>Sr</th>
+                          <th>All Seed Tasks</th>
+                          <th>Delete</th>
+                        </thead>
+
+                        <tbody id="adminuniquetask">
+                           
+                        </tbody>      
+                    </table>
+                  </div>
+
+                  <div class="col-md-8 scrollseed">
+                    <table id="admintask" class="table table-hover table-bordered">
+                        <thead>
+                            <th>Id</th>
+                            <th>username</th>
+                            <th>password</th>
+                            <th>proxy</th>
+                            <th>port</th>
+                            <th>recoverymail</th>
+                            <th>emailto</th>
+                            <th>forwardto</th>
+                            <th>profile</th>
+                            <th>status</th>
+                            <!-- <th>delete</th> -->
+
+                        </thead>
+
+                        <tbody id="adminseedtask">
+                            
+                        </tbody>      
+                    </table>
+                  </div>
+            </div>
               
 
 
@@ -920,7 +961,7 @@
 
 
     <script>
-      var divs = ['allmachinesdiv','createtaskdiv','deleteseeddiv','insertproxydiv','removeproxydiv','livelogdiv','clearlogdiv','insertseeddiv','addmachinediv','adminallmachinediv']
+      var divs = ['allmachinesdiv','createtaskdiv','deleteseeddiv','insertproxydiv','removeproxydiv','livelogdiv','clearlogdiv','insertseeddiv','addmachinediv','adminallmachinediv','adminalltaskdiv']
       function manageOperations(id){
         var currentid = id+'div'
         var len = divs.length;
@@ -944,6 +985,35 @@
         } 
       }
     </script>
+
+
+
+
+
+    <script>
+      var loc = window.location;
+      var wsStart = 'ws://';
+      if (loc.protocol == 'https:'){
+        wsStart = 'wss://'
+      }
+      var endpoint = wsStart + window.location.host + '/ws/'
+      var liveMchineSocket = new WebSocket(endpoint);
+
+      liveMchineSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var row = "";
+        data.data.forEach(function(value){
+          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td></tr>";      
+        $('#machine-config').html(row);
+        });
+        document.getElementById("total_machines").innerHTML 
+                = data.total_machines;
+        document.getElementById("active_machines").innerHTML 
+                = data.active_machines;
+        };
+    </script>
+
+
 
 
     <script>
@@ -1058,30 +1128,6 @@
       }
     </script>
 
-
-
-    <script>
-      var loc = window.location;
-      var wsStart = 'ws://';
-      if (loc.protocol == 'https:'){
-        wsStart = 'wss://'
-      }
-      var endpoint = wsStart + window.location.host + '/ws/'
-      var liveMchineSocket = new WebSocket(endpoint);
-
-      liveMchineSocket.onmessage = function(e) {
-        var data = JSON.parse(e.data);
-        var row = "";
-        data.data.forEach(function(value){
-          row = row + "<tr><td>"+value[0]+"</td><td>"+value[1]+"</td><td>"+value[2]+"</td><td>"+value[3]+"</td><td>"+value[4]+"</td><td>"+value[5]+"</td><td>"+value[6]+"</td><td>"+value[7]+"</td></tr>";      
-        $('#machine-config').html(row);
-        });
-        document.getElementById("total_machines").innerHTML 
-                = data.total_machines;
-        document.getElementById("active_machines").innerHTML 
-                = data.active_machines;
-        };
-    </script>
 
 
 
@@ -1256,6 +1302,21 @@
           });
         }
 
+
+        if (data.alluniquetask != null){
+          if (data.alluniquetask.length == 0){
+            $('#adminuniquetask').html("");
+          }
+          var row = "";
+          data.alluniquetask.forEach(function(value){
+            var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+            var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
+            row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+          $('#adminuniquetask').html(row);
+          });
+        }
+
+
         if (data.task_wise_seed != null){
           if (data.task_wise_seed.length == 0){
             $('#seedtask').html("");
@@ -1268,6 +1329,39 @@
           searching: true,
           responsive: true,
           scrollY: 380,
+          dom: 'Bfrtip',
+          buttons: ['csv', 'excel'],
+          data:data.task_wise_seed,
+          columns:[
+              {'data':'id'},
+              {'data':'username'},
+              {'data':'password'},
+              {'data':'proxy'},
+              {'data':'port'},
+              {'data':'recoverymail'},
+              {'data':'emailto'},
+              {'data':'forwardto'},
+              {'data':'taskprofile'},
+              {'data':'seedstatus'},
+              // {'data':'id',
+              // 'render':function(data){
+              //   link = '<button type="button" id="deleteuniquetaskseed" class="btn btn-danger" value='+data+'><i  style="font-size:20px" class="fa fa-trash-o"></i></button>';
+              //   return link}
+              // }
+            ]
+
+          });
+
+
+
+
+          $('#admintask').dataTable().fnDestroy();
+
+          $('#admintask').dataTable({
+          retrieve: true,
+          deferRender: true,
+          searching: true,
+          responsive: true,
           dom: 'Bfrtip',
           buttons: ['csv', 'excel'],
           data:data.task_wise_seed,
@@ -1339,6 +1433,7 @@
         console.log('removeseedsocket onclose',e)
       }  
     </script>
+
 
 
     <script>

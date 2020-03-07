@@ -37,9 +37,7 @@ class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 		while 1:
 			total_machines, active_machines, teamwise_machine_object = await self.get_live_machine_conf(self.scope['session']['team'])
 			live_data = {'data':teamwise_machine_object, 'total_machines':total_machines, 'active_machines':active_machines}
-			await asyncio.sleep(0.5)
-			await self.send_json(live_data)
-			await asyncio.sleep(0.5)
+			await asyncio.sleep(1)
 			await self.send_json(live_data)
 
 	@database_sync_to_async
@@ -396,9 +394,10 @@ class RemoveSeedsConsumer(AsyncConsumer):
 		})
 
 		user_unique_seed_task = await self.get_user_unique_seed_task()
+		alluniquetask = await self.get_all_unique_seed_task()
 		await self.send({
 				"type":"websocket.send",
-				"text": json.dumps({'user_unique_seed_task':user_unique_seed_task})
+				"text": json.dumps({'user_unique_seed_task':user_unique_seed_task,'alluniquetask':alluniquetask})
 		})
 
 	async def websocket_receive(self,event):
@@ -413,6 +412,7 @@ class RemoveSeedsConsumer(AsyncConsumer):
 			response = await self.delete_task_all_seed(seedtask['deleteuniquetask'])
 			json_response['response'] = response
 			json_response['user_unique_seed_task'] = await self.get_user_unique_seed_task()
+			json_response['alluniquetask'] = await self.get_all_unique_seed_task()
 			json_response['task_wise_seed'] = []
 
 		if 'deleteuniquetaskseed' in seedtask.keys():
@@ -440,6 +440,14 @@ class RemoveSeedsConsumer(AsyncConsumer):
 		for i,j in enumerate(user_unique_seed_task):
 			uniquetask.append((i+1,j))
 		return uniquetask
+
+	@database_sync_to_async
+	def get_all_unique_seed_task(self):
+		user_unique_seed_task = list(UserSeed.objects.order_by().values('tasklog').distinct())
+		alluniquetask = []
+		for i,j in enumerate(user_unique_seed_task):
+			alluniquetask.append((i+1,j.get('tasklog')))
+		return alluniquetask
 
 	@database_sync_to_async
 	def get_unique_task_wise_seed(self, taskname):
