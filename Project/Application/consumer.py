@@ -37,7 +37,7 @@ class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 		while 1:
 			total_machines, active_machines, teamwise_machine_object = await self.get_live_machine_conf(self.scope['session']['team'])
 			live_data = {'data':teamwise_machine_object, 'total_machines':total_machines, 'active_machines':active_machines}
-			await asyncio.sleep(0.2)
+			await asyncio.sleep(2)
 			await self.send_json(live_data)
 
 	@database_sync_to_async

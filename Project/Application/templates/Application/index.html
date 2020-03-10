@@ -423,9 +423,10 @@
 
             <div id="deleteseeddiv" style="display: none;">
                   
-              <!--     <center class='heading'><strong>Remove Seed</strong></center> -->
+                  <!-- <center class='heading'><strong>Remove Seed</strong></center> -->
 
                   <div class="col-sm-3 col-md-3 col-lg-3">
+                      <center class='heading'><strong>Your Tasks</strong></center>
                     <table id="useruniquetasktable" class="table table-hover table-bordered">
                         <thead>
                           <th>Sr</th>
@@ -440,6 +441,7 @@
                   </div>
 
                   <div class="col-sm-9 col-md-9 col-lg-9">
+                      <center class='heading'><strong>Task Details</strong></center>
                     <table id="taskseed" class="table table-hover table-bordered">
                         <thead>
                             <th>Id</th>
@@ -739,7 +741,9 @@
 
 
             <div id="adminalltaskdiv" style="display: none;">
-                  <div class="col-md-4 scrollunique">
+
+                  <div class="col-md-3 scrollunique" style="overflow: hidden;">
+                    <center class='heading'><strong>All Tasks</strong></center>
                     <table id="adminuniquetasktable" class="table table-hover table-bordered">
                         <thead>
                           <th>Sr</th>
@@ -753,7 +757,8 @@
                     </table>
                   </div>
 
-                  <div class="col-md-8 scrollseed">
+                  <div class="col-md-9 scrollseed">
+                     <center class='heading'><strong>Task Details</strong></center>
                     <table id="admintask" class="table table-hover table-bordered">
                         <thead>
                             <th>Id</th>
@@ -1420,7 +1425,7 @@
               },
               {'data':'tasklog',
               'render':function(data){
-                link = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+data+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>';
+                link = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+data+'><i style="font-size:20px;" class="fa fa-trash-o"></i></button>';
                 return link}
               }
             ]
