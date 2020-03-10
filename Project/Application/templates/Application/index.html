@@ -426,14 +426,14 @@
               <!--     <center class='heading'><strong>Remove Seed</strong></center> -->
 
                   <div class="col-sm-3 col-md-3 col-lg-3">
-                    <table id="uniquetasktable" class="table table-hover table-bordered">
+                    <table id="useruniquetasktable" class="table table-hover table-bordered">
                         <thead>
                           <th>Sr</th>
                           <th>All Seed Tasks</th>
                           <th>Delete</th>
                         </thead>
 
-                        <tbody id="uniquetask">
+                        <tbody id="useruniquetask">
                            
                         </tbody>      
                     </table>
@@ -740,7 +740,7 @@
 
             <div id="adminalltaskdiv" style="display: none;">
                   <div class="col-md-4 scrollunique">
-                    <table id="uniquetasktable" class="table table-hover table-bordered">
+                    <table id="adminuniquetasktable" class="table table-hover table-bordered">
                         <thead>
                           <th>Sr</th>
                           <th>All Seed Tasks</th>
@@ -1242,14 +1242,77 @@
         console.log('inserttasksocket onmessage',e);
         data = JSON.parse(e.data)
         if (data.user_unique_seed_task){
-          row = ''
-          data.user_unique_seed_task.forEach(function(value){
-            var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
-            var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
-            row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
-          $('#uniquetask').html(row);
+          // row = ''
+          // data.user_unique_seed_task.forEach(function(value){
+          //   var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+          //   var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
+          //   row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+          // $('#uniquetask').html(row);
+          // });
+
+          $('#useruniquetasktable').dataTable().fnDestroy();
+          $('#useruniquetasktable').dataTable({
+          retrieve: true,
+          deferRender: true,
+          searching: true,
+          responsive: true,
+          data:data.user_unique_seed_task,
+          columns:[
+              {'data':'id'},
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+data+'>'+data+'</button>';
+                return link}
+              },
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+data+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>';
+                return link}
+              }
+            ]
+
           });
         }
+
+
+        if (data.alluniquetask != null){
+          if (data.alluniquetask.length == 0){
+            $('#adminuniquetask').html("");
+          }
+          // var row = "";
+          // data.alluniquetask.forEach(function(value){
+          //   var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+          //   var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
+          //   row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+          // $('#adminuniquetask').html(row);
+          // });
+
+          $('#adminuniquetasktable').dataTable().fnDestroy();
+          $('#adminuniquetasktable').dataTable({
+          retrieve: true,
+          deferRender: true,
+          searching: true,
+          responsive: true,
+          data:data.alluniquetask,
+          columns:[
+              {'data':'id'},
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+data+'>'+data+'</button>';
+                return link}
+              },
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+data+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>';
+                return link}
+              }
+            ]
+
+          });
+
+        }
+
+
         document.getElementById('error-log').innerHTML 
                 = data.response;
       }
@@ -1291,15 +1354,41 @@
         var data = JSON.parse(e.data);
         if (data.user_unique_seed_task != null){
           if (data.user_unique_seed_task.length == 0){
-            $('#uniquetask').html("");
+            $('#useruniquetask').html("");
           }
-          var row = "";
-          data.user_unique_seed_task.forEach(function(value){
-            var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
-            var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
-            row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
-          $('#uniquetask').html(row);
+          // var row = "";
+          // data.user_unique_seed_task.forEach(function(value){
+          //   var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+          //   var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
+          //   row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+          // $('#uniquetask').html(row);
+          // });
+
+
+
+          $('#useruniquetasktable').dataTable().fnDestroy();
+          $('#useruniquetasktable').dataTable({
+          retrieve: true,
+          deferRender: true,
+          searching: true,
+          responsive: true,
+          data:data.user_unique_seed_task,
+          columns:[
+              {'data':'id'},
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+data+'>'+data+'</button>';
+                return link}
+              },
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+data+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>';
+                return link}
+              }
+            ]
+
           });
+
         }
 
 
@@ -1307,13 +1396,37 @@
           if (data.alluniquetask.length == 0){
             $('#adminuniquetask').html("");
           }
-          var row = "";
-          data.alluniquetask.forEach(function(value){
-            var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
-            var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
-            row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
-          $('#adminuniquetask').html(row);
+          // var row = "";
+          // data.alluniquetask.forEach(function(value){
+          //   var seedtask = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+value[1]+'>'+value[1]+'</button>'
+          //   var deleteseedtask = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+value[1]+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>'
+          //   row = row + "<tr><td>"+value[0]+"</td><td>"+seedtask+"</td><td>"+deleteseedtask+"</td></tr>"
+          // $('#adminuniquetask').html(row);
+          // });
+
+          $('#adminuniquetasktable').dataTable().fnDestroy();
+          $('#adminuniquetasktable').dataTable({
+          retrieve: true,
+          deferRender: true,
+          searching: true,
+          responsive: true,
+          data:data.alluniquetask,
+          columns:[
+              {'data':'id'},
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="seeduniquetask" class="btn btn-info" value='+data+'>'+data+'</button>';
+                return link}
+              },
+              {'data':'tasklog',
+              'render':function(data){
+                link = '<button type="button" id="deleteuniquetask" class="btn btn-danger" value='+data+'><i style="font-size:20px" class="fa fa-trash-o"></i></button>';
+                return link}
+              }
+            ]
+
           });
+
         }
 
 
@@ -1328,7 +1441,6 @@
           deferRender: true,
           searching: true,
           responsive: true,
-          scrollY: 380,
           dom: 'Bfrtip',
           buttons: ['csv', 'excel'],
           data:data.task_wise_seed,

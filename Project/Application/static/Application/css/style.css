@@ -20,10 +20,10 @@ span{
 }
 
 
-
+/*
 .scrollunique {
     overflow:scroll;
-    height:510px;
+    height:450px;
     width: 27%;
 }
 
@@ -34,11 +34,11 @@ span{
     height:510px;
     width: 73%;
 }
-
+*/
 
 
 body {
-    background:white;
+    background:lavender;
 
     font-family: "Times New Roman", Times, serif;
 

@@ -37,7 +37,7 @@ class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 		while 1:
 			total_machines, active_machines, teamwise_machine_object = await self.get_live_machine_conf(self.scope['session']['team'])
 			live_data = {'data':teamwise_machine_object, 'total_machines':total_machines, 'active_machines':active_machines}
-			await asyncio.sleep(1)
+			await asyncio.sleep(0.2)
 			await self.send_json(live_data)
 
 	@database_sync_to_async
@@ -381,7 +381,7 @@ class InsertTaskConsumer(AsyncConsumer):
 		user_unique_seed_task = list(UserSeed.objects.filter(tasklog__icontains=self.scope['user']).values_list('tasklog',flat=True).distinct())
 		uniquetask = []
 		for i,j in enumerate(user_unique_seed_task):
-			uniquetask.append((i+1,j))
+			uniquetask.append({'id':i+1,'tasklog':j})
 		return uniquetask
 
 
@@ -438,7 +438,7 @@ class RemoveSeedsConsumer(AsyncConsumer):
 		user_unique_seed_task = list(UserSeed.objects.filter(tasklog__icontains=self.scope['user']).values_list('tasklog',flat=True).distinct())
 		uniquetask = []
 		for i,j in enumerate(user_unique_seed_task):
-			uniquetask.append((i+1,j))
+			uniquetask.append({'id':i+1,'tasklog':j})
 		return uniquetask
 
 	@database_sync_to_async
@@ -446,7 +446,7 @@ class RemoveSeedsConsumer(AsyncConsumer):
 		user_unique_seed_task = list(UserSeed.objects.order_by().values('tasklog').distinct())
 		alluniquetask = []
 		for i,j in enumerate(user_unique_seed_task):
-			alluniquetask.append((i+1,j.get('tasklog')))
+			alluniquetask.append({'id':i+1,'tasklog':j.get('tasklog')})
 		return alluniquetask
 
 	@database_sync_to_async
