@@ -35,10 +35,6 @@
   <link href="{% static '/Application/css/jquery-ui-1.10.4.min.css' %}" rel="stylesheet">
 
 
-
-
- 
-
 </head>
 
 <body>
@@ -208,14 +204,14 @@
 
           </li>
 
-          <li class="sub-menu">
+          <!-- <li class="sub-menu">
             <a href="javascript:;" class="">
                           <i class="icon_table"></i>
                           <span>All Seed</span>
                           <span class="menu-arrow arrow_carrot-right"></span>
                       </a>
             
-          </li>
+          </li> -->
 
           <li class="sub-menu">
             <a href="javascript:;" class="">
@@ -837,6 +833,34 @@
         </div>
 
 
+
+
+
+        <!-- section visualization report -->
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Summary Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                    <canvas id="myChart"></canvas>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
         <!-- project team & activity start -->
         <div class="row">
          
@@ -914,6 +938,10 @@
 <script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.html5.min.js"></script>
 
   
+
+ <!--chart.js plugins-->
+ <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 
 
 
@@ -1439,6 +1467,8 @@
           if (data.task_wise_seed.length == 0){
             $('#seedtask').html("");
           }
+          showSummary(data.labels,data.data);
+          
           $('#taskseed').dataTable().fnDestroy();
 
           $('#taskseed').dataTable({
@@ -1447,7 +1477,7 @@
           searching: true,
           responsive: true,
           dom: 'Bfrtip',
-          buttons: ['csv', 'excel'],
+          buttons: ['csv', 'excel',{"text":'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Summary</button>'}],
           data:data.task_wise_seed,
           columns:[
               {'data':'id'},
@@ -1467,9 +1497,8 @@
               // }
             ]
 
+
           });
-
-
 
 
           $('#admintask').dataTable().fnDestroy();
@@ -1480,7 +1509,7 @@
           searching: true,
           responsive: true,
           dom: 'Bfrtip',
-          buttons: ['csv', 'excel'],
+          buttons: ['csv', 'excel',{"text":'<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">Summary</button>'}],
           data:data.task_wise_seed,
           columns:[
               {'data':'id'},
@@ -1557,6 +1586,54 @@
                 = 'Create New Task';
       })
     </script>
+
+
+
+
+<script>
+
+    function showSummary(labels,data){
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: '# of seeds',
+                  data: data,
+                  backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)',
+                      'rgba(255, 159, 64, 0.2)'
+                  ],
+                  borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)',
+                      'rgba(255, 159, 64, 1)'
+                  ],
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  yAxes: [{
+                      ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+      });
+    }
+
+</script>
+
 
 </body>
 

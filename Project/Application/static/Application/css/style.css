@@ -20,6 +20,11 @@ span{
 }
 
 
+table tr th {
+    color: black !important;;
+    text-transform: capitalize !important;;
+}
+
 /*
 .scrollunique {
     overflow:scroll;

@@ -405,8 +405,10 @@ class RemoveSeedsConsumer(AsyncConsumer):
 		print('---------seedtask---------',seedtask)
 		json_response = {}
 		if 'seeduniquetask' in seedtask.keys():
-			task_wise_seed = await self.get_unique_task_wise_seed(seedtask['seeduniquetask'])
+			task_wise_seed, labels, data = await self.get_unique_task_wise_seed(seedtask['seeduniquetask'])
 			json_response['task_wise_seed'] = task_wise_seed
+			json_response['labels'] = labels
+			json_response['data'] = data
 		
 		if 'deleteuniquetask' in seedtask.keys():
 			response = await self.delete_task_all_seed(seedtask['deleteuniquetask'])
@@ -419,7 +421,7 @@ class RemoveSeedsConsumer(AsyncConsumer):
 			seeduniquetask = UserSeed.objects.get(id=seedtask['deleteuniquetaskseed'])
 			taskname = seeduniquetask.tasklog
 			seeduniquetask.delete()
-			task_wise_seed = await self.get_unique_task_wise_seed(taskname)
+			task_wise_seed, labels, data = await self.get_unique_task_wise_seed(taskname)
 			json_response['user_unique_seed_task'] = await self.get_user_unique_seed_task()
 			json_response['task_wise_seed'] = task_wise_seed
 			json_response['response'] = 'Seed Record Deleted Successfully'
@@ -452,8 +454,10 @@ class RemoveSeedsConsumer(AsyncConsumer):
 	@database_sync_to_async
 	def get_unique_task_wise_seed(self, taskname):
 		task_wise_seed = UserSeed.objects.filter(tasklog=taskname)
+		labels = list(UserSeed.objects.filter(tasklog=taskname).values_list('seedstatus',flat=True).distinct())
+		data = [UserSeed.objects.filter(tasklog=taskname,seedstatus=label).count() for label in labels]
 		task_wise_seed = [{"id":i.id,"username":i.username,"password":i.password,"proxy":i.proxy,"port":i.port,"recoverymail":i.recoverymail,"emailto":i.emailto,"forwardto":i.forwardto,"taskprofile":i.taskprofile,"seedstatus":i.seedstatus} for i in task_wise_seed]
-		return task_wise_seed
+		return task_wise_seed, labels, data
 
 	@database_sync_to_async
 	def delete_task_all_seed(self,taskname):
