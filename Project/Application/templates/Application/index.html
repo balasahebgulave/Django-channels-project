@@ -1464,12 +1464,13 @@
 
 
         if (data.task_wise_seed != null){
+         
           if (data.task_wise_seed.length == 0){
             $('#seedtask').html("");
           }
-          showSummary(data.labels,data.data);
           
           $('#taskseed').dataTable().fnDestroy();
+
 
           $('#taskseed').dataTable({
           retrieve: true,
@@ -1531,6 +1532,7 @@
 
           });
 
+          showSummary(data.labels,data.data);
 
           // var row = "";
           // data.task_wise_seed.forEach(function(value){
@@ -1593,6 +1595,7 @@
 <script>
 
     function showSummary(labels,data){
+      var temp = document.getElementById('myChart').innerHTML = "Visualization Testing !";
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'pie',
