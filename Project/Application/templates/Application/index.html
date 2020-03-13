@@ -838,20 +838,20 @@
 
         <!-- section visualization report -->
         <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div style="position: fixed; min-height:50px" class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Summary Report</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle" style="color: black; font-weight: bold">Summary Report</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" id="myChart1">
                     <canvas id="myChart"></canvas>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -1595,7 +1595,7 @@
 <script>
 
     function showSummary(labels,data){
-      var temp = document.getElementById('myChart').innerHTML = "Visualization Testing !";
+      var temp = document.getElementById('myChart1').innerHTML = '<canvas id="myChart"></canvas>';
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'pie',
