@@ -335,6 +335,26 @@ class CreateTaskProfileConsumer(AsyncConsumer):
 
 
 
+def insert_seed(user,team,tasklog,taskprofile,seed):
+	# print('-------------in insert_seed----------',seed)
+	flag = False
+	try:
+		UserSeed.objects.create(user=user, team =team,
+			taskprofile=taskprofile,username=seed[0],password=seed[1],
+			proxy='NA' if len(seed[2])==0 else seed[2],port='NA' if len(seed[3])==0 else seed[3],
+			proxyuser='NA' if len(seed[4])==0 else seed[4],proxypass='NA' if len(seed[5])==0 else seed[5],
+			recoverymail='NA' if len(seed[6])==0 else seed[6],emailto='NA' if len(seed[7])==0 else seed[7],
+			forwardto='NA' if len(seed[8])==0 else seed[8],tasklog=tasklog)
+		flag = True
+	except Exception as e:
+		if 'UNIQUE constraint failed' in str(e):
+			print(e)
+
+	return flag
+
+
+import timeit
+import itertools
 class InsertTaskConsumer(AsyncConsumer):
 	async def websocket_connect(self, event):
 		await self.send({
@@ -345,29 +365,26 @@ class InsertTaskConsumer(AsyncConsumer):
 		insertdata = json.loads(event['text'])
 		inserttask = {data['name']:data['value'] for data in insertdata['inserttask']}
 		# print('-------inserttask---------',inserttask)
-		seedslist = inserttask['seed'].split('\n')
-		# print('-------seedlist---------',seedslist)
-		seedcount = 0
-		duplicate = 0
+		seedslists = [seed.strip('\r').split('\t') for seed in inserttask['seed'].split('\n')]
+		seedslist = list(seed for seed,_ in itertools.groupby(seedslists))
+		print('-------seedlist---------',seedslist)
+		seedcounts = 0
+		duplicates = len(seedslists)-len(seedslist)
 		tasklog = f"{str(self.scope['user']).title()}_Task_{str(datetime.datetime.now())[:19].replace(' ','_')}"
+		executor = ThreadPoolExecutor(1)
+		user=self.scope['user']
+		team =self.scope['session']['team']
+		taskprofile = inserttask['selected_profile']
+		start = timeit.default_timer()
 		for seed in seedslist:
-			seed = seed.split('\t')
 			if len(seed) == 9:
 				# print('----------seed---------',seed)
-				try:
-					UserSeed.objects.create(user=self.scope['user'], team =self.scope['session']['team'],
-						taskprofile=inserttask['selected_profile'],username=seed[0],password=seed[1],
-						proxy='NA' if len(seed[2])==0 else seed[2],port='NA' if len(seed[3])==0 else seed[3],
-						proxyuser='NA' if len(seed[4])==0 else seed[4],proxypass='NA' if len(seed[5])==0 else seed[5],
-						recoverymail='NA' if len(seed[6])==0 else seed[6],emailto='NA' if len(seed[7])==0 else seed[7],
-						forwardto='NA' if len(seed[8])==0 else seed[8],tasklog=tasklog)
-					seedcount+=1
-				except Exception as e:
-					if 'UNIQUE constraint failed' in str(e):
-						duplicate+=1
-
+			    future = executor.submit(insert_seed,user,team,tasklog,taskprofile,seed)
+			    seedcounts+=1
+		stop = timeit.default_timer()
+		print('Time: ', stop - start)  
 		user_unique_seed_task = await self.get_user_unique_seed_task()
-		response = f"{seedcount} seeds inserted successfully, {duplicate} duplicate seeds found."
+		response = f"{seedcounts} seeds inserted successfully, {duplicates} duplicate seeds found."
 		await self.send({
 					"type":"websocket.send",
 					"text": json.dumps({'response':response,'user_unique_seed_task':user_unique_seed_task})
