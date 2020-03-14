@@ -381,10 +381,12 @@ class InsertTaskConsumer(AsyncConsumer):
 				# print('----------seed---------',seed)
 			    future = executor.submit(insert_seed,user,team,tasklog,taskprofile,seed)
 			    seedcounts+=1
+			    response = f"{seedcounts} seeds inserted successfully, {duplicates} duplicate seeds found."
+			else:
+				response = "data not in given format, please insert data in proper format."
 		stop = timeit.default_timer()
 		print('Time: ', stop - start)  
 		user_unique_seed_task = await self.get_user_unique_seed_task()
-		response = f"{seedcounts} seeds inserted successfully, {duplicates} duplicate seeds found."
 		await self.send({
 					"type":"websocket.send",
 					"text": json.dumps({'response':response,'user_unique_seed_task':user_unique_seed_task})
