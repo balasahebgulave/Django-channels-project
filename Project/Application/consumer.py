@@ -1,7 +1,7 @@
 import asyncio
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.consumer import AsyncConsumer
-import json, datetime, random
+import json, datetime, random,time
 from . models import MachineConfiguration, CreateTaskProfile, UserSeed
 from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
@@ -37,16 +37,24 @@ class CpuRamConsumer(AsyncJsonWebsocketConsumer):
 		while 1:
 			total_machines, active_machines, teamwise_machine_object = await self.get_live_machine_conf(self.scope['session']['team'])
 			live_data = {'data':teamwise_machine_object, 'total_machines':total_machines, 'active_machines':active_machines}
-			await asyncio.sleep(2)
+			await asyncio.sleep(1)
 			await self.send_json(live_data)
 
 	@database_sync_to_async
 	def get_live_machine_conf(self, team):
-		teamwise_machine_object = MachineConfiguration.objects.filter(team=team)
-		total_machines = teamwise_machine_object.count()
-		active_machines = len([i for i in teamwise_machine_object if i.cpu_usage != 'Not Active'])
-		# teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage, i.disk_usage) for i in teamwise_machine_object]
-		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, "*****", random.randrange(1,100), random.randrange(1,100), random.randrange(1,100)) for i in teamwise_machine_object]
+		teamwise_machine_object_old = MachineConfiguration.objects.filter(team=team)
+		time.sleep(1)
+		teamwise_machine_object_current = MachineConfiguration.objects.filter(team=team)
+		total_machines = teamwise_machine_object_current.count()
+		active_machines = len([i for i in teamwise_machine_object_current if i.cpu_usage != 'Not Active'])
+		teamwise_machine_object = [(i.id, i.team, i.machine_ip, i.adminuser, i.password, i.cpu_usage, i.ram_usage, i.disk_usage) for i in teamwise_machine_object_current]
+		
+		for old,current in zip(teamwise_machine_object_old,teamwise_machine_object_current):
+			if old.cpu_usage == current.cpu_usage:
+				current.cpu_usage = "Not Active"
+				current.ram_usage = "Not Active"
+				current.disk_usage = "Not Active"
+				current.save()
 		return total_machines, active_machines, teamwise_machine_object
 
 
@@ -68,7 +76,19 @@ class ChatConsumer(AsyncConsumer):
 
 	async def websocket_receive(self, event):
 		print('------------received---------',json.loads(event['text']))
+		nsm_data = json.loads(event['text'])
+		await self.save_nsm_data(nsm_data)
 
+	@database_sync_to_async
+	def save_nsm_data(self, nsm_data):
+		objs = MachineConfiguration.objects.filter(machine_ip=nsm_data["machineip"])
+		for obj in objs:
+			obj.cpu_usage = nsm_data['cpu_usage']
+			obj.ram_usage = nsm_data['ram_usage']
+			obj.disk_usage = nsm_data['disk_usage']
+			obj.save()
+
+		return True
 
 	async def websocket_disconnect(self, event):
 		print('------------disconnect---------',event)
