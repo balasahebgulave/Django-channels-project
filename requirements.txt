@@ -1,4 +1,4 @@
-Django==3.0.1
+Django==3.0.14
 PyMySQL==0.9.3
 channels==2.4.0
 asgiref==3.2.3
